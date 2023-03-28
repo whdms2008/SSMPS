@@ -1,4 +1,5 @@
 # 🛍️ SSMPS: Smart Store Management and Payment System
+![mark-removebg-preview](https://user-images.githubusercontent.com/45191177/228127425-000d4608-60f5-4f62-8b0d-c498854e6241.png)
 
 공주대학교 종합설계I 팀 프로젝트
 
