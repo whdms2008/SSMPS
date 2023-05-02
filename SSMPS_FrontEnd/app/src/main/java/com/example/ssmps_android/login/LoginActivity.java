@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         setToken();
+        join();
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);

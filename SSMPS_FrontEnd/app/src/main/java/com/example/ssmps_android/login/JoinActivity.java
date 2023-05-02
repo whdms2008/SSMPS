@@ -35,6 +35,7 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         initComponent();
+        join();
     }
 
     private void initComponent(){
@@ -60,8 +61,6 @@ public class JoinActivity extends AppCompatActivity {
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
         String passwordCheck = passCheckInput.getText().toString();
-
-
 
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
