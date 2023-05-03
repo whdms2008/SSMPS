@@ -1,7 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
-folder = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\label'
-txt_folder = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\label_txt'
+folder = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product_2\label'
+txt_folder = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product_2\label_txt'
 files = [f for f in os.listdir(folder)]
 
 for file_name in files:
@@ -9,13 +9,13 @@ for file_name in files:
     tree = ET.parse(f'{folder}/{file_name}')
     root = tree.getroot()
     # 추출한 정보를 쓰기 위한 텍스트 파일을 엽니다.
-    with open(f'{txt_folder}/{file_name[:-4]}.txt', 'w') as f:
-    
+    with open(f'{txt_folder}/{file_name[:-9]}.txt', 'w') as f:
+        name = root.find('div_cd/item_no').text
         # XML 파일에서 라벨링 정보가 들어있는 태그를 찾습니다.
         for obj in root.iter('object'):
             
             # 해당 태그에서 필요한 정보를 추출합니다.
-            name = obj.find('name').text
+            # name = obj.find('item_no').text
             xmin = obj.find('bndbox/xmin').text
             ymin = obj.find('bndbox/ymin').text
             xmax = obj.find('bndbox/xmax').text

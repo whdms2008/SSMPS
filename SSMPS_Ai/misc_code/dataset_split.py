@@ -3,8 +3,8 @@ import shutil
 from sklearn.model_selection import train_test_split
 
 # 이미지 카테고리 나누기
-label_path = r'product\20_product\label_txt'
-image_path = r'product\20_product\image'
+label_path = r'product\20_product_2\label_txt'
+image_path = r'product\20_product_2\image'
 
 imgs_name = os.listdir(image_path)
 l = []
@@ -32,15 +32,23 @@ for i in img:
     valids.extend(valid)
     tests.extend(test)
 
+path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product_2'
+set_l = ['train', 'val', 'test']
+type_l = ['images', 'labels']
+
+for s in set_l:
+    os.mkdir(f'{path}/{s}')
+    for t in type_l:
+        os.mkdir(f'{path}/{s}/{t}')
 
 # 파일 train, valid, test 별로 옮기기
-train_img_path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\train\image'
-valid_img_path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\valid\image'
-test_img_path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\test\image'
+train_img_path = f'{path}\{set_l[0]}\{type_l[0]}'
+valid_img_path = f'{path}\{set_l[1]}\{type_l[0]}'
+test_img_path = f'{path}\{set_l[2]}\{type_l[0]}'
 
-train_label_path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\train\label'
-valid_label_path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\valid\label'
-test_label_path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\test\label'
+train_label_path = f'{path}\{set_l[0]}\{type_l[1]}'
+valid_label_path = f'{path}\{set_l[1]}\{type_l[1]}'
+test_label_path = f'{path}\{set_l[2]}\{type_l[1]}'
 
 for tr in trains:
     shutil.move(f"{image_path}/{tr}.jpg", f"{train_img_path}/{tr}.jpg")
