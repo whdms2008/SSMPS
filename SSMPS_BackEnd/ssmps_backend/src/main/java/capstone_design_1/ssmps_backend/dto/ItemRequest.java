@@ -6,7 +6,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AddItemRequest {
+public class ItemRequest {
+    private Long id;
     private AddStoreRequest store;
     private String name;
     private String type;
@@ -15,4 +16,9 @@ public class AddItemRequest {
     private String image;
     private String location;
     private String barcode;
+
+    public ItemRequest(Long id, int quantity) {
+        this.id = id;
+        this.quantity = quantity;
+    }
 }
