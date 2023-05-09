@@ -4,7 +4,7 @@ import shutil
 type = ['image', 'label']
 for t in type:
     # 이동할 파일이 있는 폴더 경로와 이동할 폴더 경로 설정
-    folder_path = r"C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product_2"
+    folder_path = r"C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\상품 이미지"
     folder_path = f"{folder_path}/{t}"
 
     folders = [f for f in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, f))]
