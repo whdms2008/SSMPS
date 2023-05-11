@@ -16,6 +16,9 @@ public class Store {
     private Long id;
     private String name;
     private String address;
-    @OneToMany(mappedBy = "store")
-    private List<Item> items;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    private Manager manager;
+//    @OneToMany(mappedBy = "store")
+//    private List<Item> items;
 }
