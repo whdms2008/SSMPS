@@ -21,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class JoinActivity extends AppCompatActivity {
+public class SignActivity extends AppCompatActivity {
     EditText idInput, passInput, passCheckInput;
     Button joinBtn;
 
@@ -33,7 +33,7 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join);
+        setContentView(R.layout.activity_signup);
         initComponent();
         join();
     }
@@ -66,11 +66,11 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!password.equals(passwordCheck)){
-                    Toast.makeText(JoinActivity.this, "비밀번호가 같지 않습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignActivity.this, "비밀번호가 같지 않습니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(id.isEmpty() || password.isEmpty()){
-                    Toast.makeText(JoinActivity.this, "아이디 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignActivity.this, "아이디 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Manager newManager = new Manager(id, password, null);
@@ -79,14 +79,14 @@ public class JoinActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Manager> call, Response<Manager> response) {
                         if(response.isSuccessful()){
-                            Toast.makeText(JoinActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
 
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Manager> call, Throwable t) {
-                        Toast.makeText(JoinActivity.this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignActivity.this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
                         Log.e("join error", t.getMessage());
                     }
                 });
