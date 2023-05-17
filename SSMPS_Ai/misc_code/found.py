@@ -1,7 +1,7 @@
 import os
 
-folder_path_1 = r"C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\상품 이미지\val\images" # 첫 번째 폴더 경로 입력
-folder_path_2 = r"C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\상품 이미지\val\labels" # 두 번째 폴더 경로 입력
+folder_path_1 = r"C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\two_augmentation\product_image\image" # 첫 번째 폴더 경로 입력
+folder_path_2 = r"C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\two_augmentation\product_image\label" # 두 번째 폴더 경로 입력
 filename_without_ext_1 = set()
 
 # 첫 번째 폴더의 파일 이름(확장자 제외)을 집합에 추가
