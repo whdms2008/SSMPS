@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,5 +18,12 @@ public class LoginRepository {
     }
     public Manager getManager(String id, String password){
         return null;
+    }
+
+    public Optional<Manager> findManagerByAccountId(String accountId){
+        List<Manager> findManagerList = em.createQuery("select m from Manager m where m.accountId = :id")
+                .setParameter("id", accountId)
+                .getResultList();
+        return findManagerList.stream().findFirst();
     }
 }
