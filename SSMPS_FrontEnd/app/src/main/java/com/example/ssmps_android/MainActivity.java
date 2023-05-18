@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         guestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),GuestActivity.class);
+                Intent intent = new Intent(getApplicationContext(), StoreSelectActivity.class);
                 startActivity(intent);
             }
         });

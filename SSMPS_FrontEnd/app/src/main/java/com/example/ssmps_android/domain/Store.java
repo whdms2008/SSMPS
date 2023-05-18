@@ -1,8 +1,9 @@
 package com.example.ssmps_android.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Store {
+public class Store implements Serializable {
     private Long id;
     private String name;
     private String address;

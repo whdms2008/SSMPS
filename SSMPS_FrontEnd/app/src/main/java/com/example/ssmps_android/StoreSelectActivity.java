@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ssmps_android.domain.Location;
+import com.example.ssmps_android.domain.Store;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class StoreSelectActivity extends AppCompatActivity {
 
@@ -15,16 +19,16 @@ public class StoreSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_select);
 
-        ArrayList<String> testDataSet = new ArrayList<>();
+        ArrayList<Store> testDataSet = new ArrayList<>();
         for (int i =0; i<20; i++) {
-            testDataSet.add("TEST DATA" + i);
+            testDataSet.add(new Store(Long.valueOf(i), i + "번 매장", "ㅁㄴㅇㅁㄴㅇ", null));
         }
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        CustomAdapterActivity customAdapter = new CustomAdapterActivity(testDataSet);
+        CustomAdapter customAdapter = new CustomAdapter(testDataSet);
         recyclerView.setAdapter(customAdapter);
     }
 }

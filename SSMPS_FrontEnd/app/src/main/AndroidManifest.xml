@@ -25,10 +25,10 @@
         </activity>
         <activity android:name=".login.GuestActivity" />
         <activity android:name=".FunctionSelectActivity" />
-        <activity android:name=".CustomAdapterActivity" />
+        <activity android:name=".CustomAdapter" />
         <activity android:name=".StoreSelectActivity" />
-        <activity android:name=".MainPage"/>
-        <activity android:name=".LocationDetailActivity"/>
+        <activity android:name=".location.MainPage"/>
+        <activity android:name=".location.LocationDetailActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.ssmps_android;
+package com.example.ssmps_android.location;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,12 +11,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Location;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

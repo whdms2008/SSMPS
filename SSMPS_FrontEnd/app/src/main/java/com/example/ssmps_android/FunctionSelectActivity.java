@@ -8,6 +8,8 @@ import android.widget.Button;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ssmps_android.location.MainPage;
+
 public class FunctionSelectActivity extends AppCompatActivity {
     Button register, delete, modify;
     @Override
@@ -30,7 +32,7 @@ public class FunctionSelectActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ItemRegisterActivity.class);
                 startActivity(intent);
             }
         });

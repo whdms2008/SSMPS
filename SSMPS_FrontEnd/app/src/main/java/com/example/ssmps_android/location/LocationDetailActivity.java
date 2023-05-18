@@ -1,9 +1,11 @@
-package com.example.ssmps_android;
+package com.example.ssmps_android.location;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.ssmps_android.R;
 
 public class LocationDetailActivity extends AppCompatActivity {
     EditText searchInput;
