@@ -1,5 +1,6 @@
 package com.example.ssmps_android.location;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -59,6 +60,9 @@ public class MainPage extends AppCompatActivity {
         setContentView(R.layout.activity_main_page);
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         setToken();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);

@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,8 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_search_manager);
-        
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         initData();
         searchItem();
 

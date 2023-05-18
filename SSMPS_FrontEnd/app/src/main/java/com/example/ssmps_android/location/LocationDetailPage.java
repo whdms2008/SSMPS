@@ -1,5 +1,6 @@
 package com.example.ssmps_android.location;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -27,6 +28,9 @@ public class LocationDetailPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_detail_page);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         tableRowList.add(findViewById(R.id.location_detail_row1));
         tableRowList.add(findViewById(R.id.location_detail_row2));
