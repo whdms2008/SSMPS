@@ -21,7 +21,7 @@ public class StoreSelectActivity extends AppCompatActivity {
 
         ArrayList<Store> testDataSet = new ArrayList<>();
         for (int i =0; i<20; i++) {
-            testDataSet.add(new Store(Long.valueOf(i), i + "번 매장", "ㅁㄴㅇㅁㄴㅇ", null));
+            testDataSet.add(new Store(Long.valueOf(i), i + "번 매장", "천안", null));
         }
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 

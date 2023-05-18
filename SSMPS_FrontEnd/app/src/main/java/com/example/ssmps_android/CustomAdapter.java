@@ -20,14 +20,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private TextView textView, textView2;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
         }
 
         public TextView getTextView() {
             return textView;
+        }
+        public TextView getTextView2(){
+            return textView2;
         }
     }
 
@@ -50,6 +54,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         Store store = localDataSet.get(position);
 
         holder.textView.setText(store.getName());
+        holder.textView2.setText(store.getAddress());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
