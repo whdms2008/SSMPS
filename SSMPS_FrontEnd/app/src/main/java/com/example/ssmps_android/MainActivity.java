@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
         initComponent();
         join();
+        login();
         guest_login();
 
         //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
