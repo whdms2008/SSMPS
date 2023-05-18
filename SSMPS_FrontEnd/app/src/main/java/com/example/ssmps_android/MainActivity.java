@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         //startActivity(intent);
-        //kk
     }
     private void initComponent(){
         idInput = findViewById(R.id.login_id);
