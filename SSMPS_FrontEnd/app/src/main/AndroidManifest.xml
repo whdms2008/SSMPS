@@ -26,9 +26,11 @@
         <activity android:name=".login.GuestActivity" />
         <activity android:name=".FunctionSelectActivity" />
         <activity android:name=".CustomAdapter" />
+        <activity android:name=".CustomAdapter2" />
         <activity android:name=".StoreSelectActivity" />
         <activity android:name=".location.MainPage"/>
         <activity android:name=".location.LocationDetailActivity"/>
+        <activity android:name=".ManagerSearchItemActivity"/>
     </application>
 
 </manifest>

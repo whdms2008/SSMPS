@@ -64,6 +64,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/joinstoreList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -78,6 +79,24 @@
             android:id="@+id/join_store_name"
             android:layout_width="120dp"
             android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/join_store_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="➕" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/joinList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
     </LinearLayout>
 
 

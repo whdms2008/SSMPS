@@ -2,11 +2,15 @@ package com.example.ssmps_android.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ssmps_android.R;
@@ -22,9 +26,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class SignActivity extends AppCompatActivity {
-    EditText idInput, passInput, passCheckInput;
-    Button joinBtn;
-
+    EditText idInput, passInput, passCheckInput, storenamesetting;
+    Button joinBtn, plusBtn, addNameBtn;
     Retrofit retrofit;
     RetrofitAPI service;
 
@@ -42,15 +45,68 @@ public class SignActivity extends AppCompatActivity {
         idInput = findViewById(R.id.join_id);
         passInput = findViewById(R.id.join_password);
         passCheckInput = findViewById(R.id.join_password_check);
+        storenamesetting = findViewById(R.id.join_store_name);
         joinBtn = findViewById(R.id.join_join_btn);
+        plusBtn = findViewById(R.id.join_store_btn);
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         setToken();
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
-    }
 
+        plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { addStoreName();}
+        });
+    }
+    private void addStoreName(){
+        LinearLayout con = findViewById(R.id.joinList);
+        con.removeView(plusBtn);
+
+        LinearLayout parent = new LinearLayout(getApplicationContext());
+        LinearLayout.LayoutParams conParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        LinearLayout nameParent = new LinearLayout(getApplicationContext());
+        LinearLayout.LayoutParams linParams2 = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        linParams2.leftMargin = 30;
+        linParams2.topMargin = 30;
+        TextView textStoreName = new TextView(getApplicationContext());
+        textStoreName.setText("가게 이름 설정 ");
+
+        EditText editStoreName = new EditText(getApplicationContext());
+        LinearLayout.LayoutParams editParam = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        editParam.width = 270;
+        editParam.height = 100;
+        editStoreName.setLayoutParams(editParam);
+
+        nameParent.setBackgroundColor(Color.parseColor("#FAFAD2"));
+        nameParent.addView(textStoreName);
+        nameParent.addView(editStoreName);
+        nameParent.setLayoutParams(linParams2);
+        parent.addView(nameParent);
+
+        Button button = new Button(getApplicationContext());
+        button.setText("➕");
+        button.setId(R.id.join_store_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addStoreName();
+            }
+        });
+        con.addView(parent);
+        con.addView(button);
+    }
     private void setToken(){
         String token = sharedPreferenceUtil.getData("token", "err");
         tokenInterceptor = new TokenInterceptor();
@@ -93,4 +149,5 @@ public class SignActivity extends AppCompatActivity {
             }
         });
     }
+
 }
