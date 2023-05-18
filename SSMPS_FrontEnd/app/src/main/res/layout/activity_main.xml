@@ -80,7 +80,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/login_guest"
+            android:id="@+id/mainActivity_login_guest"
             android:layout_width="190dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"

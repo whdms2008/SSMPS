@@ -8,10 +8,10 @@ public class Item {
     private int price;
     private int quantity;
     private String image;
-    private String location;
+    private Location location;
     private String barcode;
 
-    public Item(Long id, Store store, String name, String type, int price, int quantity, String image, String location, String barcode) {
+    public Item(Long id, Store store, String name, String type, int price, int quantity, String image, Location location, String barcode) {
         this.id = id;
         this.store = store;
         this.name = name;
@@ -79,11 +79,11 @@ public class Item {
         this.image = image;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 

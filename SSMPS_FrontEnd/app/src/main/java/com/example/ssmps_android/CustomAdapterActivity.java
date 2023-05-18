@@ -20,6 +20,7 @@ public class CustomAdapterActivity extends RecyclerView.Adapter<CustomAdapterAct
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
         }
+
         public TextView getTextView() {
             return textView;
         }
@@ -48,5 +49,4 @@ public class CustomAdapterActivity extends RecyclerView.Adapter<CustomAdapterAct
     public int getItemCount() {
         return localDataSet.size();
     }
-
 }

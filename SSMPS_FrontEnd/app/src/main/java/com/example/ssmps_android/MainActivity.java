@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     EditText idInput, passInput;
     TextView guestBtn, joinBtn;
-    Button loginBtn;
+    Button loginBtn, guestLoginBtn;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private void initComponent(){
         idInput = findViewById(R.id.login_id);
         passInput = findViewById(R.id.login_password);
-        guestBtn = findViewById(R.id.login_guest);
+        guestLoginBtn = findViewById(R.id.mainActivity_login_guest);
         joinBtn = findViewById(R.id.login_join);
         loginBtn = findViewById(R.id.login_login_btn);
 
@@ -119,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void guest_login(){
-        guestBtn.setOnClickListener(new View.OnClickListener() {
+        guestLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),GuestActivity.class);
+                Intent intent = new Intent(getApplicationContext(),FunctionSelectActivity.class);
                 startActivity(intent);
             }
         });
