@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -32,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -48,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -59,6 +62,24 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가게 이름 설정"/>
+        <EditText
+            android:id="@+id/join_store_name"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/join_join_btn"
