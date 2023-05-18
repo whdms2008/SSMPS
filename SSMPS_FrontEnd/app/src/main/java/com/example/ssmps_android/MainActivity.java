@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.dto.LoginRequest;
-import com.example.ssmps_android.login.GuestActivity;
 import com.example.ssmps_android.login.SignActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;

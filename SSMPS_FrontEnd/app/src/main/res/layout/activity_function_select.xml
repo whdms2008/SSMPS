@@ -18,7 +18,7 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/functionSelect_item_add"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_marginLeft="60dp"
@@ -29,7 +29,7 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/delete"
+        android:id="@+id/functionSelect_item_delete_modify"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_marginLeft="60dp"

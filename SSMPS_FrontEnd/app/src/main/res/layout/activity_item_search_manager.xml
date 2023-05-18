@@ -20,12 +20,12 @@
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/managerSearchItem_item_name_input"
             android:layout_width="170dp"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/img"
+            android:id="@+id/managerSearchItem_search_btn"
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
