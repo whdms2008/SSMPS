@@ -1,4 +1,4 @@
-package com.example.ssmps_android;
+package com.example.ssmps_android.Recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,29 +10,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ssmps_android.domain.Item;
+import com.example.ssmps_android.FunctionSelectActivity;
+import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.Store;
 
 import java.util.ArrayList;
 
-public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHolder> {
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
-    private ArrayList<Item> localDataSet;
+    private ArrayList<Store> localDataSet;
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private TextView textView, textView2;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
         }
 
         public TextView getTextView() {
             return textView;
         }
+        public TextView getTextView2(){
+            return textView2;
+        }
     }
 
-    public CustomAdapter2(ArrayList<Item> dataSet) {
+    public CustomAdapter(ArrayList<Store> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -40,23 +45,24 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_recyclerview_searchitem, parent, false);
-        CustomAdapter2.ViewHolder viewHolder = new CustomAdapter2.ViewHolder(view);
+                .inflate(R.layout.activity_recyclerview_storeselect, parent, false);
+        CustomAdapter.ViewHolder viewHolder = new CustomAdapter.ViewHolder(view);
         context = parent.getContext();
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Item item = localDataSet.get(position);
+        Store store = localDataSet.get(position);
 
-        holder.textView.setText(item.getName());
+        holder.textView.setText(store.getName());
+        holder.textView2.setText(store.getAddress());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ItemRegisterActivity.class);
-                intent.putExtra("item", item);
+                Intent intent = new Intent(context, FunctionSelectActivity.class);
+                intent.putExtra("store", store);
                 context.startActivity(intent);
             }
         });

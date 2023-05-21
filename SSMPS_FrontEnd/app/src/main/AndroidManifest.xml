@@ -28,8 +28,8 @@
         </activity>
         <activity android:name=".guest.GuestActivity" />
         <activity android:name=".FunctionSelectActivity" />
-        <activity android:name=".CustomAdapter" />
-        <activity android:name=".CustomAdapter2" />
+        <activity android:name=".Recyclerview.CustomAdapter" />
+        <activity android:name=".Recyclerview.CustomAdapter2" />
         <activity android:name=".StoreSelectActivity" />
         <activity android:name=".location.MainPage" />
         <activity android:name=".location.LocationDetailActivity" />
