@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ssmps_android.Recyclerview.CustomAdapter2;
 import com.example.ssmps_android.domain.Item;
 
 import java.util.ArrayList;

@@ -7,11 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ssmps_android.domain.Location;
+import com.example.ssmps_android.Recyclerview.CustomAdapter;
 import com.example.ssmps_android.domain.Store;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class StoreSelectActivity extends AppCompatActivity {
 
@@ -25,7 +24,7 @@ public class StoreSelectActivity extends AppCompatActivity {
         for (int i =0; i<20; i++) {
             testDataSet.add(new Store(Long.valueOf(i), i + "번 매장", "천안", null));
         }
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.storeSelect_recyclerView);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
