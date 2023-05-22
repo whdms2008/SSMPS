@@ -51,15 +51,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.hide();
         initComponent();
         join();
         guest_login();
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sharedPreferenceUtil.remove("token");
                 login();
             }
         });
@@ -110,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                     sharedPreferenceUtil.putData("manager", gson.toJson(manager, Manager.class)); // manager 저장
                     sharedPreferenceUtil.putData("token", managerResponse.getToken());
-
+                    Log.e("token", token);
+                    sharedPreferenceUtil.remove("token");
                     Intent intent = new Intent(getApplicationContext(), StoreSelectActivity.class);
                     startActivity(intent);
                     return;

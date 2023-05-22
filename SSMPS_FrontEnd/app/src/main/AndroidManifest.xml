@@ -34,7 +34,8 @@
         <activity android:name=".StoreSelectActivity" />
         <activity android:name=".location.MainPage" />
         <activity android:name=".location.LocationDetailActivity" />
-        <activity android:name=".ManagerSearchItemActivity"/>
+        <activity android:name=".manager.ManagerSearchItemActivity"/>
+        <activity android:name=".ItemRegisterActivity"/>
     </application>
 
 </manifest>

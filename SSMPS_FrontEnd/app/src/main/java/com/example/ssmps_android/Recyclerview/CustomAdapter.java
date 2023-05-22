@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ssmps_android.FunctionSelectActivity;
 import com.example.ssmps_android.R;
+import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Store;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     private List<Store> localDataSet;
     Context context;
+
+    SharedPreferenceUtil sharedPreferenceUtil;
+    Gson gson;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView, textView2;
@@ -38,8 +44,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }
     }
 
-    public CustomAdapter(List<Store> dataSet) {
+    public CustomAdapter(List<Store> dataSet, Context context) {
         localDataSet = dataSet;
+        this.context = context;
+        sharedPreferenceUtil = new SharedPreferenceUtil(context);
+        gson = new GsonBuilder().create();
     }
 
     @NonNull
@@ -47,8 +56,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_recyclerview_storeselect, parent, false);
-        CustomAdapter.ViewHolder viewHolder = new CustomAdapter.ViewHolder(view);
         context = parent.getContext();
+        CustomAdapter.ViewHolder viewHolder = new CustomAdapter.ViewHolder(view);
         return viewHolder;
     }
 
@@ -63,7 +72,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FunctionSelectActivity.class);
-                intent.putExtra("store", store);
+                sharedPreferenceUtil.putData("store", gson.toJson(store, Store.class));
                 context.startActivity(intent);
             }
         });

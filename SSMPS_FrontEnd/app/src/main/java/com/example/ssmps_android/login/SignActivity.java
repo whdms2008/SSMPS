@@ -129,6 +129,8 @@ public class SignActivity extends AppCompatActivity {
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
         String passwordCheck = passCheckInput.getText().toString();
+
+        Log.e("id check", id);
         if(!password.equals(passwordCheck)){
             Toast.makeText(SignActivity.this, "비밀번호가 같지 않습니다", Toast.LENGTH_SHORT).show();
             return;

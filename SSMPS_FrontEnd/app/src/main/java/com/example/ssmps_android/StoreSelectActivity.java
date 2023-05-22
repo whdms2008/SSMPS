@@ -17,6 +17,8 @@ import com.example.ssmps_android.dto.StoreResponse;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +35,12 @@ public class StoreSelectActivity extends AppCompatActivity {
 
     Retrofit retrofit;
     RetrofitAPI service;
+    Gson gson;
 
     Manager nowManager;
 
     List<Store> storeList = new ArrayList<>();
+    CustomAdapter customAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,6 @@ public class StoreSelectActivity extends AppCompatActivity {
         actionBar.hide();
         initData();
         getStorelistData();
-        setRecyclerView();
 
 //        ArrayList<Store> testDataSet = new ArrayList<>();
 //        for (int i =0; i<20; i++) {
@@ -58,6 +61,9 @@ public class StoreSelectActivity extends AppCompatActivity {
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
+        gson = new GsonBuilder().create();
+
+        nowManager = gson.fromJson(sharedPreferenceUtil.getData("manager", "err"), Manager.class);
     }
 
     private void getStorelistData(){
@@ -74,6 +80,8 @@ public class StoreSelectActivity extends AppCompatActivity {
                 storeList = response.body().stream()
                         .map(s -> new Store(s.getId(), s.getName(), s.getAddress(), null))
                         .collect(Collectors.toList());
+                Log.e("store size", storeList.size() + "");
+                setRecyclerView();
             }
 
             @Override
@@ -90,7 +98,9 @@ public class StoreSelectActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        CustomAdapter customAdapter = new CustomAdapter(storeList);
+        customAdapter = new CustomAdapter(storeList, getApplicationContext());
+
+        Log.e("store list", storeList.size() + "");
         recyclerView.setAdapter(customAdapter);
     }
 }
