@@ -1,11 +1,13 @@
 package com.example.ssmps_android.network;
 
+import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Manager;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.CenterItemResponse;
 import com.example.ssmps_android.dto.LoginRequest;
 import com.example.ssmps_android.dto.LoginResponse;
+import com.example.ssmps_android.dto.RegistItemRequest;
 import com.example.ssmps_android.dto.StoreResponse;
 
 import java.util.List;
@@ -38,4 +40,7 @@ public interface RetrofitAPI {
 
     @GET("api/centerItem/{name}")
     Call<List<CenterItemResponse>> findCenterItemByName(@Path("name") String name);
+
+    @POST("api/item")
+    Call<Item> registItem(@Query("store") Long storeId, @Query("item") Long itemId);
 }
