@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     TokenInterceptor tokenInterceptor;
     SharedPreferenceUtil sharedPreferenceUtil;
+    String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +47,13 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
         initComponent();
         join();
-        login();
         guest_login();
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
 
         //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         //startActivity(intent);
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToken(){
-        String token = sharedPreferenceUtil.getData("token", "err");
+        token = sharedPreferenceUtil.getData("token", "err");
         tokenInterceptor = new TokenInterceptor();
         tokenInterceptor.setToken(token);
     }
@@ -75,33 +81,35 @@ public class MainActivity extends AppCompatActivity {
     private void login(){
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
-
-        loginBtn.setOnClickListener(v -> {
-            LoginRequest loginRequest = new LoginRequest(id, password);
-            Call<String> login = service.login(loginRequest);
-            login.enqueue(new Callback<>() {
-                @Override
-                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
-                    Toast.makeText(MainActivity.this, "로그인에 실패했습니다", Toast.LENGTH_SHORT).show();
-                    try {
-                        assert response.errorBody() != null;
-                        Log.e("login fail", response.errorBody().string());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+        Call<String> login;
+        if(token.equals("err")){
+            login = service.loginFirst(id, password);
+        }else{
+            login = service.login(id, password);
+        }
+        login.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), StoreSelectActivity.class);
+                    startActivity(intent);
+                    return;
                 }
-
-                @Override
-                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                    Toast.makeText(MainActivity.this, "로그인 실패!", Toast.LENGTH_SHORT).show();
-                    Log.e("login error", t.getMessage());
+                Toast.makeText(MainActivity.this, "로그인에 실패했습니다", Toast.LENGTH_SHORT).show();
+                try {
+                    assert response.errorBody() != null;
+                    Log.e("login fail", response.errorBody().string());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                Toast.makeText(MainActivity.this, "로그인 실패!", Toast.LENGTH_SHORT).show();
+                Log.e("login error", t.getMessage());
+            }
         });
     }
 

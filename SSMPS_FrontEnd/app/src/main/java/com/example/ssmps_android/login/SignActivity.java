@@ -45,7 +45,12 @@ public class SignActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_signup);
         initComponent();
-        join();
+        joinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                join();
+            }
+        });
     }
 
     private void initComponent(){
@@ -124,37 +129,30 @@ public class SignActivity extends AppCompatActivity {
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
         String passwordCheck = passCheckInput.getText().toString();
-
-        joinBtn.setOnClickListener(new View.OnClickListener() {
+        if(!password.equals(passwordCheck)){
+            Toast.makeText(SignActivity.this, "비밀번호가 같지 않습니다", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(id.isEmpty() || password.isEmpty()){
+            Toast.makeText(SignActivity.this, "아이디 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Manager newManager = new Manager(id, password, null);
+        Call<Manager> join = service.join(newManager);
+        join.enqueue(new Callback<Manager>() {
             @Override
-            public void onClick(View v) {
-                if(!password.equals(passwordCheck)){
-                    Toast.makeText(SignActivity.this, "비밀번호가 같지 않습니다", Toast.LENGTH_SHORT).show();
-                    return;
+            public void onResponse(Call<Manager> call, Response<Manager> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(SignActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
-                if(id.isEmpty() || password.isEmpty()){
-                    Toast.makeText(SignActivity.this, "아이디 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Manager newManager = new Manager(id, password, null);
-                Call<Manager> join = service.join(newManager);
-                join.enqueue(new Callback<Manager>() {
-                    @Override
-                    public void onResponse(Call<Manager> call, Response<Manager> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(SignActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+            }
 
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Manager> call, Throwable t) {
-                        Toast.makeText(SignActivity.this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
-                        Log.e("join error", t.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(Call<Manager> call, Throwable t) {
+                Toast.makeText(SignActivity.this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
+                Log.e("join error", t.getMessage());
             }
         });
     }
-
 }
