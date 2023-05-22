@@ -137,7 +137,7 @@ public class SignActivity extends AppCompatActivity {
             Toast.makeText(SignActivity.this, "아이디 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
             return;
         }
-        Manager newManager = new Manager(id, password, null);
+        Manager newManager = new Manager(null, id, password, null);
         Call<Manager> join = service.join(newManager);
         join.enqueue(new Callback<Manager>() {
             @Override

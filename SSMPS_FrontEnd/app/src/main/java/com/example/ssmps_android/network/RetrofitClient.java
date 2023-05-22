@@ -11,7 +11,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit instance = null;
-    private static final String URL = "http://192.168.0.30:8080";
+//    private static final String URL = "http://192.168.0.30:8080";
+    private static final String URL = "http://192.168.0.36:8080";
 
     public static Retrofit getInstance(TokenInterceptor interceptor){
         if(instance == null){

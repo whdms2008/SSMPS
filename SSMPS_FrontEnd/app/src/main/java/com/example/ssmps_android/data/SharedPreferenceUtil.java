@@ -15,10 +15,12 @@ public class SharedPreferenceUtil {
 
     public void putData(String key, Object object){
         editor.putString(key, ((String) object));
+        editor.commit();
     }
 
     public void remove(String key){
         editor.remove(key);
+        editor.commit();
     }
 
     public String getData(String key, String defaultValue){

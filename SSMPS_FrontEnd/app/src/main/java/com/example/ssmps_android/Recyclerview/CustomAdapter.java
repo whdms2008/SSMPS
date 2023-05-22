@@ -15,10 +15,11 @@ import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.Store;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
-    private ArrayList<Store> localDataSet;
+    private List<Store> localDataSet;
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,7 +38,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }
     }
 
-    public CustomAdapter(ArrayList<Store> dataSet) {
+    public CustomAdapter(List<Store> dataSet) {
         localDataSet = dataSet;
     }
 

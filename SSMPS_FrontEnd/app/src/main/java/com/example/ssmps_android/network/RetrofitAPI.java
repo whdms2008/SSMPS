@@ -2,7 +2,12 @@ package com.example.ssmps_android.network;
 
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Manager;
+import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.LoginRequest;
+import com.example.ssmps_android.dto.LoginResponse;
+import com.example.ssmps_android.dto.StoreResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,11 +20,14 @@ public interface RetrofitAPI {
     Call<Manager> join(@Body Manager manager);
 
     @GET("api/manager/login")
-    Call<String> login(@Query("id") String id, @Query("password") String password);
+    Call<LoginResponse> login(@Query("id") String id, @Query("password") String password);
 
     @POST("api/manager/test")
     Call<String> testPosting();
 
     @GET("api/loginFirst")
-    Call<String> loginFirst(@Query("id") String id, @Query("password") String password);
+    Call<LoginResponse> loginFirst(@Query("id") String id, @Query("password") String password);
+
+    @GET("api/storeList")
+    Call<List<StoreResponse>> findStoreList(@Query("id") Long id);
 }

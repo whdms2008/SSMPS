@@ -14,13 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.Manager;
+import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.LoginRequest;
+import com.example.ssmps_android.dto.LoginResponse;
 import com.example.ssmps_android.login.SignActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     TokenInterceptor tokenInterceptor;
     SharedPreferenceUtil sharedPreferenceUtil;
+    Gson gson;
     String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.login_login_btn);
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        gson = new GsonBuilder().create();
         setToken();
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
@@ -81,17 +91,26 @@ public class MainActivity extends AppCompatActivity {
     private void login(){
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
-        Call<String> login;
+        Call<LoginResponse> login;
+        Log.e("token", token);
         if(token.equals("err")){
             login = service.loginFirst(id, password);
         }else{
             login = service.login(id, password);
         }
-        login.enqueue(new Callback<>() {
+        login.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
+                    LoginResponse managerResponse = response.body();
+//                    List<Store> storeList = managerResponse.getStoreResponseList().stream()
+//                            .map(s -> new Store(s.getId(), s.getName(), s.getAddress(), null))
+//                            .collect(Collectors.toList());
+                    Manager manager = new Manager(managerResponse.getId(), managerResponse.getAccountId(), " ", null);
                     Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                    sharedPreferenceUtil.putData("manager", gson.toJson(manager, Manager.class)); // manager 저장
+                    sharedPreferenceUtil.putData("token", managerResponse.getToken());
+
                     Intent intent = new Intent(getApplicationContext(), StoreSelectActivity.class);
                     startActivity(intent);
                     return;
@@ -106,9 +125,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, "로그인 실패!", Toast.LENGTH_SHORT).show();
                 Log.e("login error", t.getMessage());
+                Log.e("login eeE", t.getCause().toString());
             }
         });
     }
