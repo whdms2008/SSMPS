@@ -3,8 +3,10 @@ import shutil
 from sklearn.model_selection import train_test_split
 
 # 이미지 카테고리 나누기
-label_path = r'product\20_product_2\label_txt'
-image_path = r'product\20_product_2\image'
+
+path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\two_augmentation\product_image'
+label_path = f'{path}\label'
+image_path = f'{path}\image'
 
 imgs_name = os.listdir(image_path)
 l = []
@@ -32,7 +34,6 @@ for i in img:
     valids.extend(valid)
     tests.extend(test)
 
-path = r'C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product_2'
 set_l = ['train', 'val', 'test']
 type_l = ['images', 'labels']
 

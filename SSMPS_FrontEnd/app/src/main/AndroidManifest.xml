@@ -12,10 +12,10 @@
         android:theme="@style/Theme.Ssmps_android"
         tools:targetApi="31">
         <activity
-            android:name=".MainPage"
+            android:name=".guest.GuestItemSearchActivity"
             android:exported="false" />
         <activity
-            android:name=".login.JoinActivity"
+            android:name=".login.SignActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -26,7 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".guest.GuestActivity" />
+        <activity android:name=".FunctionSelectActivity" />
+        <activity android:name=".Recyclerview.CustomAdapter" />
+        <activity android:name=".Recyclerview.CustomAdapter2" />
+        <activity android:name=".StoreSelectActivity" />
+        <activity android:name=".location.MainPage" />
+        <activity android:name=".location.LocationDetailActivity" />
+        <activity android:name=".ManagerSearchItemActivity"/>
     </application>
 
 </manifest>
