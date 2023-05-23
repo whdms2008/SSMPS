@@ -1,7 +1,7 @@
 import cv2
 import os
 size = (416, 416)
-path = r"C:\Users\freet\Documents\GitHub\SSMPS_minju\SSMPS_Ai\product\20_product\two_augmentation\product_image\product_image_yolo\train\images"
+path = r"C:\Users\freet\Desktop\detect2"
 img_list = os.listdir(path)
 for img_l in img_list:
     # print(f"{path}/{img_l}")
