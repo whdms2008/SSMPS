@@ -15,7 +15,6 @@ import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHolder> {
@@ -43,7 +42,7 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_recyclerview_itemsearchmanager, parent, false);
+                .inflate(R.layout.recyclerview_itemsearchmanager, parent, false);
         CustomAdapter2.ViewHolder viewHolder = new CustomAdapter2.ViewHolder(view);
         context = parent.getContext();
         return viewHolder;

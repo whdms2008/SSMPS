@@ -48,7 +48,7 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_search_manager);
+        setContentView(R.layout.activity_manager_item_search);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         initData();

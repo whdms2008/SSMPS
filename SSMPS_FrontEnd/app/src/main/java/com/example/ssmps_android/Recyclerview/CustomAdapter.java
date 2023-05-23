@@ -17,7 +17,6 @@ import com.example.ssmps_android.domain.Store;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
@@ -55,7 +54,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_recyclerview_storeselect, parent, false);
+                .inflate(R.layout.recyclerview_storeselect, parent, false);
         context = parent.getContext();
         CustomAdapter.ViewHolder viewHolder = new CustomAdapter.ViewHolder(view);
         return viewHolder;

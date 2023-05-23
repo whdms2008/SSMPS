@@ -1,19 +1,12 @@
 package com.example.ssmps_android.Recyclerview;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.ssmps_android.ItemRegisterActivity;
 import com.example.ssmps_android.R;
-import com.example.ssmps_android.domain.Item;
-
 import java.util.ArrayList;
 
 public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHolder> {
@@ -39,7 +32,7 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_recyclerview_locationdetail, parent, false);
+                .inflate(R.layout.recyclerview_locationdetail, parent, false);
         CustomAdapter3.ViewHolder viewHolder = new CustomAdapter3.ViewHolder(view);
         return viewHolder;
     }
