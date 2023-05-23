@@ -22,6 +22,12 @@ import java.util.stream.Collectors;
 public class ItemController {
     private final ItemService itemService;
 
+//    @GetMapping("api/items")
+//    public ResponseEntity<Object> getItemByBarcode(){
+//        // 테스트용
+//        return ResponseEntity.ok("asdasdasd");
+//    }
+
     // 바코드 촬영 후 물건 정보 요청
     @GetMapping("api/item/{barcode}")
     public ResponseEntity<Object> getItemByBarcode(@PathVariable String barcode){
@@ -38,7 +44,7 @@ public class ItemController {
     public ResponseEntity<Object> addItem(@RequestBody ItemRequest newItem){
         CenterItem newCenterItem = new CenterItem(newItem.getId(), newItem.getName(), newItem.getType(),
                 newItem.getPrice(), newItem.getImage(), newItem.getBarcode());
-        Item item = new Item(null, newCenterItem, null, newItem.getQuantity(), newItem.getLocation());
+        Item item = new Item(null, newCenterItem, null, newItem.getQuantity(), null);
         Item addItem = itemService.addItem(item);
         ItemResponse resultItem = new ItemResponse(addItem);
         return ResponseEntity.ok(resultItem);
