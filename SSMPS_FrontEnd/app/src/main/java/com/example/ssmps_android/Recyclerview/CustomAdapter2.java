@@ -12,13 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ssmps_android.ItemRegisterActivity;
 import com.example.ssmps_android.R;
+import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHolder> {
 
-    private ArrayList<Item> localDataSet;
+    private List<CenterItem> localDataSet;
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -33,7 +35,7 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHold
         }
     }
 
-    public CustomAdapter2(ArrayList<Item> dataSet) {
+    public CustomAdapter2(List<CenterItem> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -49,7 +51,7 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Item item = localDataSet.get(position);
+        CenterItem item = localDataSet.get(position);
 
         holder.textView.setText(item.getName());
 

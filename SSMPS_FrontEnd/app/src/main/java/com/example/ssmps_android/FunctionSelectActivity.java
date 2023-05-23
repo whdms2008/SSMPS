@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.location.MainPage;
+import com.example.ssmps_android.manager.ManagerSearchItemActivity;
 
 public class FunctionSelectActivity extends AppCompatActivity {
     Button layoutSettingBtn, addBtn, deleteModifyBtn;
