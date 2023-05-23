@@ -19,6 +19,9 @@ public class Store {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
     private Manager manager;
+
+    @OneToMany(mappedBy = "store")
+    private List<Location> location;
 //    @OneToMany(mappedBy = "store")
 //    private List<Item> items;
 }
