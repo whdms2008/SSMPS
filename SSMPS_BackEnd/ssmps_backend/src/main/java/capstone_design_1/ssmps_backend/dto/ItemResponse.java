@@ -27,7 +27,6 @@ public class ItemResponse {
         this.image = item.getItem().getImage();
         this.barcode = item.getItem().getBarcode();
         this.quantity = item.getQuantity();
-        this.location = item.getLocation();
     }
 //    public ItemResponse(Item item) {
 //        id =

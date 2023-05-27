@@ -16,14 +16,15 @@ public class LoginRepository {
         em.persist(manager);
         return manager;
     }
-    public Manager getManager(String id, String password){
-        return null;
-    }
 
     public Optional<Manager> findManagerByAccountId(String accountId){
         List<Manager> findManagerList = em.createQuery("select m from Manager m where m.accountId = :id")
                 .setParameter("id", accountId)
                 .getResultList();
         return findManagerList.stream().findFirst();
+    }
+
+    public Manager findManagerById(Long id){
+        return em.find(Manager.class, id);
     }
 }
