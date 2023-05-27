@@ -7,7 +7,7 @@
     <LinearLayout
         android:background="#FAFAD2"
         android:layout_width="380dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center"
         android:layout_height="100dp">
 
@@ -44,16 +44,5 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
         android:scaleType="fitXY"/>
-
-    <Button
-        android:id="@+id/guest_information_btn"
-        android:layout_gravity="center"
-        android:layout_width="300dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="5dp"
-        android:backgroundTint="#FAFAD2"
-        android:text="정보 보러 가기"
-        android:textColor="#000000"
-        android:textSize="20dp" />
 
 </LinearLayout>
