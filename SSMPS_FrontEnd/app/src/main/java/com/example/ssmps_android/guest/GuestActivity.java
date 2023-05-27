@@ -1,6 +1,5 @@
 package com.example.ssmps_android.guest;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +18,6 @@ import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Location;
 import com.example.ssmps_android.domain.Store;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class GuestActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_search);
+        setContentView(R.layout.activity_guest_store_layout_view);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
