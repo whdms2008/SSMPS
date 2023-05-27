@@ -33,7 +33,7 @@ public class LocationDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_detail);
+        setContentView(R.layout.activity_location_item_register);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

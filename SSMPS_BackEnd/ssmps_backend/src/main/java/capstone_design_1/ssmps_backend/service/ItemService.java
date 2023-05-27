@@ -3,6 +3,7 @@ package capstone_design_1.ssmps_backend.service;
 
 import capstone_design_1.ssmps_backend.domain.CenterItem;
 import capstone_design_1.ssmps_backend.domain.Item;
+import capstone_design_1.ssmps_backend.domain.Store;
 import capstone_design_1.ssmps_backend.dto.ItemRequest;
 import capstone_design_1.ssmps_backend.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +40,15 @@ public class ItemService {
         return itemRepository.addNewItem(item);
     }
     // 제품 전체 리스트 가져오기
-    public List<CenterItem> getItemList() {
-        return itemRepository.findAllList();
+    public List<Item> getItemList(Store store) {
+        return itemRepository.findAllList(store);
     }
 
     public Item getItemById(Long id){
         return itemRepository.findItemById(id);
     }
 
-    public List<CenterItem> getItemByName(String name) {
+    public List<Item> getItemByName(String name) {
         return itemRepository.findItemByName(name);
     }
 

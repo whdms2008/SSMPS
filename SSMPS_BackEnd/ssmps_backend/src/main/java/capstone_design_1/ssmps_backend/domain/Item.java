@@ -23,9 +23,9 @@ public class Item {
     private Store store;
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id")
-    private Location location;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "location_id")
+//    private Location location;
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
