@@ -1,19 +1,11 @@
 package com.example.ssmps_android.dto;
 
-import android.location.LocationListener;
-
-import com.example.ssmps_android.domain.Location;
-
-import java.util.List;
-
-public class StoreResponse {
+public class StoreRequest {
     private Long id;
     private String name;
     private String address;
 
-    private List<Location> locationList;
-
-    public StoreResponse(Long id, String name, String address) {
+    public StoreRequest(Long id, String name, String address) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -41,13 +33,5 @@ public class StoreResponse {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public List<Location> getLocationList() {
-        return locationList;
-    }
-
-    public void setLocationList(List<Location> locationList) {
-        this.locationList = locationList;
     }
 }

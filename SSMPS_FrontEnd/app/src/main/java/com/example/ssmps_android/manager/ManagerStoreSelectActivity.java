@@ -1,4 +1,4 @@
-package com.example.ssmps_android;
+package com.example.ssmps_android.manager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Manager;
@@ -29,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class StoreSelectActivity extends AppCompatActivity {
+public class ManagerStoreSelectActivity extends AppCompatActivity {
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
 
@@ -72,21 +73,22 @@ public class StoreSelectActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<StoreResponse>> call, Response<List<StoreResponse>> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(StoreSelectActivity.this, "매장 불러오기 에러", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagerStoreSelectActivity.this, "매장 불러오기 에러", Toast.LENGTH_SHORT).show();
                     Log.e("store finding error", response.errorBody().toString());
                     return;
                 }
                 Log.e("store finding success", "매장 불러오기 성공");
                 storeList = response.body().stream()
-                        .map(s -> new Store(s.getId(), s.getName(), s.getAddress(), null))
+                        .map(s -> new Store(s.getId(), s.getName(), s.getAddress(), s.getLocationList()))
                         .collect(Collectors.toList());
+
                 Log.e("store size", storeList.size() + "");
                 setRecyclerView();
             }
 
             @Override
             public void onFailure(Call<List<StoreResponse>> call, Throwable t) {
-                Toast.makeText(StoreSelectActivity.this, "매장 불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ManagerStoreSelectActivity.this, "매장 불러오기 실패", Toast.LENGTH_SHORT).show();
                 Log.e("store finding", "error");
             }
         });

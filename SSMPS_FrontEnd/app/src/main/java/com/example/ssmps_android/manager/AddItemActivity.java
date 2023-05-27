@@ -1,10 +1,12 @@
-package com.example.ssmps_android;
+package com.example.ssmps_android.manager;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.ssmps_android.R;
 
 public class AddItemActivity extends AppCompatActivity {
 

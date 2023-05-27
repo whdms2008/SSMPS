@@ -20,9 +20,12 @@ import android.widget.Toast;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Location;
+import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,7 @@ public class MainPage extends AppCompatActivity {
     RetrofitAPI service;
     TokenInterceptor tokenInterceptor;
     SharedPreferenceUtil sharedPreferenceUtil;
+    Gson gson;
     Canvas canvas;
     Paint paint;
     float endX, endY;
@@ -54,6 +58,9 @@ public class MainPage extends AppCompatActivity {
     Location moveLocation, nowLocation;
     ImageView frame;
     float preX, preY; // 이동 전 좌표
+    Store nowStore;
+    String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +80,15 @@ public class MainPage extends AppCompatActivity {
         registItem();
         addLocation();
         editLocation();
+        setLocationList();
+
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registLocation();
+            }
+        });
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -173,6 +189,7 @@ public class MainPage extends AppCompatActivity {
                         }
                         if(isMove){
                             drawLocation(Color.WHITE, moveLocation);
+                            setLocationData(moveLocation);
                             isMove = false;
                         }
                         isIn = false;
@@ -199,6 +216,41 @@ public class MainPage extends AppCompatActivity {
 
         paint = new Paint();
         paint.setColor(Color.WHITE);
+        gson = new GsonBuilder().create();
+        setToken();
+
+        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+        Log.e("now store loc", nowStore.getLocaiton().size() + "");
+    }
+
+
+    private void setLocationList(){
+        Call<List<Location>> findLocation = service.findStoreLocation(nowStore.getId());
+        findLocation.enqueue(new Callback<List<Location>>() {
+            @Override
+            public void onResponse(Call<List<Location>> call, Response<List<Location>> response) {
+                if(!response.isSuccessful()){
+                    Log.e("find location error", response.errorBody().toString());
+                    Toast.makeText(MainPage.this, "매장 불러오기 에러", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                locationList = response.body();
+                for(Location l : locationList){
+                    drawLocation(Color.WHITE, l);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Location>> call, Throwable t) {
+                Log.e("find location fail", t.getMessage());
+                Toast.makeText(MainPage.this, "매장 불러오기 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void setToken(){
+        token = sharedPreferenceUtil.getData("token", "err");
+        tokenInterceptor = new TokenInterceptor();
+        tokenInterceptor.setToken(token);
     }
 
     private void addLocation(){
@@ -210,12 +262,6 @@ public class MainPage extends AppCompatActivity {
             }
         });
     }
-    private void setToken(){
-        String token = sharedPreferenceUtil.getData("token", "err");
-        tokenInterceptor = new TokenInterceptor();
-        tokenInterceptor.setToken(token);
-    }
-
     private void moveLocation(Location location, MotionEvent event){
         isMove = true;
         drawLocation(Color.BLACK, location);
@@ -276,27 +322,6 @@ public class MainPage extends AppCompatActivity {
             }
         });
     }
-
-//    private void addLocation(){
-//        nameAddBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                nowLocation.setName(nameInput.getText().toString());
-//
-//                float centerX = nowLocation.getCenterX();
-//                float centerY = nowLocation.getCenterY();
-//                paint.setColor(Color.GREEN);
-//                paint.setTextSize(50f);
-//                canvas.drawText(nowLocation.getName(), centerX, centerY, paint);
-//                frame.invalidate();
-//
-//                locationName.setVisibility(View.GONE);
-//                nameInput.setVisibility(View.GONE);
-//                nameAddBtn.setVisibility(View.GONE);
-//            }
-//        });
-//    }
-
     private void addItem(){
         findViewById(R.id.mainPage_regist_item_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,5 +348,40 @@ public class MainPage extends AppCompatActivity {
                 });
             }
         });
+    }
+    
+    private void registLocation(){
+        nowStore.setLocation(locationList);
+        Log.e("loc size", locationList.size() + "");
+        Call<List<Location>> registStore = service.registStoreLocation(nowStore);
+        registStore.enqueue(new Callback<List<Location>>() {
+            @Override
+            public void onResponse(Call<List<Location>> call, Response<List<Location>> response) {
+                if(!response.isSuccessful()){
+                    Log.e("regist Location Error", response.errorBody().toString());
+                    Toast.makeText(MainPage.this, "매장 수정 에러", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                setNowStoreLocation(response.body());
+                Toast.makeText(MainPage.this, "매장 수정 성공", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<Location>> call, Throwable t) {
+                Log.e("regist location fail", t.getMessage());
+                Toast.makeText(MainPage.this, "매장 수정 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    
+    private void setNowStoreLocation(List<Location> locations){
+        nowStore.setLocation(locations);
+        sharedPreferenceUtil.remove("store");
+        sharedPreferenceUtil.putData("store", gson.toJson(nowStore, Store.class));
+    }
+
+    private void setLocationData(Location location){
+        locationList.remove(location);
+        locationList.add(location);
     }
 }

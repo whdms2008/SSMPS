@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,7 +12,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ssmps_android"
-        tools:targetApi="31">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31" >
+        <activity
+            android:name=".guest.GuestStoreSelectActivity"
+            android:exported="false" />
         <activity
             android:name=".guest.GuestItemSearchActivity"
             android:exported="false" />
@@ -20,7 +25,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,14 +33,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".guest.GuestActivity" />
-        <activity android:name=".FunctionSelectActivity" />
         <activity android:name=".Recyclerview.CustomAdapter" />
         <activity android:name=".Recyclerview.CustomAdapter2" />
-        <activity android:name=".StoreSelectActivity" />
+        <activity android:name=".manager.ManagerStoreSelectActivity" />
         <activity android:name=".location.MainPage" />
         <activity android:name=".location.LocationDetailActivity" />
-        <activity android:name=".manager.ManagerSearchItemActivity"/>
-        <activity android:name=".ItemRegisterActivity"/>
+        <activity android:name=".ItemRegisterActivity" />
+        <activity android:name=".manager.FunctionSelectActivity" />
+        <activity android:name=".manager.ItemModifyDeleteActivity" />
+        <activity android:name=".manager.ManagerSearchCenterItemActivity" />
+        <activity android:name=".manager.ManagerSearchItemActivity" />
+        <activity android:name=".guest.StoreViewActivity"/>
     </application>
 
 </manifest>

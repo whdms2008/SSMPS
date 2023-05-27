@@ -11,11 +11,25 @@ import android.widget.EditText;
 
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter3;
+import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.Item;
+import com.example.ssmps_android.domain.Store;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationDetailActivity extends AppCompatActivity {
     EditText searchInput;
+
+    Store nowStore;
+
+    SharedPreferenceUtil sharedPreferenceUtil;
+    Gson gson;
+
+    List<Item> itemList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +37,8 @@ public class LocationDetailActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+        initData();
 
         findViewById(R.id.locationDetail_search_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,5 +57,15 @@ public class LocationDetailActivity extends AppCompatActivity {
 
         CustomAdapter3 customAdapter3 = new CustomAdapter3(testDataSet);
         recyclerView.setAdapter(customAdapter3);
+    }
+
+    private void initData(){
+        sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        gson = new GsonBuilder().create();
+
+        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+    }
+    private void setItemList(){
+
     }
 }

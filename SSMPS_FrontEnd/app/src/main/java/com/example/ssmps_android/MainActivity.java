@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Manager;
-import com.example.ssmps_android.domain.Store;
-import com.example.ssmps_android.dto.LoginRequest;
 import com.example.ssmps_android.dto.LoginResponse;
+import com.example.ssmps_android.guest.GuestStoreSelectActivity;
 import com.example.ssmps_android.login.SignActivity;
+import com.example.ssmps_android.manager.ManagerStoreSelectActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
@@ -26,8 +26,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 sharedPreferenceUtil.remove("token");
                 login();
+            }
+        });
+
+        guestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GuestStoreSelectActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -115,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     sharedPreferenceUtil.putData("token", managerResponse.getToken());
                     Log.e("token", token);
                     sharedPreferenceUtil.remove("token");
-                    Intent intent = new Intent(getApplicationContext(), StoreSelectActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ManagerStoreSelectActivity.class);
                     startActivity(intent);
                     return;
                 }
@@ -132,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, "로그인 실패!", Toast.LENGTH_SHORT).show();
                 Log.e("login error", t.getMessage());
-                Log.e("login eeE", t.getCause().toString());
             }
         });
     }
@@ -152,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         guestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StoreSelectActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ManagerStoreSelectActivity.class);
                 startActivity(intent);
             }
         });

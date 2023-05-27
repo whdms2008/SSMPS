@@ -2,22 +2,18 @@ package com.example.ssmps_android.manager;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ssmps_android.R;
-import com.example.ssmps_android.Recyclerview.CustomAdapter2;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.CenterItem;
-import com.example.ssmps_android.dto.CenterItemResponse;
+import com.example.ssmps_android.domain.Item;
+import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
@@ -26,7 +22,6 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,26 +39,17 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     SharedPreferenceUtil sharedPreferenceUtil;
     Gson gson;
     String token;
-    List<CenterItem> centerItemList = new ArrayList<>();
+    List<Item> itemList = new ArrayList<>();
+    Store nowStore;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_search_manager);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
         initData();
-        getAllCenterItem();
-
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // DB에서 데이터 가져오기
-                searchItem();
-            }
-        });
+        getAllItem();
     }
-    
-    private void initData(){
+
+    private void initData() {
         itemNameInput = findViewById(R.id.managerSearchItem_item_name_input);
         searchBtn = findViewById(R.id.managerSearchItem_search_btn);
 
@@ -73,73 +59,40 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
-    }
 
+        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+    }
     private void setToken(){
         token = sharedPreferenceUtil.getData("token", "err");
+        Log.e("token", token);
         tokenInterceptor = new TokenInterceptor();
         tokenInterceptor.setToken(token);
     }
 
-    private void getAllCenterItem(){
-        Call<List<CenterItemResponse>> getAllItem = service.findAllCenterItem();
-        getAllItem.enqueue(new Callback<List<CenterItemResponse>>() {
+    private void getAllItem(){
+        Call<List<Item>> findAllItem = service.findAllItem(nowStore.getId());
+        findAllItem.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onResponse(Call<List<CenterItemResponse>> call, Response<List<CenterItemResponse>> response) {
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if(!response.isSuccessful()){
-                    Log.e("getAllItem Error", response.errorBody().toString());
-                    Toast.makeText(ManagerSearchItemActivity.this, "아이템 리스트 가져오기 에러", Toast.LENGTH_SHORT).show();
+                    Log.e("find all item error", response.errorBody().toString());
+                    Toast.makeText(ManagerSearchItemActivity.this, "물건 리스트 가져오기 에러", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Toast.makeText(ManagerSearchItemActivity.this, "리스트업 성공!", Toast.LENGTH_SHORT).show();
-                centerItemList = response.body().stream()
-                        .map(ci -> new CenterItem(ci.getId(), ci.getName(), ci.getType(), ci.getPrice(), ci.getImage(), ci.getBarcode()))
-                        .collect(Collectors.toList());
-                setItemRecyclerview();
+                itemList = response.body();
+                Log.e("list size", itemList.size() + "");
+                setRecyclerviewData();
             }
 
             @Override
-            public void onFailure(Call<List<CenterItemResponse>> call, Throwable t) {
-                Log.e("getAllItem fail", t.getMessage());
-                Toast.makeText(ManagerSearchItemActivity.this, "아이템 리스트 가져오기 실패", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    
-    private void searchItem(){
-        String itemName = itemNameInput.getText().toString();
-        Log.e("itemName", itemName);
-        Call<List<CenterItemResponse>> findItemByName = service.findCenterItemByName(itemName);
-        findItemByName.enqueue(new Callback<List<CenterItemResponse>>() {
-            @Override
-            public void onResponse(Call<List<CenterItemResponse>> call, Response<List<CenterItemResponse>> response) {
-                if(!response.isSuccessful()){
-                    Log.e("get search item", response.errorBody().toString());
-                    Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 에러", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 성공", Toast.LENGTH_SHORT).show();
-                centerItemList = response.body().stream()
-                        .map(ci -> new CenterItem(ci.getId(), ci.getName(), ci.getType(), ci.getPrice(), ci.getImage(), ci.getBarcode()))
-                        .collect(Collectors.toList());
-                setItemRecyclerview();
-            }
-
-            @Override
-            public void onFailure(Call<List<CenterItemResponse>> call, Throwable t) {
-                Log.e("get search Item fail", t.getMessage());
-                Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 실패", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                Log.e("find all item fail", t.getMessage());
+                Toast.makeText(ManagerSearchItemActivity.this, "물건 리스트 가져오기 실패", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void setItemRecyclerview(){
-        RecyclerView recyclerView = findViewById(R.id.itemSearchManager_recyclerView);
+    private void setRecyclerviewData(){
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        CustomAdapter2 customAdapter2 = new CustomAdapter2(centerItemList);
-        recyclerView.setAdapter(customAdapter2);
     }
 }
