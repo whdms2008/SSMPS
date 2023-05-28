@@ -15,7 +15,7 @@
         android:gravity="center"
         android:text="SSMPS"
         android:textColor="#F3A9A9"
-        android:textSize="80px"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/menuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +31,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/product_list"
+            android:layout_marginBottom="18dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="1000px"
+                android:text="제품 명"
+                android:textSize="80px" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="1000px"
+                android:text="가격"
+                android:textSize="80px"/>
+
+            <TextView
+                android:id="@+id/product_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="1000px"
+                android:text="제품 갯수"
+                android:textSize="80px" />
+        </LinearLayout>
+
         <ListView
-            android:id="@+id/listView"
-            android:layout_width="1272dp"
-            android:layout_height="653dp" />
+            android:id="@+id/product_list"
+            android:layout_width="match_parent"
+            android:layout_height="451dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp" />
     </RelativeLayout>
 
     <Button
@@ -47,7 +81,7 @@
         android:backgroundTint="#F3A9A9"
         android:text="결제"
         android:textColor="@color/white"
-        android:textSize="80px"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menuLayout"

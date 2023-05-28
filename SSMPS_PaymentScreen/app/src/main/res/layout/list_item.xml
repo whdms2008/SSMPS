@@ -2,21 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TEXT"
-        android:textSize="100px" />
+        android:textSize="80px"
+        android:paddingRight="900px"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:textSize="80px"
+        android:paddingRight="1000px"/>
+
+    <TextView
+        android:id="@+id/cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cnt"
+        android:textSize="80px"
+        android:paddingRight="1000px"/>
 
     <Button
         android:id="@+id/delButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="삭제"
         android:backgroundTint="#F3A9A9"
+        android:text="삭제"
+        android:textSize="80px"
         android:textColor="@color/white"/>
-
 </LinearLayout>

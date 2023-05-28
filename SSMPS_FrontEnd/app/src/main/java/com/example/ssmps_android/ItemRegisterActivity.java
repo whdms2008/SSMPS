@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ssmps_android.data.SharedPreferenceUtil;
@@ -29,7 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ItemRegisterActivity extends AppCompatActivity{
-    EditText itemName, itemQuantity, itemType;
+    TextView itemName, itemPrice, itemType;
     ImageView itemImage;
     Button registerBtn;
     CenterItem nowItem;
@@ -62,8 +63,8 @@ public class ItemRegisterActivity extends AppCompatActivity{
 
     private void initData(){
         itemName = findViewById(R.id.itemRegister_item_name);
-        itemQuantity = findViewById(R.id.itemRegister_quantity);
-        itemType = findViewById(R.id.itemRegister_quantity);
+        itemPrice = findViewById(R.id.itemRegister_price);
+        itemType = findViewById(R.id.itemRegister_item_type);
 
         itemImage = findViewById(R.id.itemRegister_item_img);
         registerBtn = findViewById(R.id.itemRegister_register_btn);
