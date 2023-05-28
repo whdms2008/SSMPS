@@ -8,11 +8,12 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Location implements Serializable {
-    private List<Item> itemList;
+    private Long id;
     private float startX;
     private float startY;
     private float endX;
     private float endY;
+    private List<Item> itemList;
 
     private float centerX;
     private float centerY;
@@ -24,6 +25,16 @@ public class Location implements Serializable {
         this.endY = Math.round(endY);
         centerX = startX + ((endX - startX) / 2);
         centerY = startY + ((endY - startY) / 2);
+    }
+
+
+    public Location(Long id, float startX, float startY, float endX, float endY, List<Item> itemList) {
+        this.id = id;
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+        this.itemList = itemList;
     }
 
     public boolean intersect(Location location){

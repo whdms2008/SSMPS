@@ -71,8 +71,7 @@ public class MainPage extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        retrofit = RetrofitClient.getInstance(tokenInterceptor);
-        service = retrofit.create(RetrofitAPI.class);
+
 
         initData();
         addItem();
@@ -218,6 +217,9 @@ public class MainPage extends AppCompatActivity {
         paint.setColor(Color.WHITE);
         gson = new GsonBuilder().create();
         setToken();
+
+        retrofit = RetrofitClient.getInstance(tokenInterceptor);
+        service = retrofit.create(RetrofitAPI.class);
 
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
         Log.e("now store loc", nowStore.getLocaiton().size() + "");

@@ -1,5 +1,7 @@
 package com.example.ssmps_android.Recyclerview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,11 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.ssmps_android.R;
+import com.example.ssmps_android.domain.Item;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHolder> {
 
-    private ArrayList<String> localDataSet;
+    private List<Item> localDataSet;
+    Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
@@ -24,7 +30,7 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
         }
     }
 
-    public CustomAdapter3 (ArrayList<String> dataSet) {
+    public CustomAdapter3 (List<Item> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -34,13 +40,20 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_locationdetail, parent, false);
         CustomAdapter3.ViewHolder viewHolder = new CustomAdapter3.ViewHolder(view);
+        context = parent.getContext();
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String text = localDataSet.get(position);
-        holder.textView.setText(text);
+        Item item = localDataSet.get(position);
+        holder.textView.setText(item.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Activity)context).finish();
+            }
+        });
     }
 
     @Override

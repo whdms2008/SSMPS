@@ -47,6 +47,9 @@ public interface RetrofitAPI {
     @POST("api/item")
     Call<Item> registItem(@Query("store") Long storeId, @Query("item") Long itemId);
 
+    @GET("api/item/{name}")
+    Call<List<Item>> findItemByName(@Path("name") String name);
+
     @GET("api/itemList")
     Call<List<Item>> findAllItem(@Query("storeId") Long storeId);
 
