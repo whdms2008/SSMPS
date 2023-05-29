@@ -56,7 +56,6 @@ public class GuestActivity extends AppCompatActivity{
 
         itemNameInput = findViewById(R.id.guest_item_name_input);
         searchBtn = findViewById(R.id.guest_item_search_btn);
-        informationBtn = findViewById(R.id.guest_information_btn);
 
         // 임시 데이터
         locationList.add(new Location(150, 10, 230, 100));

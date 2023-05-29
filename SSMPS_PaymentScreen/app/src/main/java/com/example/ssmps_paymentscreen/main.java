@@ -30,12 +30,12 @@ public class main extends Activity {
         });
 
         ListViewAdapter adapter = new ListViewAdapter();
-        ListView listView = findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.product_list);
         listView.setAdapter(adapter);
-
-        adapter.addItem("포카리");
-        adapter.addItem("코카콜라");
-        adapter.addItem("빼빼로");
+//
+        adapter.addItem("포카리", 2000, 2);
+//        adapter.addItem("코카콜라", 3000, 3);
+//        adapter.addItem("빼빼로", 4000, 3);
         adapter.notifyDataSetChanged();
     }
 }

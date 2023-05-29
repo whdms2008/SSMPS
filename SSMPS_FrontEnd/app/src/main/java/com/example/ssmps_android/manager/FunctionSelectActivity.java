@@ -1,4 +1,4 @@
-package com.example.ssmps_android;
+package com.example.ssmps_android.manager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.widget.Button;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ssmps_android.R;
 import com.example.ssmps_android.location.MainPage;
-import com.example.ssmps_android.manager.ManagerSearchItemActivity;
+import com.example.ssmps_android.manager.ManagerSearchCenterItemActivity;
 
 public class FunctionSelectActivity extends AppCompatActivity {
     Button layoutSettingBtn, addBtn, deleteModifyBtn;
@@ -46,7 +47,7 @@ public class FunctionSelectActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ManagerSearchItemActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ManagerSearchCenterItemActivity.class);
                 startActivity(intent);
             }
         });

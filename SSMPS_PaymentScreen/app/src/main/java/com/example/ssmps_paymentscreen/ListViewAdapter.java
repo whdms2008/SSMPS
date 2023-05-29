@@ -14,7 +14,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
-    private TextView text;
+    private TextView text, price, cnt;
 
     private ArrayList<ListViewItem> listviewItemList = new ArrayList<ListViewItem>();
 
@@ -35,11 +35,15 @@ public class ListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item, parent, false);
         }
 
-        text = (TextView) convertView.findViewById(R.id.text);
+        text = (TextView) convertView.findViewById(R.id.product_name);
+        price = (TextView) convertView.findViewById(R.id.product_price);
+        cnt = (TextView) convertView.findViewById(R.id.product_cnt);
 
         ListViewItem listViewItem = listviewItemList.get(position);
 
         text.setText(listViewItem.getText());
+        price.setText(listViewItem.getPrice());
+        cnt.setText(listViewItem.getCnt());
         return convertView;
     }
 
@@ -53,10 +57,13 @@ public class ListViewAdapter extends BaseAdapter {
         return listviewItemList.get(position);
     }
 
-    public void addItem(String text){
+    public void addItem(String text, int price, int cnt){
         ListViewItem item = new ListViewItem();
 
         item.setText(text);
+        item.setPrice(price);
+        item.setCnt(cnt);
+
         listviewItemList.add(item);
     }
 }

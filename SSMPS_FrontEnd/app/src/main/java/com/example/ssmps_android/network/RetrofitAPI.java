@@ -2,12 +2,15 @@ package com.example.ssmps_android.network;
 
 import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
+import com.example.ssmps_android.domain.Location;
 import com.example.ssmps_android.domain.Manager;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.CenterItemResponse;
+import com.example.ssmps_android.dto.LocationRequest;
 import com.example.ssmps_android.dto.LoginRequest;
 import com.example.ssmps_android.dto.LoginResponse;
 import com.example.ssmps_android.dto.RegistItemRequest;
+import com.example.ssmps_android.dto.StoreRequest;
 import com.example.ssmps_android.dto.StoreResponse;
 
 import java.util.List;
@@ -43,4 +46,19 @@ public interface RetrofitAPI {
 
     @POST("api/item")
     Call<Item> registItem(@Query("store") Long storeId, @Query("item") Long itemId);
+
+    @GET("api/item/{name}")
+    Call<List<Item>> findItemByName(@Path("name") String name);
+
+    @GET("api/itemList")
+    Call<List<Item>> findAllItem(@Query("storeId") Long storeId);
+
+    @GET("api/storeList")
+    Call<List<Store>> findAllStore();
+
+    @GET("api/store/location/{id}")
+    Call<List<Location>> findStoreLocation(@Path("id") Long storeId);
+
+    @POST("api/store/location")
+    Call<List<Location>> registStoreLocation(@Body Store store);
 }
