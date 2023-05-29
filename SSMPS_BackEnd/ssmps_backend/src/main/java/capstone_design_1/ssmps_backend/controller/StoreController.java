@@ -2,10 +2,7 @@ package capstone_design_1.ssmps_backend.controller;
 
 import capstone_design_1.ssmps_backend.domain.Location;
 import capstone_design_1.ssmps_backend.domain.Store;
-import capstone_design_1.ssmps_backend.dto.AddLocationRequest;
-import capstone_design_1.ssmps_backend.dto.LocationRequest;
-import capstone_design_1.ssmps_backend.dto.LocationResponse;
-import capstone_design_1.ssmps_backend.dto.RequestLocation;
+import capstone_design_1.ssmps_backend.dto.*;
 import capstone_design_1.ssmps_backend.dto.store.StoreRequest;
 import capstone_design_1.ssmps_backend.dto.store.StoreResponse;
 import capstone_design_1.ssmps_backend.service.StoreService;
@@ -50,7 +47,9 @@ public class StoreController {
     public ResponseEntity<Object> findAllStore(@PathVariable Long id){
         List<Store> allStore = storeService.findAllStoreById(id);
         List<StoreResponse> resultList = allStore.stream()
-                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList()))
+                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
+                .map(l -> new LocationResponse(l.getId(), l.getStartX(), l.getStartY(), l.getEndX(), l.getEndY(), l.getItemList().stream()
+                .map(i -> new ItemResponse(i)).collect(Collectors.toList()))).collect(Collectors.toList())))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(resultList);
     }
@@ -59,7 +58,12 @@ public class StoreController {
     @GetMapping("api/store/location/{id}")
     public ResponseEntity<Object> findStoreLocation(@PathVariable(name = "id") Long storeId){
         Store store = storeService.findStoreById(storeId);
-        return ResponseEntity.ok(store.getLocationList());
+        log.error("here");
+        log.error(store.getName());
+        List<LocationResponse> resultList = store.getLocationList().stream()
+                .map(l -> new LocationResponse(l.getId(), l.getStartX(), l.getStartY(), l.getEndX(), l.getEndY(), l.getItemList().stream()
+                        .map(i -> new ItemResponse(i)).collect(Collectors.toList()))).collect(Collectors.toList());
+        return ResponseEntity.ok(resultList);
     }
 
     @PostMapping("api/store/location")
@@ -79,6 +83,12 @@ public class StoreController {
         return ResponseEntity.ok(resultList);
     }
 
-
-
+    @GetMapping("api/storeList")
+    public List<StoreResponse> findAllStore(){
+        List<Store> findAllStore = storeService.findAllStore();
+        List<StoreResponse> resultList = findAllStore.stream()
+                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
+                .map(l -> new LocationResponse(l)).collect(Collectors.toList()))).collect(Collectors.toList());
+        return resultList;
+    }
 }

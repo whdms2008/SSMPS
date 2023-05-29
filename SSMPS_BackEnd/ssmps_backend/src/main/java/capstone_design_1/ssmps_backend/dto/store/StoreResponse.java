@@ -2,6 +2,7 @@ package capstone_design_1.ssmps_backend.dto.store;
 
 
 import capstone_design_1.ssmps_backend.domain.Location;
+import capstone_design_1.ssmps_backend.dto.LocationResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +16,5 @@ public class StoreResponse {
     private Long id;
     private String name;
     private String address;
-    private List<Location> locationList;
+    private List<LocationResponse> locationList;
 }

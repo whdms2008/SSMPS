@@ -1,10 +1,12 @@
 package capstone_design_1.ssmps_backend.dto;
 
+import capstone_design_1.ssmps_backend.domain.Location;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -25,5 +27,13 @@ public class LocationResponse {
         this.endX = endX;
         this.endY = endY;
         this.itemList = itemList;
+    }
+    public LocationResponse(Location location){
+        this.id = location.getId();
+        this.startX = location.getStartX();
+        this.startY = location.getStartY();
+        this.endX = location.getEndX();
+        this.endY = location.getEndY();
+        this.itemList = location.getItemList().stream().map(i -> new ItemResponse(i)).collect(Collectors.toList());
     }
 }

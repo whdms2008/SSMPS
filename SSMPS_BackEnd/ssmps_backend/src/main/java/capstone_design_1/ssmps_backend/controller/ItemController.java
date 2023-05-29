@@ -54,7 +54,6 @@ public class ItemController {
     // 매장내 물건 전체 리스트 요청
     @GetMapping("api/itemList")
     public ResponseEntity<Object> findAllItem(@RequestParam Long storeId){
-        log.error("test here");
         Store findStore = storeService.findStoreById(storeId);
         List<Item> itemList = itemService.getItemList(findStore);
         List<ItemResponse> responseList = itemList.stream()

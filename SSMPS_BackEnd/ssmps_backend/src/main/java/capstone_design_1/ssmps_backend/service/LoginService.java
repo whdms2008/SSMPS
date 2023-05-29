@@ -1,6 +1,9 @@
 package capstone_design_1.ssmps_backend.service;
 
+import capstone_design_1.ssmps_backend.domain.Location;
 import capstone_design_1.ssmps_backend.domain.Manager;
+import capstone_design_1.ssmps_backend.dto.ItemResponse;
+import capstone_design_1.ssmps_backend.dto.LocationResponse;
 import capstone_design_1.ssmps_backend.dto.ManagerResponse;
 import capstone_design_1.ssmps_backend.dto.store.StoreResponse;
 import capstone_design_1.ssmps_backend.repository.LoginRepository;
@@ -36,8 +39,12 @@ public class LoginService {
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
         if(passwordEncoder.matches(manager.getPassword(), findManager.getPassword())){
             String token = jwtTokenProvider.createToken(manager.getAccountId());
+
             List<StoreResponse> storeRes = findManager.getStores().stream()
-                    .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList()))
+                    .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
+                    .map(l -> new LocationResponse(l.getId(), l.getStartX(), l.getStartY(), l.getEndX(), l.getEndY(), l.getItemList().stream()
+                    .map(i -> new ItemResponse(i)).collect(Collectors.toList()))).collect(Collectors.toList())
+                    ))
                     .collect(Collectors.toList());
             return new ManagerResponse(findManager.getId(), findManager.getAccountId(), storeRes, token);
         }else{
