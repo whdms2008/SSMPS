@@ -35,6 +35,16 @@ public class Location implements Serializable {
         this.endX = endX;
         this.endY = endY;
         this.itemList = itemList;
+        centerX = startX + ((endX - startX) / 2);
+        centerY = startY + ((endY - startY) / 2);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean intersect(Location location){
@@ -106,10 +116,12 @@ public class Location implements Serializable {
     }
 
     public float getCenterX() {
+        centerX = startX + ((endX - startX) / 2);
         return centerX;
     }
 
     public float getCenterY() {
+        centerY = startY + ((endY - startY) / 2);
         return centerY;
     }
 }
