@@ -94,6 +94,7 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewData(){
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 

@@ -1,6 +1,8 @@
 package com.example.ssmps_android.guest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.ssmps_android.R;
+import com.example.ssmps_android.Recyclerview.CustomAdapter;
+import com.example.ssmps_android.Recyclerview.CustomAdapter2;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.network.RetrofitAPI;
@@ -56,7 +60,15 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         gson = new GsonBuilder().create();
     }
     private void setRecyclerviewData(){
-        // 리사이클러뷰 데이터 추가
+        RecyclerView recyclerView = findViewById(R.id.storeSelect_recyclerView);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        CustomAdapter customAdapter = new CustomAdapter(storeList, getApplicationContext());
+
+        Log.e("store list", storeList.size() + "");
+        recyclerView.setAdapter(customAdapter);
     }
     private void setStoreList(){
         Call<List<Store>> findAllStore = service.findAllStore();

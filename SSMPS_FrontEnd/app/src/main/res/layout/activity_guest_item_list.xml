@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".guest.GuestItemSearchActivity"
+    tools:context=".guest.GuestItemListActivity"
     android:orientation="vertical">
 
 
@@ -18,14 +18,27 @@
             android:textSize="20sp"
             android:text="이름:   "/>
 
-        <EditText
-            android:id="@+id/guestItemSearch_item_name"
+        <TextView
+            android:id="@+id/guestItemList_name"
             android:layout_width="150dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/guestItemSearch_recyclerView"
+        android:id="@+id/guestItemList_recyclerView"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/guest_search_location_btn"
+        android:text="위치 보기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/guest_search_item_info_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="상세 보기"/>
 </LinearLayout>
