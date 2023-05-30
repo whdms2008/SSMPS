@@ -10,35 +10,40 @@
         android:layout_weight="0.3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TEXT"
-        android:textSize="50sp"
-        android:layout_margin="50dp"/>
+        android:text="제품명"
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/price"
         android:layout_weight="0.3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Price"
-        android:textSize="50sp"
-        android:layout_margin="50dp"/>
+        android:text="가격"
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/cnt"
         android:layout_weight="0.3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="cnt"
-        android:textSize="50sp"
-        android:layout_margin="50dp"/>
+        android:text="갯수"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/all_price"
+        android:layout_weight="0.3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="총 가격"
+        android:textSize="30sp"/>
 
     <Button
         android:id="@+id/delButton"
-        android:layout_width="wrap_content"
+        android:layout_weight="0.35"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#F3A9A9"
         android:text="삭제"
-        android:textSize="50sp"
-        android:textColor="@color/white"
-        android:layout_margin="50dp"/>
+        android:textSize="30sp"
+        android:textColor="@color/white"/>
 </LinearLayout>
