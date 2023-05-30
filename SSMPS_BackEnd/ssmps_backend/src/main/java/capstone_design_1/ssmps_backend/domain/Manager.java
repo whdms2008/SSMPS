@@ -1,22 +1,27 @@
 package capstone_design_1.ssmps_backend.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Manager implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "account_id")
     private String accountId;
     private String password;
-    @OneToMany(mappedBy = "manager")
-    private List<Store> stores;
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+    private List<Store> stores = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

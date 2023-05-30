@@ -3,6 +3,7 @@ package capstone_design_1.ssmps_backend.repository;
 
 import capstone_design_1.ssmps_backend.domain.CenterItem;
 import capstone_design_1.ssmps_backend.domain.Item;
+import capstone_design_1.ssmps_backend.domain.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -27,8 +28,9 @@ public class ItemRepository {
         em.persist(item);
         return item;
     }
-    public List<CenterItem> findAllList() {
-        List findItemList = em.createQuery("select i from Item i")
+    public List<Item> findAllList(Store store) {
+        List findItemList = em.createQuery("select i from Item i where i.store = :store")
+                .setParameter("store", store)
                 .getResultList();
         return findItemList;
     }
@@ -37,11 +39,10 @@ public class ItemRepository {
         return em.find(Item.class, id);
     }
 
-    public List<CenterItem> findItemByName(String name) {
-        List findItemList = em.createQuery("select i from CenterItem i where i.name like :name")
+    public List<Item> findItemByName(String name) {
+        return em.createQuery("select i from CenterItem i where i.name like :name")
                 .setParameter("name", "%" + name + "%")
                 .getResultList();
-        return findItemList;
     }
 
     public Item deleteItem(Item deleteItem) {

@@ -1,18 +1,25 @@
 package com.example.ssmps_android.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Store {
+public class Store implements Serializable {
     private Long id;
     private String name;
     private String address;
-    private List<Item> items;
+    private List<Location> locationList;
 
-    public Store(Long id, String name, String address, List<Item> items) {
+    public Store(Long id, String name, String address, List<Location> locationList) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.items = items;
+        this.locationList = locationList;
+    }
+
+    public Store(Long id, String name, String address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
     }
 
     public Long getId() {
@@ -39,11 +46,15 @@ public class Store {
         this.address = address;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Location> getLocaiton() {
+        return locationList;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setLocation(List<Location> items) {
+        this.locationList = items;
+    }
+
+    public List<Location> getLocationList() {
+        return locationList;
     }
 }

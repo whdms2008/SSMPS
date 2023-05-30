@@ -1,9 +1,6 @@
 package capstone_design_1.ssmps_backend.dto;
 
-
 import capstone_design_1.ssmps_backend.domain.CenterItem;
-import capstone_design_1.ssmps_backend.domain.Item;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -3,25 +3,25 @@ package com.example.ssmps_android.domain;
 import java.util.List;
 
 public class Manager {
-//    private Long id;
+    private Long id;
     private String accountId;
     private String password;
-    private List<Store> stores;
+    private List<Store> storeList;
 
-
-    public Manager(String accountId, String password, List<Store> stores) {
+    public Manager(Long id, String accountId, String password, List<Store> storeList) {
+        this.id = id;
         this.accountId = accountId;
         this.password = password;
-        this.stores = stores;
+        this.storeList = storeList;
     }
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAccountId() {
         return accountId;
@@ -39,11 +39,11 @@ public class Manager {
         this.password = password;
     }
 
-    public List<Store> getStores() {
-        return stores;
+    public List<Store> getStoreList() {
+        return storeList;
     }
 
-    public void setStores(List<Store> stores) {
-        this.stores = stores;
+    public void setStoreList(List<Store> storeList) {
+        this.storeList = storeList;
     }
 }

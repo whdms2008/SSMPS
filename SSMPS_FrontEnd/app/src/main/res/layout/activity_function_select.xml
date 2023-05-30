@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="#FAFAD2"
+        android:layout_width="380dp"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:layout_height="100dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="60dp"
+            android:textSize="20dp"
+            android:text="가게 이름 : "/>
+
+        <TextView
+            android:id="@+id/functionSelect_store_name"
+            android:layout_marginTop="20dp"
+            android:layout_width="200dp"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/functionSelect_store_layout"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#FAFAD2"
+        android:text="가게 배치"
+        android:textColor="#000000"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/functionSelect_item_add"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="70dp"
+        android:backgroundTint="#FAFAD2"
+        android:text="제품 등록"
+        android:textColor="#000000"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/functionSelect_item_delete_modify"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="70dp"
+        android:backgroundTint="#FAFAD2"
+        android:textColor="#000000"
+        android:text="제품 수정 및 삭제"
+        android:textSize="20dp" />
+
+</LinearLayout>

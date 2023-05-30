@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -21,7 +22,10 @@ public class Item {
     @JoinColumn(name = "store_id")
     private Store store;
     private int quantity;
-    private String location;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "location_id")
+//    private Location location;
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
