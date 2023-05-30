@@ -1,11 +1,9 @@
 package com.example.ssmps_paymentscreen;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,16 +12,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListViewAdapter extends BaseAdapter {
     private final Context context;
     private final List<ListViewItem> items;
 
+    public interface OnDataChangeListener{
+        void onDataChanged();
+    }
+    OnDataChangeListener mOnDataChangeListener;
     public ListViewAdapter(Context context, List<ListViewItem> items) {
         this.context = context;
         this.items = items;
+    }
+    public void setOnDataChangeListener(OnDataChangeListener onDataChangeListener){
+        mOnDataChangeListener = onDataChangeListener;
     }
 
     @Override
@@ -65,6 +69,10 @@ public class ListViewAdapter extends BaseAdapter {
         deleteButton.setOnClickListener(v -> {
             Toast.makeText(context, "삭제됨", Toast.LENGTH_SHORT).show();
             items.remove(position);
+            notifyDataSetChanged();
+            if(mOnDataChangeListener != null){
+                mOnDataChangeListener.onDataChanged();
+            }
         });
 
         return convertView;

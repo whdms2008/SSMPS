@@ -1,16 +1,9 @@
 package com.example.ssmps_paymentscreen;
 
-import android.content.Intent;
-import android.widget.Button;
-import android.widget.Toast;
-
-import java.text.DecimalFormat;
-
 public class ListViewItem {
     private String text; // 상품 이름
     private int price; // 상품 가격
     private int cnt; // 상품 갯수
-    private int all_price; // 상품 당 총 가격
 
     public ListViewItem(String text, int price, int cnt){
         this.text = text;
