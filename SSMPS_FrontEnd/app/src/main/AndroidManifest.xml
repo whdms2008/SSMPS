@@ -21,7 +21,7 @@
             android:name=".guest.GuestStoreSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".guest.GuestItemSearchActivity"
+            android:name=".guest.GuestItemListActivity"
             android:exported="false" />
         <activity
             android:name=".login.SignActivity"
@@ -38,6 +38,7 @@
         <activity android:name=".guest.GuestActivity" />
         <activity android:name=".Recyclerview.CustomAdapter" />
         <activity android:name=".Recyclerview.CustomAdapter2" />
+        <activity android:name=".Recyclerview.CustomAdapter4" />
         <activity android:name=".manager.ManagerStoreSelectActivity" />
         <activity android:name=".location.MainPage" />
         <activity android:name=".location.LocationDetailActivity" />

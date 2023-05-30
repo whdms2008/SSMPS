@@ -71,8 +71,6 @@ public class MainPage extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-
-
         initData();
         addItem();
         removeLocation();
@@ -80,7 +78,6 @@ public class MainPage extends AppCompatActivity {
         addLocation();
         editLocation();
         setLocationList();
-
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,11 @@ import com.example.ssmps_android.location.MainPage;
 import com.example.ssmps_android.manager.ManagerSearchCenterItemActivity;
 
 public class FunctionSelectActivity extends AppCompatActivity {
+
     Button layoutSettingBtn, addBtn, deleteModifyBtn;
+
+    TextView functionSelect_store_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,7 @@ public class FunctionSelectActivity extends AppCompatActivity {
         layoutSettingBtn = findViewById(R.id.functionSelect_store_layout);
         addBtn = findViewById(R.id.functionSelect_item_add);
         deleteModifyBtn = findViewById(R.id.functionSelect_item_delete_modify);
+        functionSelect_store_name = findViewById(R.id.functionSelect_store_name);
     }
 
     private void settingLayout(){

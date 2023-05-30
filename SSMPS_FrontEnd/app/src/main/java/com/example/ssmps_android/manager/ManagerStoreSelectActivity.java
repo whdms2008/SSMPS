@@ -2,6 +2,8 @@ package com.example.ssmps_android.manager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.LoginType;
 import com.example.ssmps_android.domain.Manager;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.StoreResponse;
@@ -31,6 +34,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ManagerStoreSelectActivity extends AppCompatActivity {
+
+    EditText storeSelect_search;
+    Button storeSelect_search_btn;
+
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
 
@@ -100,7 +107,7 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        customAdapter = new CustomAdapter(storeList, getApplicationContext());
+        customAdapter = new CustomAdapter(storeList, getApplicationContext(), LoginType.MANAGER);
 
         Log.e("store list", storeList.size() + "");
         recyclerView.setAdapter(customAdapter);

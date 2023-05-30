@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter3;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Store;
+import com.example.ssmps_android.dto.CenterItemResponse;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
@@ -35,6 +37,7 @@ public class LocationDetailActivity extends AppCompatActivity {
     EditText searchInput;
     ImageButton searchBtn;
     RecyclerView recyclerView;
+
 
     Store nowStore;
 
@@ -94,6 +97,7 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewData(){
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -124,7 +128,7 @@ public class LocationDetailActivity extends AppCompatActivity {
 
     private void searchItem(){
         String itemName = searchInput.getText().toString();
-        Call<List<Item>> searchItem = service.findItemByName(itemName);
+        Call<List<Item>> searchItem = service.findItemByName(itemName, nowStore.getId());
         searchItem.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {

@@ -5,12 +5,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.ssmps_android.R;
 
 public class ItemModifyDeleteActivity extends AppCompatActivity {
-    EditText itemName, itemQuantity, itemType;
+    EditText itemQuantity;
+    TextView itemName, itemType, itemPrice;
     ImageView itemImg;
     Button modifyBtn, deleteBtn;
     @Override
@@ -38,6 +41,7 @@ public class ItemModifyDeleteActivity extends AppCompatActivity {
         itemName = findViewById(R.id.itemDeleteModify_item_name);
         itemQuantity = findViewById(R.id.itemDeleteModify_item_quantity);
         itemType = findViewById(R.id.itemDeleteModify_item_type);
+        itemPrice = findViewById(R.id.itemDeleteModify_item_price);
 
         itemImg = findViewById(R.id.itemDeleteModify_item_img);
         modifyBtn = findViewById(R.id.itemDeleteModify_modify_btn);

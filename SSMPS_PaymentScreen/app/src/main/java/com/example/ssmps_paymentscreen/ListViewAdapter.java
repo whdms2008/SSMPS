@@ -1,50 +1,39 @@
 package com.example.ssmps_paymentscreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListViewAdapter extends BaseAdapter {
-    private TextView text, price, cnt;
+    private final Context context;
+    private final List<ListViewItem> items;
 
-    private ArrayList<ListViewItem> listviewItemList = new ArrayList<ListViewItem>();
-
-    public ListViewAdapter(){}
-
-    @Override
-    public int getCount() {
-        return listviewItemList.size();
+    public ListViewAdapter(Context context, List<ListViewItem> items) {
+        this.context = context;
+        this.items = items;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
-        final Context context = parent.getContext();
+    public int getCount() {
+        return items.size();
+    }
 
-        if (convertView == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_item, parent, false);
-        }
-
-        text = (TextView) convertView.findViewById(R.id.product_name);
-        price = (TextView) convertView.findViewById(R.id.product_price);
-        cnt = (TextView) convertView.findViewById(R.id.product_cnt);
-
-        ListViewItem listViewItem = listviewItemList.get(position);
-
-        text.setText(listViewItem.getText());
-        price.setText(listViewItem.getPrice());
-        cnt.setText(listViewItem.getCnt());
-        return convertView;
+    @Override
+    public ListViewItem getItem(int position) {
+        return items.get(position);
     }
 
     @Override
@@ -53,17 +42,31 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return listviewItemList.get(position);
-    }
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        }
 
-    public void addItem(String text, int price, int cnt){
-        ListViewItem item = new ListViewItem();
+        final ListViewItem item = getItem(position);
 
-        item.setText(text);
-        item.setPrice(price);
-        item.setCnt(cnt);
+        TextView text1 = convertView.findViewById(R.id.product_name);
+        TextView text2 = convertView.findViewById(R.id.price);
+        TextView text3 = convertView.findViewById(R.id.cnt);
+        TextView text4 = convertView.findViewById(R.id.all_price);
 
-        listviewItemList.add(item);
+        if (item != null) {
+            text1.setText(item.getText());
+            text2.setText(item.getPrice());
+            text3.setText(item.getCnt());
+            text4.setText(item.getAll_price());
+        }
+
+        Button deleteButton = convertView.findViewById(R.id.delButton);
+        deleteButton.setOnClickListener(v -> {
+            Toast.makeText(context, "삭제됨", Toast.LENGTH_SHORT).show();
+            items.remove(position);
+        });
+
+        return convertView;
     }
 }

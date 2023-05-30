@@ -1,15 +1,21 @@
 package com.example.ssmps_android.guest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ssmps_android.R;
+import com.example.ssmps_android.Recyclerview.CustomAdapter;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.LoginType;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
@@ -26,6 +32,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class GuestStoreSelectActivity extends AppCompatActivity {
+
+    EditText storeSelect_search;
+    Button storeSelect_search_btn;
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
 
@@ -39,14 +48,6 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_select);
         initData();
         setStoreList();
-
-        findViewById(R.id.storeSelect_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StoreViewActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initData(){
@@ -56,7 +57,15 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         gson = new GsonBuilder().create();
     }
     private void setRecyclerviewData(){
-        // 리사이클러뷰 데이터 추가
+        RecyclerView recyclerView = findViewById(R.id.storeSelect_recyclerView);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        CustomAdapter customAdapter = new CustomAdapter(storeList, getApplicationContext(), LoginType.GUEST);
+
+        Log.e("store list", storeList.size() + "");
+        recyclerView.setAdapter(customAdapter);
     }
     private void setStoreList(){
         Call<List<Store>> findAllStore = service.findAllStore();

@@ -74,6 +74,5 @@ public class GuestActivity extends AppCompatActivity{
         // DB에서 itemName인 것 가져오기
         Location location = locationList.get(0);
 
-
     }
 }

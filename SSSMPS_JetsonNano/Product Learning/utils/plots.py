@@ -63,9 +63,16 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=3):
     if label:
         tf = max(tl - 1, 1)  # font thickness
         t_size = cv2.getTextSize(label, 0, fontScale=tl / 3, thickness=tf)[0]
-        c2 = c1[0] + t_size[0], c1[1] - t_size[1] - 3
+        font_size = t_size[1]
+        font = ImageFont.truetype("malgun.ttf", font_size, encoding="utf-8")
+        t_size = font.getsize(label)
+        c2 = c1[0] + t_size[0], c1[1] - t_size[1]
         cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
-        cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+        img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        draw = ImageDraw.Draw(img)
+        draw.text((c1[0], c2[1]), label, (0, 0, 0), font=font)
+        # cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+        return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 
 
 def plot_one_box_PIL(box, img, color=None, label=None, line_thickness=None):
@@ -75,12 +82,11 @@ def plot_one_box_PIL(box, img, color=None, label=None, line_thickness=None):
     draw.rectangle(box, width=line_thickness, outline=tuple(color))  # plot
     if label:
         fontsize = max(round(max(img.size) / 40), 12)
-        font = ImageFont.truetype("Arial.ttf", fontsize)
+        font = ImageFont.truetype("malgun.ttf", fontsize)
         txt_width, txt_height = font.getsize(label)
         draw.rectangle([box[0], box[1] - txt_height + 4, box[0] + txt_width, box[1]], fill=tuple(color))
         draw.text((box[0], box[1] - txt_height + 1), label, fill=(255, 255, 255), font=font)
     return np.asarray(img)
-
 
 def plot_wh_methods():  # from utils.plots import *; plot_wh_methods()
     # Compares the two methods for width-height anchor multiplication
