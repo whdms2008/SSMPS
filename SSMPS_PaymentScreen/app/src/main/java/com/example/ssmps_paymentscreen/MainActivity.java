@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -12,30 +11,30 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class main extends Activity {
+public class MainActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         Button startButton = findViewById(R.id.payment_button);
-        startButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Toast.makeText(main.this, "결제되었습니다.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), start.class);
-                startActivity(intent);
-            }
+        startButton.setOnClickListener(view -> {
+            Toast.makeText(MainActivity.this, "결제되었습니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), start.class);
+            startActivity(intent);
         });
 
-        ListViewAdapter adapter = new ListViewAdapter();
+        List<ListViewItem> items = new ArrayList<>();
+
+        items.add(new ListViewItem("포카리", 2000, 2));
+        items.add(new ListViewItem("코카콜라", 3000, 3));
+        items.add(new ListViewItem("빼빼로", 4000, 3));
+        ListViewAdapter adapter = new ListViewAdapter(this, items);
         ListView listView = findViewById(R.id.product_list);
         listView.setAdapter(adapter);
-//
-        adapter.addItem("포카리", 2000, 2);
-//        adapter.addItem("코카콜라", 3000, 3);
-//        adapter.addItem("빼빼로", 4000, 3);
+
         adapter.notifyDataSetChanged();
     }
 }
