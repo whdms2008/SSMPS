@@ -2,6 +2,8 @@ package com.example.ssmps_android.manager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -32,6 +34,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ManagerStoreSelectActivity extends AppCompatActivity {
+
+    EditText storeSelect_search;
+    Button storeSelect_search_btn;
+
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
 
