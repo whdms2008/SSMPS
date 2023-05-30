@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ssmps_android.R;
-import com.example.ssmps_android.Recyclerview.CustomAdapter2;
+import com.example.ssmps_android.Recyclerview.ManagerModifyDeleteAdapter;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.CenterItem;
+import com.example.ssmps_android.domain.Item;
+import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.CenterItemResponse;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
@@ -39,12 +41,12 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
 
     Retrofit retrofit;
     RetrofitAPI service;
-
     TokenInterceptor tokenInterceptor;
     SharedPreferenceUtil sharedPreferenceUtil;
     Gson gson;
     String token;
-    List<CenterItem> centerItemList = new ArrayList<>();
+    List<Item> itemList = new ArrayList<>();
+    Store nowStore;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,8 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
+
+        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
     }
 
     private void setToken(){
@@ -82,24 +86,22 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     }
 
     private void getAllCenterItem(){
-        Call<List<CenterItemResponse>> getAllItem = service.findAllCenterItem();
-        getAllItem.enqueue(new Callback<List<CenterItemResponse>>() {
+        Call<List<Item>> getAllItem = service.findAllItem(nowStore.getId());
+        getAllItem.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onResponse(Call<List<CenterItemResponse>> call, Response<List<CenterItemResponse>> response) {
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if(!response.isSuccessful()){
                     Log.e("getAllItem Error", response.errorBody().toString());
                     Toast.makeText(ManagerSearchItemActivity.this, "아이템 리스트 가져오기 에러", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Toast.makeText(ManagerSearchItemActivity.this, "리스트업 성공!", Toast.LENGTH_SHORT).show();
-                centerItemList = response.body().stream()
-                        .map(ci -> new CenterItem(ci.getId(), ci.getName(), ci.getType(), ci.getPrice(), ci.getImage(), ci.getBarcode()))
-                        .collect(Collectors.toList());
+                itemList = response.body();
                 setItemRecyclerview();
             }
 
             @Override
-            public void onFailure(Call<List<CenterItemResponse>> call, Throwable t) {
+            public void onFailure(Call<List<Item>> call, Throwable t) {
                 Log.e("getAllItem fail", t.getMessage());
                 Toast.makeText(ManagerSearchItemActivity.this, "아이템 리스트 가져오기 실패", Toast.LENGTH_SHORT).show();
             }
@@ -109,24 +111,22 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     private void searchItem(){
         String itemName = itemNameInput.getText().toString();
         Log.e("itemName", itemName);
-        Call<List<CenterItemResponse>> findItemByName = service.findCenterItemByName(itemName);
-        findItemByName.enqueue(new Callback<List<CenterItemResponse>>() {
+        Call<List<Item>> findItemByName = service.findItemByName(itemName, nowStore.getId());
+        findItemByName.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onResponse(Call<List<CenterItemResponse>> call, Response<List<CenterItemResponse>> response) {
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if(!response.isSuccessful()){
                     Log.e("get search item", response.errorBody().toString());
                     Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 에러", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 성공", Toast.LENGTH_SHORT).show();
-                centerItemList = response.body().stream()
-                        .map(ci -> new CenterItem(ci.getId(), ci.getName(), ci.getType(), ci.getPrice(), ci.getImage(), ci.getBarcode()))
-                        .collect(Collectors.toList());
+                itemList = response.body();
                 setItemRecyclerview();
             }
 
             @Override
-            public void onFailure(Call<List<CenterItemResponse>> call, Throwable t) {
+            public void onFailure(Call<List<Item>> call, Throwable t) {
                 Log.e("get search Item fail", t.getMessage());
                 Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 실패", Toast.LENGTH_SHORT).show();
             }
@@ -139,7 +139,7 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        CustomAdapter2 customAdapter2 = new CustomAdapter2(centerItemList);
-        recyclerView.setAdapter(customAdapter2);
+        ManagerModifyDeleteAdapter adapter = new ManagerModifyDeleteAdapter(itemList);
+        recyclerView.setAdapter(adapter);
     }
 }

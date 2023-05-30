@@ -15,13 +15,13 @@ import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHolder> {
+public class ManagerRegistSearchAdapter extends RecyclerView.Adapter<ManagerRegistSearchAdapter.ViewHolder> {
 
-    private List<CenterItem> localDataSet;
+    private List<CenterItem> itemList = new ArrayList<>();
     Context context;
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         public ViewHolder(@NonNull View itemView) {
@@ -34,23 +34,23 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHold
         }
     }
 
-    public CustomAdapter2(List<CenterItem> dataSet) {
-        localDataSet = dataSet;
+    public ManagerRegistSearchAdapter(List<CenterItem> itemList) {
+        this.itemList = itemList;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ManagerRegistSearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_itemsearchmanager, parent, false);
-        CustomAdapter2.ViewHolder viewHolder = new CustomAdapter2.ViewHolder(view);
+        ManagerRegistSearchAdapter.ViewHolder viewHolder = new ManagerRegistSearchAdapter.ViewHolder(view);
         context = parent.getContext();
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CenterItem item = localDataSet.get(position);
+    public void onBindViewHolder(@NonNull ManagerRegistSearchAdapter.ViewHolder holder, int position) {
+        CenterItem item = itemList.get(position);
 
         holder.textView.setText(item.getName());
 
@@ -66,6 +66,6 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.ViewHold
 
     @Override
     public int getItemCount() {
-        return localDataSet.size();
+        return itemList.size();
     }
 }

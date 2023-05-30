@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter;
-import com.example.ssmps_android.Recyclerview.CustomAdapter2;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.LoginType;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
@@ -43,14 +43,6 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_select);
         initData();
         setStoreList();
-
-        findViewById(R.id.storeSelect_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StoreViewActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initData(){
@@ -65,7 +57,7 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        CustomAdapter customAdapter = new CustomAdapter(storeList, getApplicationContext());
+        CustomAdapter customAdapter = new CustomAdapter(storeList, getApplicationContext(), LoginType.GUEST);
 
         Log.e("store list", storeList.size() + "");
         recyclerView.setAdapter(customAdapter);

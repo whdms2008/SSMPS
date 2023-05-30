@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ssmps_android.R;
-import com.example.ssmps_android.Recyclerview.CustomAdapter2;
+import com.example.ssmps_android.Recyclerview.ManagerRegistSearchAdapter;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.dto.CenterItemResponse;
@@ -139,7 +139,7 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        CustomAdapter2 customAdapter2 = new CustomAdapter2(centerItemList);
-        recyclerView.setAdapter(customAdapter2);
+        ManagerRegistSearchAdapter adapter = new ManagerRegistSearchAdapter(centerItemList);
+        recyclerView.setAdapter(adapter);
     }
 }

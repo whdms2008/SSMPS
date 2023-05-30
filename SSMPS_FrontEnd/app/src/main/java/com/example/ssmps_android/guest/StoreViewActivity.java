@@ -8,11 +8,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.LogPrinter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -22,7 +22,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ssmps_android.GuestSearchItemActivity;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Location;
@@ -45,6 +44,7 @@ import retrofit2.Retrofit;
 public class StoreViewActivity extends AppCompatActivity {
     EditText searchInput;
     Button searchBtn;
+    TextView searchResult;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -54,7 +54,6 @@ public class StoreViewActivity extends AppCompatActivity {
     String token;
     Store nowStore;
     List<Location> locationList = new ArrayList<>();
-
     Canvas canvas;
     Paint paint;
     ImageView frame;
@@ -84,7 +83,8 @@ public class StoreViewActivity extends AppCompatActivity {
                         Intent intent = result.getData();
                         if (result.getResultCode() == Activity.RESULT_OK){
                             int locationId = intent.getIntExtra("location", -1);
-                            showItemLocation(locationId);
+                            String itemName = intent.getStringExtra("itemName");
+                            showSearchResult(locationId, itemName);
                         }
                     }
                 });
@@ -93,6 +93,7 @@ public class StoreViewActivity extends AppCompatActivity {
     private void initData(){
         searchInput = findViewById(R.id.guest_item_name_input);
         searchBtn = findViewById(R.id.guest_item_search_btn);
+        searchResult = findViewById(R.id.guest_search_item_name);
         frame = findViewById(R.id.guest_canvas);
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
@@ -156,20 +157,21 @@ public class StoreViewActivity extends AppCompatActivity {
         canvas.drawRect(location.getStartX(), location.getStartY(), location.getEndX(), location.getEndY(), paint);
         frame.invalidate();
 
+
     }
 
     private void drawLocationType(Location location){
         paint.setColor(Color.BLACK);
         paint.setTextSize(40);
         paint.setTextAlign(Paint.Align.CENTER);
-        Log.e(location.getCenterX() + "", location.getCenterY() + "");
         String type = location.getItemList().stream().map(i -> i.getType() + "\n").collect(Collectors.joining());
         canvas.drawText(type, location.getCenterX(), location.getCenterY(), paint);
     }
 
     private void searchItem(){
         String itemName = searchInput.getText().toString();
-        Intent intent = new Intent(getApplicationContext(), GuestSearchItemActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GuestItemListActivity.class);
+        intent.putExtra("item", itemName);
         resultLauncher.launch(intent);
     }
 
@@ -179,5 +181,11 @@ public class StoreViewActivity extends AppCompatActivity {
         drawLocation(Color.BLACK, location);
         drawLocation(Color.RED, location);
         drawLocationType(location);
+    }
+
+    private void showSearchResult(int locationId, String itemName){
+        searchResult.setText(itemName);
+        showItemLocation(locationId);
+//        searchResult.setText();
     }
 }

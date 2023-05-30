@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.LoginType;
 import com.example.ssmps_android.domain.Manager;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.StoreResponse;
@@ -100,7 +101,7 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        customAdapter = new CustomAdapter(storeList, getApplicationContext());
+        customAdapter = new CustomAdapter(storeList, getApplicationContext(), LoginType.MANAGER);
 
         Log.e("store list", storeList.size() + "");
         recyclerView.setAdapter(customAdapter);
