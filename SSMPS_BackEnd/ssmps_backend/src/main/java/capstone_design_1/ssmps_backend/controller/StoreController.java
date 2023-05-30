@@ -91,4 +91,25 @@ public class StoreController {
                 .map(l -> new LocationResponse(l)).collect(Collectors.toList()))).collect(Collectors.toList());
         return resultList;
     }
+
+    @GetMapping("api/manager/store/{name}")
+    public List<StoreResponse> findManagerStoreByName(@PathVariable(name = "name") String storeName, @RequestParam(name = "id") Long managerId){
+        List<Store> findStoreList = storeService.findManagerStoreByName(storeName, managerId);
+        List<StoreResponse> resultList = findStoreList.stream()
+                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
+                .map(l -> new LocationResponse(l)).collect(Collectors.toList())))
+                .collect(Collectors.toList());
+        return resultList;
+    }
+
+    @GetMapping("api/store/{name}")
+    public List<StoreResponse> findStoreByName(@PathVariable String name){
+        List<Store> findStoreList = storeService.findStoreByName(name);
+        List<StoreResponse> resultList = findStoreList.stream()
+                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
+                .map(l -> new LocationResponse(l)).collect(Collectors.toList())))
+                .collect(Collectors.toList());
+        return resultList;
+    }
+
 }

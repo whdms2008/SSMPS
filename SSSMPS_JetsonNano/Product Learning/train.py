@@ -37,6 +37,7 @@ from utils.wandb_logging.wandb_utils import WandbLogger, check_wandb_resume
 
 logger = logging.getLogger(__name__)
 
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 def train(hyp, opt, device, tb_writer=None):
     logger.info(colorstr('hyperparameters: ') + ', '.join(f'{k}={v}' for k, v in hyp.items()))
@@ -60,7 +61,7 @@ def train(hyp, opt, device, tb_writer=None):
     plots = not opt.evolve  # create plots
     cuda = device.type != 'cpu'
     init_seeds(2 + rank)
-    with open(opt.data) as f:
+    with open(opt.data, encoding="utf-8") as f:
         data_dict = yaml.load(f, Loader=yaml.SafeLoader)  # data dict
     is_coco = opt.data.endswith('coco.yaml')
 
