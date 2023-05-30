@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -36,5 +38,12 @@ public class GuestItemListActivity extends AppCompatActivity {
 
     private void initData(){
         itemName = findViewById(R.id.guestItemList_name);
+
+//        int locationId = 7;
+//        Intent intent = new Intent();
+//        intent.putExtra("location", locationId);
+//        setResult(Activity.RESULT_OK, intent);
+//        finish();
     }
 }
+
