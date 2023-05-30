@@ -47,4 +47,18 @@ public class StoreRepository {
     public void saveLocation(Location l) {
         em.persist(l);
     }
+
+    public List<Store> findStoreByName(String storeName){
+        return em.createQuery("select s from Store s where s.name = :name")
+                .setParameter("name", storeName)
+                .getResultList();
+    }
+
+    public List<Store> findManagerStoreByName(String storeName, Long managerId){
+        return em.createQuery("select s from Store s where s.name = :name and s.manager.id = :managerId")
+                .setParameter("name", storeName)
+                .setParameter("managerId", managerId)
+                .getResultList();
+    }
+
 }

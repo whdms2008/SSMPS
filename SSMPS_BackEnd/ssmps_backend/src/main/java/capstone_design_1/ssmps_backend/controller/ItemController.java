@@ -62,10 +62,11 @@ public class ItemController {
         return ResponseEntity.ok(responseList);
     }
 
-    // 물건 조회 (검색. 추가 요청 때                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
+    // 물건 조회 (검색. 추가 요청 때)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
     @GetMapping("api/item/{name}")
-    public ResponseEntity<Object> findItemByName(@PathVariable String name){
-        List<Item> findItemList = itemService.getItemByName(name);
+    public ResponseEntity<Object> findItemByName(@PathVariable String name, @RequestParam("store_id") Long storeId){
+        Store findStore = storeService.findStoreById(storeId);
+        List<Item> findItemList = itemService.getItemByName(name, findStore);
         List<ItemResponse> resultList = findItemList.stream()
                 .map(i -> new ItemResponse(i))
                 .collect(Collectors.toList());

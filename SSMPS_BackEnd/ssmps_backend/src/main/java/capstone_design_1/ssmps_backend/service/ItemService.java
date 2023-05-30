@@ -48,8 +48,8 @@ public class ItemService {
         return itemRepository.findItemById(id);
     }
 
-    public List<Item> getItemByName(String name) {
-        return itemRepository.findItemByName(name);
+    public List<Item> getItemByName(String name, Store store) {
+        return itemRepository.findItemByName(name, store);
     }
 
     @Transactional

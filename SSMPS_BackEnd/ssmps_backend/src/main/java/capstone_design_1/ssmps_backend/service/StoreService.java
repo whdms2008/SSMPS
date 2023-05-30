@@ -52,4 +52,12 @@ public class StoreService {
     public List<Store> findAllStore(){
         return storeRepository.findAllStore();
     }
+
+    public List<Store> findStoreByName(String storeName){
+        return storeRepository.findStoreByName(storeName);
+    }
+
+    public List<Store> findManagerStoreByName(String storeName, Long managerId){
+        return storeRepository.findManagerStoreByName(storeName, managerId);
+    }
 }

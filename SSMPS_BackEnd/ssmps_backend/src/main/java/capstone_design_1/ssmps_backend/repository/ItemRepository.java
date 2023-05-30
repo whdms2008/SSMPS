@@ -39,9 +39,10 @@ public class ItemRepository {
         return em.find(Item.class, id);
     }
 
-    public List<Item> findItemByName(String name) {
-        return em.createQuery("select i from CenterItem i where i.name like :name")
+    public List<Item> findItemByName(String name, Store store) {
+        return em.createQuery("select i from Item i where i.item.name like :name and i.store = :store")
                 .setParameter("name", "%" + name + "%")
+                .setParameter("store", store)
                 .getResultList();
     }
 
