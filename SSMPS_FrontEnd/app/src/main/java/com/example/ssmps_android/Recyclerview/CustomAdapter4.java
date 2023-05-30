@@ -14,11 +14,12 @@ import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.guest.GuestItemListActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHolder> {
 
-    private List<Item> localDataSet;
+    private List<Item> localDataSet = new ArrayList<>();
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

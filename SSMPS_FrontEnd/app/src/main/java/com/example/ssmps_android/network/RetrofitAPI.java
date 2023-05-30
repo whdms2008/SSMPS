@@ -38,6 +38,12 @@ public interface RetrofitAPI {
     @GET("api/storeList/{id}")
     Call<List<StoreResponse>> findStoreList(@Path("id") Long id);
 
+    @GET("api/store/{name}")
+    Call<List<Store>> findStoreByName(@Path("name") String name);
+
+    @GET("api/manager/store/{name}")
+    Call<List<Store>> findManagerStoreByName(@Path("name") String name, @Query("id") Long managerId);
+
     @GET("api/centerItemList")
     Call<List<CenterItemResponse>> findAllCenterItem();
 
