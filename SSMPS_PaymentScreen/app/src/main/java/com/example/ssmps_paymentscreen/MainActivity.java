@@ -34,35 +34,11 @@ public class MainActivity extends Activity implements ListViewAdapter.OnDataChan
         setContentView(R.layout.main);
 
         Button startButton = findViewById(R.id.payment_button);
-        startButton.setOnClickListener(view -> {
-            Toast.makeText(MainActivity.this, "결제되었습니다.", Toast.LENGTH_SHORT).show();
+
+        startButton.setOnClickListener(view -> new Thread(() -> {
+
             Intent intent = new Intent(getApplicationContext(), start.class);
             startActivity(intent);
-        });
-
-        items = new ArrayList<>();
-
-        items.add(new ListViewItem("포카리", 2000, 2));
-        items.add(new ListViewItem("코카콜라", 3000, 3));
-        items.add(new ListViewItem("빼빼로", 4000, 3));
-        items.add(new ListViewItem("포카리", 2000, 2));
-        items.add(new ListViewItem("빼빼로", 4000, 3));
-        items.add(new ListViewItem("포카리", 2000, 2));
-        items.add(new ListViewItem("코카콜라", 3000, 3));
-        items.add(new ListViewItem("빼빼로", 4000, 3));
-        items.add(new ListViewItem("포카리", 2000, 2));
-        items.add(new ListViewItem("코카콜라", 3000, 3));
-        items.add(new ListViewItem("빼빼로", 4000, 3));
-
-        ListViewAdapter adapter = new ListViewAdapter(this, items);
-        ListView listView = findViewById(R.id.product_list);
-        adapter.setOnDataChangeListener(this);
-        listView.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
-        updateAllPrice();
-
-        startButton.setOnClickListener(v -> new Thread(() -> {
             try (Socket client = new Socket()) {
                 InetSocketAddress ipep = new InetSocketAddress("1.234.5.119", 12345);
 
@@ -105,6 +81,27 @@ public class MainActivity extends Activity implements ListViewAdapter.OnDataChan
                 e.printStackTrace();
             }
         }).start());
+        items = new ArrayList<>();
+
+        items.add(new ListViewItem("포카리", 2000, 2));
+        items.add(new ListViewItem("코카콜라", 3000, 3));
+        items.add(new ListViewItem("빼빼로", 4000, 3));
+        items.add(new ListViewItem("포카리", 2000, 2));
+        items.add(new ListViewItem("빼빼로", 4000, 3));
+        items.add(new ListViewItem("포카리", 2000, 2));
+        items.add(new ListViewItem("코카콜라", 3000, 3));
+        items.add(new ListViewItem("빼빼로", 4000, 3));
+        items.add(new ListViewItem("포카리", 2000, 2));
+        items.add(new ListViewItem("코카콜라", 3000, 3));
+        items.add(new ListViewItem("빼빼로", 4000, 3));
+
+        ListViewAdapter adapter = new ListViewAdapter(this, items);
+        ListView listView = findViewById(R.id.product_list);
+        adapter.setOnDataChangeListener(this);
+        listView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+        updateAllPrice();
     }
     @Override
     public void onDataChanged(){
