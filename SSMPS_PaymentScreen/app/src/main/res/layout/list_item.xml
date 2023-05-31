@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="제품명"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/price"
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="가격"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/cnt"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="갯수"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/all_price"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="총 가격"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/delButton"
@@ -44,6 +44,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#F3A9A9"
         android:text="삭제"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="@color/white"/>
 </LinearLayout>
