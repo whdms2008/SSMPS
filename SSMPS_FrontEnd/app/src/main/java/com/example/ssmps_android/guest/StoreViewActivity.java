@@ -171,9 +171,7 @@ public class StoreViewActivity extends AppCompatActivity {
     }
 
     private void searchItem(){
-        String itemName = searchInput.getText().toString();
         Intent intent = new Intent(getApplicationContext(), GuestItemListActivity.class);
-        intent.putExtra("item", itemName);
         resultLauncher.launch(intent);
     }
 

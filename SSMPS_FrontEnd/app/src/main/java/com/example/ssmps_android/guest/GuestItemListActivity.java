@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,8 @@ public class GuestItemListActivity extends AppCompatActivity {
     TextView itemName;
     List<Item> itemList = new ArrayList<>();
 
+    Button searchBtn;
+
     Retrofit retrofit;
     RetrofitAPI service;
 
@@ -47,6 +51,7 @@ public class GuestItemListActivity extends AppCompatActivity {
         initData();
         setListData();
     }
+
     private void setRecyclerview(){
         RecyclerView recyclerView = findViewById(R.id.guestItemList_recyclerView);
 
