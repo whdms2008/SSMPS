@@ -92,9 +92,9 @@ public class ItemModifyDeleteActivity extends AppCompatActivity {
 
     private void setItemData(){
         itemName.setText(nowItem.getName());
-        itemQuantity.setText(nowItem.getQuantity());
+        itemQuantity.setText(Integer.toString(nowItem.getQuantity()));
         itemType.setText(nowItem.getType());
-        itemPrice.setText(nowItem.getPrice());
+        itemPrice.setText(Integer.toString(nowItem.getPrice()));
     }
 
     private void deleteItem(){

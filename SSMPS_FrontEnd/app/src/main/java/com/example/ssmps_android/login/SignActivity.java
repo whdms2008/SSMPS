@@ -17,9 +17,13 @@ import android.widget.Toast;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Manager;
+import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,12 +32,15 @@ import retrofit2.Retrofit;
 
 public class SignActivity extends AppCompatActivity {
     EditText idInput, passInput, passCheckInput, storenamesetting, storeaddresssetting;
-    Button joinBtn, plusBtn;
+    Button joinBtn, plusBtn, preBtn;
     Retrofit retrofit;
     RetrofitAPI service;
 
     TokenInterceptor tokenInterceptor;
     SharedPreferenceUtil sharedPreferenceUtil;
+    List<EditText> storeNameList = new ArrayList<>();
+    List<EditText> storeAddressList = new ArrayList<>();
+    int cnt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,11 @@ public class SignActivity extends AppCompatActivity {
             public void onClick(View v) {
                 join();
             }
+        });
+
+        plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { addStoreName();}
         });
     }
 
@@ -67,12 +79,14 @@ public class SignActivity extends AppCompatActivity {
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
 
-        plusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { addStoreName();}
-        });
+
+
+        storeNameList.add(storenamesetting);
+        storeAddressList.add(storeaddresssetting);
     }
     private void addStoreName(){
+
+
         LinearLayout con = findViewById(R.id.joinStoreList);
         con.removeView(plusBtn);
 
@@ -104,6 +118,7 @@ public class SignActivity extends AppCompatActivity {
         nameParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
         nameParent.addView(textStoreName);
         nameParent.addView(editStoreName);
+        storeNameList.add(editStoreName);
         nameParent.setLayoutParams(linParams2);
 
 
@@ -128,18 +143,22 @@ public class SignActivity extends AppCompatActivity {
         addressParent.addView(textStoreAddress);
         addressParent.addView(editStoreAddress);
 
+        storeAddressList.add(editStoreAddress);
+
         parent.addView(nameParent);
         parent.addView(addressParent);
 
         Button button = new Button(getApplicationContext());
         button.setText("➕");
-        button.setId(R.id.join_store_btn);
+        button.setId(cnt++);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addStoreName();
             }
         });
+        con.removeView(findViewById(cnt - 2));
         con.addView(parent);
         con.addView(button);
     }
@@ -163,7 +182,17 @@ public class SignActivity extends AppCompatActivity {
             Toast.makeText(SignActivity.this, "아이디 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
             return;
         }
-        Manager newManager = new Manager(null, id, password, null);
+        Log.e("size: ", storeNameList.size() + "");
+        Log.e("size: ", storeAddressList.size() + "");
+        if (storeNameList.size() == 0 || storeAddressList.size() == 0 || (storeNameList.size() != storeAddressList.size())){
+            Toast.makeText(this, "매장 정보를 바르게 입력하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        List<Store> storeList = new ArrayList<>();
+        for(int i = 0; i < storeNameList.size();i++){
+            storeList.add(new Store(null, storeNameList.get(i).getText().toString(), storeAddressList.get(i).getText().toString()));
+        }
+        Manager newManager = new Manager(null, id, password, storeList);
         Call<Manager> join = service.join(newManager);
         join.enqueue(new Callback<Manager>() {
             @Override
