@@ -53,7 +53,7 @@ public interface RetrofitAPI {
     @POST("api/item")
     Call<Item> registItem(@Query("store") Long storeId, @Query("item") Long itemId);
 
-    @GET("api/item/{name}")
+    @GET("api/manager/item/{name}")
     Call<List<Item>> findItemByName(@Path("name") String name, @Query("store_id") Long storeId);
 
     @GET("api/itemList")
@@ -67,4 +67,7 @@ public interface RetrofitAPI {
 
     @POST("api/store/location")
     Call<List<Location>> registStoreLocation(@Body Store store);
+
+    Call<Item> deleteItem(@Body Item item);
+    Call<Item> modifyItemQuantity(@Body Item item);
 }

@@ -17,6 +17,7 @@ import com.example.ssmps_android.Recyclerview.CustomAdapter;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.LoginType;
 import com.example.ssmps_android.domain.Store;
+import com.example.ssmps_android.manager.ManagerStoreSelectActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
@@ -33,8 +34,8 @@ import retrofit2.Retrofit;
 
 public class GuestStoreSelectActivity extends AppCompatActivity {
 
-    EditText storeSelect_search;
-    Button storeSelect_search_btn;
+    EditText searchInput;
+    Button searchBtn;
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
 
@@ -48,14 +49,24 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_select);
         initData();
         setStoreList();
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchStore();
+            }
+        });
     }
 
     private void initData(){
+        searchBtn = findViewById(R.id.storeSelect_search_btn);
+        searchInput = findViewById(R.id.storeSelect_search_input);
+
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
         gson = new GsonBuilder().create();
     }
+
     private void setRecyclerviewData(){
         RecyclerView recyclerView = findViewById(R.id.storeSelect_recyclerView);
 
@@ -67,6 +78,7 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         Log.e("store list", storeList.size() + "");
         recyclerView.setAdapter(customAdapter);
     }
+
     private void setStoreList(){
         Call<List<Store>> findAllStore = service.findAllStore();
         findAllStore.enqueue(new Callback<List<Store>>() {
@@ -86,6 +98,30 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
             public void onFailure(Call<List<Store>> call, Throwable t) {
                 Log.e("find store list fail", t.getMessage());
                 Toast.makeText(GuestStoreSelectActivity.this, "매장 불러오기 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void searchStore(){
+        String findStore = searchInput.getText().toString();
+        Call<List<Store>> searchStore = service.findStoreByName(findStore);
+        searchStore.enqueue(new Callback<List<Store>>() {
+            @Override
+            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                if(!response.isSuccessful()) {
+                    Log.e("search store error", response.errorBody().toString());
+                    Toast.makeText(GuestStoreSelectActivity.this, "매장 검색 에러", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                storeList = response.body();
+                setRecyclerviewData();
+            }
+
+            @Override
+            public void onFailure(Call<List<Store>> call, Throwable t) {
+                Log.e("search store fail", t.getMessage());
+                Toast.makeText(GuestStoreSelectActivity.this, "매장 검색 실패", Toast.LENGTH_SHORT).show();
             }
         });
 

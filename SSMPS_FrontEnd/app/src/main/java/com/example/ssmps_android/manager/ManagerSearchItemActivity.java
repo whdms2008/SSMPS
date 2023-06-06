@@ -26,6 +26,7 @@ import com.example.ssmps_android.network.TokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +60,6 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // DB에서 데이터 가져오기
                 searchItem();
             }
         });
@@ -115,13 +115,19 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
         findItemByName.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                if(!response.isSuccessful()){
-                    Log.e("get search item", response.errorBody().toString());
+                if (!response.isSuccessful()) {
+                    try {
+                        Log.e("get item error", response.errorBody().toString());
+                        Log.e("get search item error", response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 에러", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 성공", Toast.LENGTH_SHORT).show();
                 itemList = response.body();
+                Log.e("size", "item list size" + itemList.size());
                 setItemRecyclerview();
             }
 

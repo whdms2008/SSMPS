@@ -35,7 +35,6 @@ public class SignActivity extends AppCompatActivity {
     TokenInterceptor tokenInterceptor;
     SharedPreferenceUtil sharedPreferenceUtil;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -44,7 +44,7 @@ import retrofit2.Retrofit;
 public class StoreViewActivity extends AppCompatActivity {
     EditText searchInput;
     Button searchBtn;
-    TextView searchResult;
+    TextView searchResult, storeName;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -94,6 +94,7 @@ public class StoreViewActivity extends AppCompatActivity {
         searchInput = findViewById(R.id.guest_item_name_input);
         searchBtn = findViewById(R.id.guest_item_search_btn);
         searchResult = findViewById(R.id.guest_search_item_name);
+        storeName = findViewById(R.id.guest_item_search_store_name);
         frame = findViewById(R.id.guest_canvas);
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
@@ -113,6 +114,7 @@ public class StoreViewActivity extends AppCompatActivity {
 
     private void setStore(){
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+        storeName.setText(nowStore.getName());
     }
 
     private void setLocationData(){
