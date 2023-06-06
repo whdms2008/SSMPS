@@ -43,7 +43,8 @@
         <EditText
             android:id="@+id/join_password"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <LinearLayout
@@ -60,7 +61,8 @@
         <EditText
             android:id="@+id/join_password_check"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <HorizontalScrollView

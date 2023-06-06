@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.CenterItemResponse;
+import com.example.ssmps_android.guest.GuestStoreSelectActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
@@ -74,6 +76,13 @@ public class LocationDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+        findViewById(R.id.location_item_register_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainPage.class);
+                startActivity(intent);
             }
         });
     }
