@@ -27,8 +27,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class SignActivity extends AppCompatActivity {
-    EditText idInput, passInput, passCheckInput, storenamesetting;
-    Button joinBtn, plusBtn, addNameBtn;
+    EditText idInput, passInput, passCheckInput, storenamesetting, storeaddresssetting;
+    Button joinBtn, plusBtn;
     Retrofit retrofit;
     RetrofitAPI service;
 
@@ -58,6 +58,7 @@ public class SignActivity extends AppCompatActivity {
         passInput = findViewById(R.id.join_password);
         passCheckInput = findViewById(R.id.join_password_check);
         storenamesetting = findViewById(R.id.join_store_name);
+        storeaddresssetting = findViewById(R.id.join_store_address);
         joinBtn = findViewById(R.id.join_join_btn);
         plusBtn = findViewById(R.id.join_store_btn);
 
@@ -73,7 +74,7 @@ public class SignActivity extends AppCompatActivity {
         });
     }
     private void addStoreName(){
-        LinearLayout con = findViewById(R.id.joinList);
+        LinearLayout con = findViewById(R.id.joinStoreList);
         con.removeView(plusBtn);
 
         LinearLayout parent = new LinearLayout(getApplicationContext());
@@ -81,7 +82,7 @@ public class SignActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-
+        parent.setOrientation(LinearLayout.VERTICAL);
         LinearLayout nameParent = new LinearLayout(getApplicationContext());
         LinearLayout.LayoutParams linParams2 = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -90,7 +91,7 @@ public class SignActivity extends AppCompatActivity {
         linParams2.leftMargin = 30;
         linParams2.topMargin = 30;
         TextView textStoreName = new TextView(getApplicationContext());
-        textStoreName.setText("가게 이름 설정 ");
+        textStoreName.setText("가게 이름 설정 :");
 
         EditText editStoreName = new EditText(getApplicationContext());
         LinearLayout.LayoutParams editParam = new LinearLayout.LayoutParams(
@@ -98,14 +99,38 @@ public class SignActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
         editParam.width = 270;
-        editParam.height = 100;
+        editParam.height = 115;
         editStoreName.setLayoutParams(editParam);
 
-        nameParent.setBackgroundColor(Color.parseColor("#FAFAD2"));
+        nameParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
         nameParent.addView(textStoreName);
         nameParent.addView(editStoreName);
         nameParent.setLayoutParams(linParams2);
+
+
+        linParams2.leftMargin = 30;
+        linParams2.topMargin = 30;
+        LinearLayout addressParent = new LinearLayout(getApplicationContext());
+        TextView textStoreAddress = new TextView(getApplicationContext());
+        textStoreAddress.setText("           가게 주소 :");
+
+        parent.setOrientation(LinearLayout.VERTICAL);
+        EditText editStoreAddress = new EditText(getApplicationContext());
+        LinearLayout.LayoutParams editParam2 = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        editParam2.width = 270;
+        editParam2.height = 115;
+        addressParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+        editStoreName.setLayoutParams(editParam);
+        editStoreAddress.setLayoutParams(editParam);
+        addressParent.addView(textStoreAddress);
+        addressParent.addView(editStoreAddress);
+
         parent.addView(nameParent);
+        parent.addView(addressParent);
 
         Button button = new Button(getApplicationContext());
         button.setText("➕");
