@@ -20,7 +20,7 @@ public class Manager implements UserDetails {
     @Column(name = "account_id")
     private String accountId;
     private String password;
-    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "manager")
     private List<Store> stores = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -50,5 +50,9 @@ public class Manager implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setStoreList(List<Store> list){
+        stores = list;
     }
 }

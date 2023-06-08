@@ -49,8 +49,8 @@ public class StoreRepository {
     }
 
     public List<Store> findStoreByName(String storeName){
-        return em.createQuery("select s from Store s where s.name = :name")
-                .setParameter("name", storeName)
+        return em.createQuery("select s from Store s where s.name like :name")
+                .setParameter("name", "%" + storeName + "%")
                 .getResultList();
     }
 
@@ -61,4 +61,7 @@ public class StoreRepository {
                 .getResultList();
     }
 
+    public Location findLocationById(Long locationId) {
+        return em.find(Location.class, locationId);
+    }
 }

@@ -1,16 +1,20 @@
 package capstone_design_1.ssmps_backend.controller;
 
+import capstone_design_1.ssmps_backend.domain.CenterItem;
+import capstone_design_1.ssmps_backend.domain.Item;
 import capstone_design_1.ssmps_backend.domain.Location;
 import capstone_design_1.ssmps_backend.domain.Store;
 import capstone_design_1.ssmps_backend.dto.*;
 import capstone_design_1.ssmps_backend.dto.store.StoreRequest;
 import capstone_design_1.ssmps_backend.dto.store.StoreResponse;
+import capstone_design_1.ssmps_backend.service.ItemService;
 import capstone_design_1.ssmps_backend.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 public class StoreController {
     private final StoreService storeService;
+    private final ItemService itemService;
 
     @GetMapping("/api/location")
     public ResponseEntity<Object> getLocationList(@RequestParam Long storeId){
@@ -92,19 +97,21 @@ public class StoreController {
         return resultList;
     }
 
-    @GetMapping("api/manager/store/{name}")
-    public List<StoreResponse> findManagerStoreByName(@PathVariable(name = "name") String storeName, @RequestParam(name = "id") Long managerId){
-        List<Store> findStoreList = storeService.findManagerStoreByName(storeName, managerId);
-        List<StoreResponse> resultList = findStoreList.stream()
-                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
-                .map(l -> new LocationResponse(l)).collect(Collectors.toList())))
-                .collect(Collectors.toList());
-        return resultList;
-    }
+//    @GetMapping("api/manager/store/{name}")
+//    public List<StoreResponse> findManagerStoreByName(@PathVariable(name = "name") String storeName, @RequestParam(name = "id") Long managerId){
+//        List<Store> findStoreList = storeService.findManagerStoreByName(storeName, managerId);
+//        List<StoreResponse> resultList = findStoreList.stream()
+//                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
+//                .map(l -> new LocationResponse(l)).collect(Collectors.toList())))
+//                .collect(Collectors.toList());
+//        return resultList;
+//    }
 
     @GetMapping("api/store/{name}")
     public List<StoreResponse> findStoreByName(@PathVariable String name){
+        log.error("name: {}", name);
         List<Store> findStoreList = storeService.findStoreByName(name);
+        log.error("find size: {}", findStoreList.size());
         List<StoreResponse> resultList = findStoreList.stream()
                 .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getLocationList().stream()
                 .map(l -> new LocationResponse(l)).collect(Collectors.toList())))
@@ -112,4 +119,14 @@ public class StoreController {
         return resultList;
     }
 
+    @PutMapping("api/location/item/{id}")
+    public LocationResponse modifyItemLocation(@RequestBody List<ItemRequest> itemList, @PathVariable("id") Long locationId){
+        List<Item> findItemList = new ArrayList<>();
+        for(int i = 0;i < itemList.size();i++){
+            findItemList.add(itemService.getItemById(itemList.get(i).getId()));
+        }
+        Location findLocation = storeService.findLocationById(locationId);
+        Location location = itemService.updateLocation(findItemList, findLocation);
+        return new LocationResponse(location.getId(), location.getStartX(), location.getStartY(), location.getEndX(), location.getEndY());
+    }
 }

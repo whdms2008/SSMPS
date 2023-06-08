@@ -1,11 +1,8 @@
 package capstone_design_1.ssmps_backend.dto;
 
 import capstone_design_1.ssmps_backend.domain.Item;
-import capstone_design_1.ssmps_backend.domain.Location;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +14,7 @@ public class ItemResponse {
     private String image;
     private String barcode;
     private int quantity;
-    private Location location;
+    private LocationResponse location;
 
     public ItemResponse(Item item) {
         this.id = item.getId();
@@ -28,7 +25,32 @@ public class ItemResponse {
         this.barcode = item.getItem().getBarcode();
         this.quantity = item.getQuantity();
     }
-//    public ItemResponse(Item item) {
+
+    public ItemResponse(Long id, String name, String type, int price, String image, String barcode, int quantity, LocationResponse location) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.image = image;
+        this.barcode = barcode;
+        this.quantity = quantity;
+//        this.location = location;
+    }
+    //    public ItemResponse(Item item) {
 //        id =
 //    }
+
+
+    public ItemResponse(Long id, LocationResponse location) {
+        this.id = id;
+        this.location = location;
+    }
+
+    public LocationResponse getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationResponse location) {
+        this.location = location;
+    }
 }
