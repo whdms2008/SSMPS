@@ -37,7 +37,6 @@ import retrofit2.Retrofit;
 
 // 테스트용 페이지
 public class MainPage extends AppCompatActivity {
-    TextView textView;
     Button registerBtn, removeBtn, saveBtn;
     Retrofit retrofit;
     RetrofitAPI service;
@@ -87,6 +86,16 @@ public class MainPage extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onRestart() {
+        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+        setLocationList();
+        for(Location l : locationList){
+            drawLocation(Color.WHITE, l);
+        }
+        super.onRestart();
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void editLocation(){
         frame.setOnTouchListener(new View.OnTouchListener() {
@@ -114,7 +123,6 @@ public class MainPage extends AppCompatActivity {
 
                             }
                             isRemove = false;
-                            textView.setText("매장 수정입니다~");
                             return true;
                         }
                         if(isRegister){
@@ -122,9 +130,9 @@ public class MainPage extends AppCompatActivity {
                             if(isClickLocation(event.getX(), event.getY())){
                                 Log.e("register", "등록");
                                 drawLocation(Color.YELLOW, moveLocation);
-                                textView.setText("매장 수정입니다~");
                                 isRegister = false;
                                 Intent intent = new Intent(getApplicationContext(), LocationDetailActivity.class);
+                                Log.e("move", moveLocation.getId() + "");
                                 intent.putExtra("location", moveLocation);
                                 startActivity(intent);
                                 return true;
@@ -138,7 +146,6 @@ public class MainPage extends AppCompatActivity {
                             startY = event.getY();
                             Log.e("start", startX + "  " + startY);
                             clickCnt = 1;
-                            textView.setText("끝 점을 선택하세요");
                         }else{
                             Log.e("here", clickCnt + "");
                             endX = event.getX();
@@ -151,7 +158,6 @@ public class MainPage extends AppCompatActivity {
 //                            frame.invalidate();
                             drawLocation(Color.WHITE, location);
                             clickCnt = 0;
-                            textView.setText("매장 수정입니다~");
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
@@ -201,7 +207,6 @@ public class MainPage extends AppCompatActivity {
         saveBtn = findViewById(R.id.mainPage_save_btn);
         registerBtn = findViewById(R.id.mainPage_regist_item_btn);
         removeBtn = findViewById(R.id.mainPage_remove_btn);
-        textView = findViewById(R.id.textView);
 
         Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -219,7 +224,7 @@ public class MainPage extends AppCompatActivity {
         service = retrofit.create(RetrofitAPI.class);
 
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
-        Log.e("now store loc", nowStore.getLocaiton().size() + "");
+        Log.e("now store loc", nowStore.getLocationList().size() + "");
     }
 
 
@@ -257,7 +262,6 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 flag = true;
-                textView.setText("시작점 선택");
             }
         });
     }
@@ -282,7 +286,6 @@ public class MainPage extends AppCompatActivity {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText("삭제할 매대를 선택하세요");
                 isRemove = true;
             }
         });
@@ -316,7 +319,6 @@ public class MainPage extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText("물건 추가를 할 매대를 선택하세요");
                 isRegister = true;
             }
         });

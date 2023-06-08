@@ -23,11 +23,11 @@
             android:hint="물건 이름을 입력하세요" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/locationDetail_search_btn"
-            android:src="@drawable/ic_launcher_background"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:background="@drawable/search"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:scaleType="fitXY" />
 
     </LinearLayout>

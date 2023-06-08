@@ -10,7 +10,7 @@ public class Item implements Serializable {
     private int price;
     private int quantity;
     private String image;
-//    private Location location;
+    private Location location;
     private String barcode;
 
     public Item(Long id, Store store, String name, String type, int price, int quantity, String image, Location location, String barcode) {
@@ -35,6 +35,19 @@ public class Item implements Serializable {
 //        this.location = location;
         this.barcode = barcode;
     }
+
+    public Item(Long id, Store store, String name, String type, int price, int quantity, String image, String barcode) {
+        this.id = id;
+        this.store = store;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.quantity = quantity;
+        this.image = image;
+        this.barcode = barcode;
+    }
+
+
 
     public Long getId() {
         return id;

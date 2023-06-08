@@ -87,7 +87,7 @@ public class StoreViewActivity extends AppCompatActivity {
                             Item searchItem = (Item) intent.getSerializableExtra("item");
                             Toast.makeText(StoreViewActivity.this, "검색: " + searchItem.getName(), Toast.LENGTH_SHORT).show();
                             Log.e("asdasd", searchItem.getName());
-                            List<Location> locaitonList = nowStore.getLocaiton();
+                            List<Location> locaitonList = nowStore.getLocationList();
                             for(Location l : locaitonList){
                                 for (Item i : l.getItemList()) {
                                     if (i.getName().equals(searchItem.getName())) {
@@ -184,6 +184,14 @@ public class StoreViewActivity extends AppCompatActivity {
     }
 
     private void showItemLocation(Location location){
+        for(Location l : locationList){
+            if(l.equals(location)){
+                continue;
+            }
+            drawLocation(Color.BLACK, l);
+            drawLocation(Color.WHITE, l);
+            drawLocationType(l);
+        }
         drawLocation(Color.BLACK, location);
         drawLocation(Color.RED, location);
         drawLocationType(location);

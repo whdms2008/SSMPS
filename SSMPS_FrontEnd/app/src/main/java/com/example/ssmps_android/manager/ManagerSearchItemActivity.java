@@ -57,6 +57,7 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
         initData();
         getAllCenterItem();
 
+        Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,5 +148,18 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
 
         ManagerModifyDeleteAdapter adapter = new ManagerModifyDeleteAdapter(itemList);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+//        Toast.makeText(this, "다시시작됨", Toast.LENGTH_SHORT).show();
+        // 처음 시작했을 때도 여기로 오는 문제 해결해야 함
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        getAllCenterItem();
+        super.onRestart();
     }
 }
