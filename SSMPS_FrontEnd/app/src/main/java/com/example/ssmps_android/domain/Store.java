@@ -46,9 +46,6 @@ public class Store implements Serializable {
         this.address = address;
     }
 
-    public List<Location> getLocaiton() {
-        return locationList;
-    }
 
     public void setLocation(List<Location> items) {
         this.locationList = items;

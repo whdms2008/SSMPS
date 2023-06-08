@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ssmps_android.ItemRegisterActivity;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.CenterItem;
-import com.example.ssmps_android.domain.Item;
 
 import java.util.ArrayList;
 import java.util.List;

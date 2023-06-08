@@ -21,9 +21,33 @@ public class Item implements Serializable {
         this.price = price;
         this.quantity = quantity;
         this.image = image;
-        this.location = location;
+//        this.location = location;
         this.barcode = barcode;
     }
+
+    public Item(Long id, String name, String type, int price, int quantity, String image, Location location, String barcode) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.quantity = quantity;
+        this.image = image;
+//        this.location = location;
+        this.barcode = barcode;
+    }
+
+    public Item(Long id, Store store, String name, String type, int price, int quantity, String image, String barcode) {
+        this.id = id;
+        this.store = store;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.quantity = quantity;
+        this.image = image;
+        this.barcode = barcode;
+    }
+
+
 
     public Long getId() {
         return id;
@@ -81,13 +105,13 @@ public class Item implements Serializable {
         this.image = image;
     }
 
-    public Location getLocation() {
-        return location;
-    }
+//    public Location getLocation() {
+//        return location;
+//    }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+//    public void setLocation(Location location) {
+//        this.location = location;
+//    }
 
     public String getBarcode() {
         return barcode;

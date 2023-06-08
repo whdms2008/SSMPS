@@ -19,11 +19,12 @@ import com.example.ssmps_android.domain.Store;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
-    private List<Store> localDataSet;
+    private List<Store> localDataSet = new ArrayList<>();
     Context context;
     LoginType type;
 

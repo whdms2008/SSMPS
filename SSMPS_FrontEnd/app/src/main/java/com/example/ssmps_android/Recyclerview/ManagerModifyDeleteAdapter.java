@@ -15,11 +15,13 @@ import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.dto.CenterItemResponse;
+import com.example.ssmps_android.manager.ItemModifyDeleteActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerModifyDeleteAdapter extends RecyclerView.Adapter<ManagerModifyDeleteAdapter.ViewHolder> {
-    private List<Item> itemList;
+    private List<Item> itemList = new ArrayList<>();
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,8 +63,9 @@ public class ManagerModifyDeleteAdapter extends RecyclerView.Adapter<ManagerModi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ItemRegisterActivity.class);
+                Intent intent = new Intent(context, ItemModifyDeleteActivity.class);
                 intent.putExtra("item", item);
+
                 context.startActivity(intent);
             }
         });

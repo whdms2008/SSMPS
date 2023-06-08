@@ -43,7 +43,8 @@
         <EditText
             android:id="@+id/join_password"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <LinearLayout
@@ -60,57 +61,89 @@
         <EditText
             android:id="@+id/join_password_check"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/joinStoreList"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:scrollbars="none">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/joinStoreList"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="가게 이름 설정"/>
-        <EditText
-            android:id="@+id/join_store_name"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가게 주소"/>
-        <EditText
-            android:id="@+id/join_store_address"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <Button
-            android:id="@+id/join_store_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:text="➕" />
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/joinList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="가게 이름 설정 : "
+                        android:textColor="#000000" />
 
-    </LinearLayout>
+                    <EditText
+                        android:id="@+id/join_store_name"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="        가게 주소 : "
+                        android:textColor="#000000" />
+
+                    <EditText
+                        android:id="@+id/join_store_address"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/join_store_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="35dp"
+                android:backgroundTint="#FAFAD2"
+                android:text="➕" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/join_join_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:text="회원가입"/>
 

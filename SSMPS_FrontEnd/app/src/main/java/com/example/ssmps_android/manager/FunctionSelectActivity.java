@@ -10,15 +10,22 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.R;
+import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.location.MainPage;
 import com.example.ssmps_android.manager.ManagerSearchCenterItemActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class FunctionSelectActivity extends AppCompatActivity {
 
     Button layoutSettingBtn, addBtn, deleteModifyBtn;
 
-    TextView functionSelect_store_name;
+    TextView storeName;
 
+    SharedPreferenceUtil sharedPreferenceUtil;
+    Gson gson;
+    Store nowStore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +43,12 @@ public class FunctionSelectActivity extends AppCompatActivity {
         layoutSettingBtn = findViewById(R.id.functionSelect_store_layout);
         addBtn = findViewById(R.id.functionSelect_item_add);
         deleteModifyBtn = findViewById(R.id.functionSelect_item_delete_modify);
-        functionSelect_store_name = findViewById(R.id.functionSelect_store_name);
+        storeName = findViewById(R.id.functionSelect_store_name);
+
+        sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        gson = new GsonBuilder().create();
+        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+        storeName.setText(nowStore.getName());
     }
 
     private void settingLayout(){

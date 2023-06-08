@@ -44,6 +44,7 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
     SharedPreferenceUtil sharedPreferenceUtil;
     Gson gson;
     String token;
+
     List<CenterItem> centerItemList = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
