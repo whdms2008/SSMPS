@@ -154,7 +154,7 @@ public class StoreViewActivity extends AppCompatActivity {
     private void setLocation(){
         Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.LTGRAY);
         frame.setImageBitmap(bitmap);
         paint = new Paint();
         paint.setColor(Color.WHITE);
@@ -193,12 +193,12 @@ public class StoreViewActivity extends AppCompatActivity {
             if(l.equals(location)){
                 continue;
             }
-            drawLocation(Color.BLACK, l);
+            drawLocation(Color.LTGRAY, l);
             drawLocation(Color.WHITE, l);
             drawLocationType(l);
         }
-        drawLocation(Color.BLACK, location);
-        drawLocation(Color.RED, location);
+        drawLocation(Color.LTGRAY, location);
+        drawLocation(Color.GRAY, location);
         drawLocationType(location);
     }
 

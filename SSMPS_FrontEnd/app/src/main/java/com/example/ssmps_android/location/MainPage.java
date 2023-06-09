@@ -105,7 +105,7 @@ public class MainPage extends AppCompatActivity {
 
         Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.LTGRAY);
 
         frame = findViewById(R.id.mainPage_draw_space);
         frame.setImageBitmap(bitmap);
@@ -155,7 +155,7 @@ public class MainPage extends AppCompatActivity {
                             // 물건 등록
                             if(isClickLocation(event.getX(), event.getY())){
                                 Log.e("register", "등록");
-                                drawLocation(Color.YELLOW, moveLocation);
+                                drawLocation(Color.DKGRAY, moveLocation);
                                 isRegister = false;
                                 Intent intent = new Intent(getApplicationContext(), LocationDetailActivity.class);
                                 Log.e("move", moveLocation.getId() + "");
@@ -269,7 +269,7 @@ public class MainPage extends AppCompatActivity {
     }
     private void moveLocation(Location location, MotionEvent event){
         isMove = true;
-        drawLocation(Color.BLACK, location);
+        drawLocation(Color.LTGRAY, location);
 
         Log.e("eventX", event.getX() + "  " + preX);
         int dx = (int) (event.getX() - preX);
@@ -281,7 +281,7 @@ public class MainPage extends AppCompatActivity {
         location.setEndX(location.getEndX() + dx);
         location.setEndY(location.getEndY() + dy);
 
-        drawLocation(Color.YELLOW, location);
+        drawLocation(Color.DKGRAY, location);
     }
 
     private void removeLocation(){
