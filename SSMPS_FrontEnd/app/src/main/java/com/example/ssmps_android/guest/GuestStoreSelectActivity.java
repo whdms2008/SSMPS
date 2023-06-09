@@ -1,5 +1,6 @@
 package com.example.ssmps_android.guest;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +50,10 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_select);
         initData();
         setStoreList();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

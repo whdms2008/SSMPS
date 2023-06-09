@@ -3,6 +3,7 @@ package com.example.ssmps_android.guest;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.R;
@@ -13,5 +14,7 @@ public class GuestItemInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_item_info);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 }

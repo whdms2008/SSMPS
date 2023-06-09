@@ -6,47 +6,54 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="380dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:background="#FAFAD2"
+        android:layout_height="60dp"
+        android:background="#394867"
         android:gravity="center"
         android:text="매장 선택"
-        android:textColor="#000000"
-        android:textSize="35dp"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:background="#FAFAD2"
+        android:background="#EEEEEE"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:layout_marginLeft="50dp"
-            android:textSize="20dp"
-            android:text="매장 검색 : "/>
+        android:layout_width="390dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="50dp">
 
         <EditText
             android:id="@+id/storeSelect_search_input"
             android:layout_gravity="center"
-            android:layout_width="200dp"
+            android:hint="매장 이름을 입력해 주세요"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:layout_width="300dp"
             android:layout_height="50dp" />
 
         <Button
             android:id="@+id/storeSelect_search_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="#ffffff"
-            android:textColor="#000000" />
+            android:src="@drawable/search"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:text="🔍"
+            android:backgroundTint="#EEEEEE" />
     </LinearLayout>
 
 

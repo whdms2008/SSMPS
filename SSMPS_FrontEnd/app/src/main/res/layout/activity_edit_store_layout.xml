@@ -7,6 +7,15 @@
     android:orientation="vertical"
     tools:context=".location.MainPage">
 
+    <ImageView
+        android:layout_width="380dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo" />
+
     <Button
         android:id="@+id/mainPage_add_btn"
         android:layout_width="wrap_content"
