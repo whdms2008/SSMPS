@@ -227,7 +227,6 @@ public class MainPage extends AppCompatActivity {
         Log.e("now store loc", nowStore.getLocationList().size() + "");
     }
 
-
     private void setLocationList(){
         Call<List<Location>> findLocation = service.findStoreLocation(nowStore.getId());
         findLocation.enqueue(new Callback<List<Location>>() {
