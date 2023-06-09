@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.R;
@@ -23,6 +24,10 @@ public class GuestItemInfoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_item_info);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         initData();
         setItemData();
     }

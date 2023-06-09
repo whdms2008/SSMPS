@@ -106,7 +106,7 @@ public class StoreViewActivity extends AppCompatActivity {
 
     private void initData(){
         searchBtn = findViewById(R.id.guest_item_search_btn);
-        searchResult = findViewById(R.id.guest_search_item_name);
+
         storeName = findViewById(R.id.guest_item_search_store_name);
         frame = findViewById(R.id.guest_canvas);
 

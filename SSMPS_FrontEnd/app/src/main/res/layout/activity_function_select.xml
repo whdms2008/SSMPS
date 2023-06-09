@@ -16,20 +16,20 @@
         android:src="@drawable/logo" />
 
     <TextView
-        android:layout_width="130dp"
+        android:layout_width="113dp"
         android:layout_height="wrap_content"
-        android:text="선택 매장"
         android:layout_gravity="center"
+        android:text="선택 매장"
         android:textColor="#000000 "
-        android:textStyle="bold"
-        android:textSize="30dp" />
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:background="#eeeeee"
         android:layout_width="380dp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:layout_height="80dp">
+        android:layout_height="50dp">
 
         <TextView
             android:id="@+id/functionSelect_store_name"

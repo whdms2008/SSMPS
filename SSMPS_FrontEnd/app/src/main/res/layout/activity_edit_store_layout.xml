@@ -16,12 +16,26 @@
         android:scaleType="fitXY"
         android:src="@drawable/logo" />
 
-    <Button
-        android:id="@+id/mainPage_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="추가"/>
-<!--    <LinearLayout-->
+    <LinearLayout
+        android:background="#eeeeee"
+        android:layout_width="380dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/edit_store_layout_name"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+
+    <!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:orientation="horizontal">-->
@@ -51,25 +65,41 @@
 
 <!--    </LinearLayout>-->
 
-    <Button
-        android:id="@+id/mainPage_remove_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="삭제"/>
-
-
     <ImageView
         android:id="@+id/mainPage_draw_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
-    
-    
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/mainPage_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#394867"
+        android:text="매대 추가"/>
+
+    <Button
+        android:id="@+id/mainPage_remove_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#394867"
+        android:text="매대 삭제"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
     <Button
         android:id="@+id/mainPage_regist_item_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="물건 등록"
+        android:text="매대 물건 등록"
+        android:backgroundTint="#394867"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -81,6 +111,7 @@
         android:id="@+id/mainPage_save_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="저장"/>
-
+        android:backgroundTint="#394867"
+        android:text="저장하기"/>
+</LinearLayout>
 </LinearLayout>

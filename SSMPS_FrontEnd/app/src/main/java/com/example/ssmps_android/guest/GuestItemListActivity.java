@@ -79,7 +79,7 @@ public class GuestItemListActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        itemName = findViewById(R.id.guestItemList_name);
+
         searchInput = findViewById(R.id.guest_item_name_input);
         searchBtn = findViewById(R.id.guest_item_search_btn);
         
