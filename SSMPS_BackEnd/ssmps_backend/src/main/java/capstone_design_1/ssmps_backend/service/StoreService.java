@@ -60,4 +60,8 @@ public class StoreService {
     public List<Store> findManagerStoreByName(String storeName, Long managerId){
         return storeRepository.findManagerStoreByName(storeName, managerId);
     }
+
+    public Location findLocationById(Long locationId) {
+        return storeRepository.findLocationById(locationId);
+    }
 }

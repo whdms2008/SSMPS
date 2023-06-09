@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.R;
@@ -68,6 +69,9 @@ public class StoreViewActivity extends AppCompatActivity {
         initData();
         setStore();
         setLocationData();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

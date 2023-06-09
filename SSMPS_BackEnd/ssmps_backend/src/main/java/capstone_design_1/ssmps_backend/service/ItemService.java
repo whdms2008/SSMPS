@@ -3,6 +3,7 @@ package capstone_design_1.ssmps_backend.service;
 
 import capstone_design_1.ssmps_backend.domain.CenterItem;
 import capstone_design_1.ssmps_backend.domain.Item;
+import capstone_design_1.ssmps_backend.domain.Location;
 import capstone_design_1.ssmps_backend.domain.Store;
 import capstone_design_1.ssmps_backend.dto.ItemRequest;
 import capstone_design_1.ssmps_backend.repository.ItemRepository;
@@ -61,5 +62,12 @@ public class ItemService {
     @Transactional
     public Item deleteItem(Item deleteItem) {
         return itemRepository.deleteItem(deleteItem);
+    }
+
+
+    @Transactional
+    public Location updateLocation(List<Item> findItem, Location location) {
+        location.setItemList(findItem);
+        return location;
     }
 }

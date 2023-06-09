@@ -63,18 +63,24 @@ public class ItemController {
     }
 
     // 물건 조회 (검색. 추가 요청 때)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
-    @GetMapping("api/item/{name}")
-    public ResponseEntity<Object> findItemByName(@PathVariable String name, @RequestParam("store_id") Long storeId){
+    @GetMapping("api/mana/item") // manager/item으로했을때 401에러 뜸
+    public List<ItemResponse> findItemByName(@RequestParam String name, @RequestParam("store_id") Long storeId){
+        log.error("item name: {}", name);
+        log.error("id: {}", storeId);
         Store findStore = storeService.findStoreById(storeId);
+        log.error("find store: {}", findStore.getName());
         List<Item> findItemList = itemService.getItemByName(name, findStore);
+        log.error("find list: {}", findItemList.size());
         List<ItemResponse> resultList = findItemList.stream()
                 .map(i -> new ItemResponse(i))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(resultList);
+        log.error("list size: {}", resultList.size());
+        return resultList;
+//        return ResponseEntity.ok(resultList);
     }
 
     // 재고 수량 변경
-    @PutMapping("api/item")
+    @PutMapping("api/store/item")
     public ResponseEntity<Object> updateItemQuantity(@RequestBody ItemRequest updateItem){
         Item findItem = itemService.getItemById(updateItem.getId());
         Item updatedItem = itemService.updateQuantity(findItem, updateItem.getQuantity());
@@ -82,13 +88,12 @@ public class ItemController {
         return ResponseEntity.ok(resultItem);
     }
 
-    @DeleteMapping("api/item")
-    public ResponseEntity<Object> deleteItem(@RequestBody ItemRequest deleteItem){
-        Item findItem = itemService.getItemById(deleteItem.getId());
+    @DeleteMapping("api/store/item/{id}")
+    public ResponseEntity<Object> deleteItem(@PathVariable Long id){
+        Item findItem = itemService.getItemById(id);
         Item deleteditem = itemService.deleteItem(findItem);
         ItemResponse resultItem = new ItemResponse(deleteditem);
         return ResponseEntity.ok(resultItem);
     }
-
 
 }

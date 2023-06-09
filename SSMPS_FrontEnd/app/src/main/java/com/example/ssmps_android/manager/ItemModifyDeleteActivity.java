@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
@@ -44,6 +45,9 @@ public class ItemModifyDeleteActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_delete_modify);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         initData();
         setItemData();

@@ -1,7 +1,7 @@
 package capstone_design_1.ssmps_backend.service;
 
-import capstone_design_1.ssmps_backend.domain.Location;
 import capstone_design_1.ssmps_backend.domain.Manager;
+import capstone_design_1.ssmps_backend.domain.Store;
 import capstone_design_1.ssmps_backend.dto.ItemResponse;
 import capstone_design_1.ssmps_backend.dto.LocationResponse;
 import capstone_design_1.ssmps_backend.dto.ManagerResponse;
@@ -28,10 +28,13 @@ public class LoginService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public Manager join(Manager manager) {
+    public Manager join(Manager manager, List<Store> list) {
         String encodedPassword = passwordEncoder.encode(manager.getPassword());
-        Manager encodedManager = new Manager(null, manager.getAccountId(), encodedPassword, null);
-        return managerRepository.join(encodedManager);
+        Manager encodedManager = new Manager(null, manager.getAccountId(), encodedPassword, manager.getStores());
+        for(Store s : list){
+            s.setManager(encodedManager);
+        }
+        return managerRepository.join(encodedManager, list);
     }
 //
     public ManagerResponse login(Manager manager){
