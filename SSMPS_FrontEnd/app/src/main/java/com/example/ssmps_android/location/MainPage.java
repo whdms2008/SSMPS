@@ -38,7 +38,7 @@ import retrofit2.Retrofit;
 // 테스트용 페이지
 public class MainPage extends AppCompatActivity {
     Button registerBtn, removeBtn, saveBtn;
-    TextView storeName;
+    TextView storeName, editAlarm;
     Retrofit retrofit;
     RetrofitAPI service;
     TokenInterceptor tokenInterceptor;
@@ -99,6 +99,7 @@ public class MainPage extends AppCompatActivity {
     }
     private void initData(){
         storeName = findViewById(R.id.edit_store_layout_name);
+        editAlarm = findViewById(R.id.edit_store_layout_explain);
         saveBtn = findViewById(R.id.mainPage_save_btn);
         registerBtn = findViewById(R.id.mainPage_regist_item_btn);
         removeBtn = findViewById(R.id.mainPage_remove_btn);
@@ -263,7 +264,11 @@ public class MainPage extends AppCompatActivity {
         findViewById(R.id.mainPage_add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editAlarm.setText("추가할 매대의 시작점과 끝점을 선택해주세요");
                 flag = true;
+                isRegister = false;
+                isMove = false;
+                isRemove = false;
             }
         });
     }
@@ -289,6 +294,10 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isRemove = true;
+                isRegister = false;
+                isMove = false;
+                flag = false;
+                editAlarm.setText("삭제할 매대를 선택해주세요");
             }
         });
     }
@@ -321,7 +330,11 @@ public class MainPage extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editAlarm.setText("물건을 진열할 매대를 선택해주세요");
                 isRegister = true;
+                isRemove = false;
+                isMove = false;
+                flag = false;
             }
         });
     }
