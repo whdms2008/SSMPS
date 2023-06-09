@@ -71,6 +71,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         findViewById(R.id.locationDetail_search_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("tttt", "here");
                 searchItem();
             }
         });
@@ -156,6 +157,7 @@ public class LocationDetailActivity extends AppCompatActivity {
                     return;
                 }
                 itemList = response.body();
+                setRecyclerViewData();
             }
 
             @Override

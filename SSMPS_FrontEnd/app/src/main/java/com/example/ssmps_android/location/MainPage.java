@@ -38,6 +38,7 @@ import retrofit2.Retrofit;
 // 테스트용 페이지
 public class MainPage extends AppCompatActivity {
     Button registerBtn, removeBtn, saveBtn;
+    TextView storeName;
     Retrofit retrofit;
     RetrofitAPI service;
     TokenInterceptor tokenInterceptor;
@@ -82,6 +83,7 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registLocation();
+                finish();
             }
         });
     }
@@ -94,6 +96,30 @@ public class MainPage extends AppCompatActivity {
             drawLocation(Color.WHITE, l);
         }
         super.onRestart();
+    }
+    private void initData(){
+        storeName = findViewById(R.id.edit_store_layout_name);
+        saveBtn = findViewById(R.id.mainPage_save_btn);
+        registerBtn = findViewById(R.id.mainPage_regist_item_btn);
+        removeBtn = findViewById(R.id.mainPage_remove_btn);
+
+        Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.BLACK);
+
+        frame = findViewById(R.id.mainPage_draw_space);
+        frame.setImageBitmap(bitmap);
+
+        paint = new Paint();
+        paint.setColor(Color.WHITE);
+        gson = new GsonBuilder().create();
+        setToken();
+
+        retrofit = RetrofitClient.getInstance(tokenInterceptor);
+        service = retrofit.create(RetrofitAPI.class);
+
+        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+        storeName.setText(nowStore.getName());
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -201,30 +227,6 @@ public class MainPage extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    private void initData(){
-        saveBtn = findViewById(R.id.mainPage_save_btn);
-        registerBtn = findViewById(R.id.mainPage_regist_item_btn);
-        removeBtn = findViewById(R.id.mainPage_remove_btn);
-
-        Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.BLACK);
-
-        frame = findViewById(R.id.mainPage_draw_space);
-        frame.setImageBitmap(bitmap);
-
-        paint = new Paint();
-        paint.setColor(Color.WHITE);
-        gson = new GsonBuilder().create();
-        setToken();
-
-        retrofit = RetrofitClient.getInstance(tokenInterceptor);
-        service = retrofit.create(RetrofitAPI.class);
-
-        nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
-        Log.e("now store loc", nowStore.getLocationList().size() + "");
     }
 
 
@@ -352,7 +354,7 @@ public class MainPage extends AppCompatActivity {
     }
     
     private void registLocation(){
-        nowStore.setLocation(locationList);
+        checkModifyLocation();
         Log.e("loc size", locationList.size() + "");
         Call<List<Location>> registStore = service.registStoreLocation(nowStore);
         registStore.enqueue(new Callback<List<Location>>() {
@@ -373,6 +375,16 @@ public class MainPage extends AppCompatActivity {
                 Toast.makeText(MainPage.this, "매장 수정 실패", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void checkModifyLocation(){
+        List<Location> list = nowStore.getLocationList();
+        List<Location> newList = new ArrayList<>();
+        for(int i = 0;i < locationList.size();i++){
+            if(!list.contains(locationList.get(i))){
+                newList.add(locationList.get(i));
+            }
+        }
+        nowStore.setLocation(newList);
     }
     
     private void setNowStoreLocation(List<Location> locations){

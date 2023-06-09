@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -38,7 +39,7 @@ import retrofit2.Retrofit;
 
 public class ManagerSearchItemActivity extends AppCompatActivity {
     EditText itemNameInput;
-    Button searchBtn;
+    ImageView searchBtn;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -67,7 +68,7 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     }
     
     private void initData(){
-        //itemNameInput = findViewById(R.id.managerSearchItem_item_name_input);
+        itemNameInput = findViewById(R.id.managerSearchItem_item_name_input);
         searchBtn = findViewById(R.id.managerSearchItem_search_btn);
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());

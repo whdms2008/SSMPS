@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.R;
@@ -43,7 +44,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class StoreViewActivity extends AppCompatActivity {
-    EditText searchInput;
     Button searchBtn;
     TextView searchResult, storeName;
 
@@ -69,6 +69,9 @@ public class StoreViewActivity extends AppCompatActivity {
         initData();
         setStore();
         setLocationData();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,9 +105,8 @@ public class StoreViewActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        searchInput = findViewById(R.id.guest_item_name_input);
         searchBtn = findViewById(R.id.guest_item_search_btn);
-        searchResult = findViewById(R.id.guest_search_item_name);
+
         storeName = findViewById(R.id.guest_item_search_store_name);
         frame = findViewById(R.id.guest_canvas);
 
@@ -175,6 +177,9 @@ public class StoreViewActivity extends AppCompatActivity {
         paint.setTextSize(40);
         paint.setTextAlign(Paint.Align.CENTER);
         String type = location.getItemList().stream().map(i -> i.getType() + "\n").collect(Collectors.joining());
+        if(type.equals("")){
+            type = "진열X";
+        }
         canvas.drawText(type, location.getCenterX(), location.getCenterY(), paint);
     }
 

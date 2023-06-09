@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.domain.Item;
+import com.example.ssmps_android.guest.GuestItemInfoActivity;
 import com.example.ssmps_android.guest.GuestItemListActivity;
 import com.example.ssmps_android.guest.StoreViewActivity;
 
@@ -66,16 +67,6 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
 
         holder.textView.setText(item.getName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent2(context, GuestItemListActivity.class);
-//                intent.putExtra("item", item);
-//                context.startActivity(intent);
-                Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         holder.locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +76,15 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
                 Log.e("item", item.getName());
                 ((Activity) context).setResult(Activity.RESULT_OK, intent);
                 ((Activity) context).finish();
+            }
+        });
+
+        holder.infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GuestItemInfoActivity.class);
+                intent.putExtra("item", item);
+                context.startActivity(intent);
             }
         });
     }

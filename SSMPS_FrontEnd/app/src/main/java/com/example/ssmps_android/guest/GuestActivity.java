@@ -55,8 +55,6 @@ public class GuestActivity extends AppCompatActivity{
         paint.setColor(Color.WHITE);
 
         searchBtn = findViewById(R.id.guest_item_search_btn);
-
-        itemNameInput = findViewById(R.id.guest_item_name_input);
         // 임시 데이터
         locationList.add(new Location(150, 10, 230, 100));
     }

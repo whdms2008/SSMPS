@@ -11,6 +11,7 @@
         android:id="@+id/guest_item_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
+
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
@@ -25,13 +26,18 @@
         android:id="@+id/guest_item_location_btn"
         android:layout_width="70dp"
         android:layout_margin="5dp"
+        android:backgroundTint="#394867"
+        android:textColor="#ffffff"
         android:layout_height="wrap_content"
+
         android:text="위치"/>
 
     <Button
         android:id="@+id/guest_item_information_btn"
         android:layout_width="70dp"
         android:layout_margin="5dp"
+        android:backgroundTint="#394867"
+        android:textColor="#ffffff"
         android:layout_marginLeft="3dp"
         android:layout_height="wrap_content"
         android:text="상세"/>

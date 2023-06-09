@@ -4,66 +4,90 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="회원가입"
-        android:textSize="22sp"
-        android:layout_marginTop="150dp"
-        android:layout_gravity="center"/>
+    <ImageView
+        android:layout_width="380dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="회원가입"
+        android:textColor="#000000 "
+        android:textSize="30dp"
+        android:textStyle="bold|italic" />
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:background="#EEEEEE"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디"/>
         <EditText
             android:id="@+id/join_id"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:height="50dp"
+            android:background="@null"
+            android:layout_marginLeft="20dp"
+            android:hint="아이디를 입력해 주세요" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:layout_width="350dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호"/>
         <EditText
             android:id="@+id/join_password"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:hint="비밀번호를 입력해 주세요"
+            android:layout_marginLeft="20dp"
             android:inputType="textPassword"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:layout_width="350dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호 확인"/>
         <EditText
             android:id="@+id/join_password_check"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:hint="비밀번호 확인"
+            android:layout_marginLeft="20dp"
             android:inputType="textPassword"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="상세정보"
+        android:textColor="#000000 "
+        android:textSize="30dp"
+        android:textStyle="bold|italic" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -74,53 +98,45 @@
             android:id="@+id/joinStoreList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="240dp"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
-                    android:background="#FFFFFF"
+                    android:background="#EEEEEE"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="가게 이름 설정 : "
-                        android:textColor="#000000" />
 
                     <EditText
                         android:id="@+id/join_store_name"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="200dp"
+                        android:background="@null"
+                        android:hint="가게 이름을 입력해 주세요"
+                        android:layout_height="50dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:background="#FFFFFF"
+                    android:layout_marginLeft="40dp"
+                    android:background="#EEEEEE"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="        가게 주소 : "
-                        android:textColor="#000000" />
 
                     <EditText
                         android:id="@+id/join_store_address"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="200dp"
+                        android:background="@null"
+                        android:hint="가게 주소를 입력해 주세요"
+                        android:layout_height="50dp"/>
 
                 </LinearLayout>
 
@@ -130,9 +146,9 @@
                 android:id="@+id/join_store_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="35dp"
-                android:backgroundTint="#FAFAD2"
+                android:backgroundTint="#EEEEEE"
                 android:text="➕" />
 
         </LinearLayout>
@@ -141,10 +157,14 @@
 
     <Button
         android:id="@+id/join_join_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:text="회원가입"/>
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="35dp"
+        android:text="가입하기"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:backgroundTint="#394867"
+        android:textColor="#ffffff"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

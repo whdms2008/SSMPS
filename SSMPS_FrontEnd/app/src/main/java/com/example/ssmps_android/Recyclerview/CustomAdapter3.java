@@ -84,6 +84,8 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
         Item item = localDataSet.get(position);
         holder.itemName.setText(item.getName());
         List<Item> itemList = nowLocation.getItemList();
+        Log.e("hhhh", nowLocation.getId() + "");
+        Log.e("itemList", itemList.size() + "");
         for(Item i : itemList){
             if(i.getName().equals(item.getName())){
                 holder.itemChcek.setChecked(true);

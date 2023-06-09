@@ -1,5 +1,6 @@
 package com.example.ssmps_android.guest;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ssmps_android.R;
@@ -35,7 +37,7 @@ import retrofit2.Retrofit;
 public class GuestStoreSelectActivity extends AppCompatActivity {
 
     EditText searchInput;
-    Button searchBtn;
+    ImageView searchBtn;
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
 
@@ -49,6 +51,10 @@ public class GuestStoreSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_select);
         initData();
         setStoreList();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
