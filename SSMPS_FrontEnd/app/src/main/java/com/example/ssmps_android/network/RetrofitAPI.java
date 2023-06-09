@@ -17,8 +17,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -67,7 +69,11 @@ public interface RetrofitAPI {
 
     @POST("api/store/location")
     Call<List<Location>> registStoreLocation(@Body Store store);
-
-    Call<Item> deleteItem(@Body Item item);
+    @DELETE("api/store/item/{id}")
+    Call<Item> deleteItem(@Path("id") Long itemId);
+    @PUT("api/store/item")
     Call<Item> modifyItemQuantity(@Body Item item);
+
+    @PUT("api/location/item/{id}")
+    Call<Location> modifyItemLocation(@Body List<Item> item, @Path("id") Long locationId);
 }

@@ -50,4 +50,7 @@ public class ItemRepository {
         em.remove(deleteItem);
         return deleteItem;
     }
+
+    public void updateLocation(Long id, Long locationId) {
+    }
 }

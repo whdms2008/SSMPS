@@ -36,4 +36,12 @@ public class LocationResponse {
         this.endY = location.getEndY();
         this.itemList = location.getItemList().stream().map(i -> new ItemResponse(i)).collect(Collectors.toList());
     }
+
+    public LocationResponse(Long id, float startX, float startY, float endX, float endY) {
+        this.id = id;
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+    }
 }

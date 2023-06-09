@@ -65,7 +65,7 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
     }
     
     private void initData(){
-        //itemNameInput = findViewById(R.id.managerSearchItem_item_name_input);
+        itemNameInput = findViewById(R.id.managerSearchItem_item_name_input);
         searchBtn = findViewById(R.id.managerSearchItem_search_btn);
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());

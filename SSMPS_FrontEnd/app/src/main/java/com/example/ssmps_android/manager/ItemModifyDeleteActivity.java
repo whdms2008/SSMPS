@@ -102,7 +102,7 @@ public class ItemModifyDeleteActivity extends AppCompatActivity {
     }
 
     private void deleteItem(){
-        Call<Item> deleteItem = service.deleteItem(nowItem);
+        Call<Item> deleteItem = service.deleteItem(nowItem.getId());
         deleteItem.enqueue(new Callback<Item>() {
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {

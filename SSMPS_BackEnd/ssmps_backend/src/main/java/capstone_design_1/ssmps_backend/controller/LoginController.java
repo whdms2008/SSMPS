@@ -1,12 +1,17 @@
 package capstone_design_1.ssmps_backend.controller;
 
 import capstone_design_1.ssmps_backend.domain.Manager;
+import capstone_design_1.ssmps_backend.domain.Store;
 import capstone_design_1.ssmps_backend.dto.ManagerRequest;
 import capstone_design_1.ssmps_backend.dto.ManagerResponse;
+import capstone_design_1.ssmps_backend.dto.store.StoreResponse;
 import capstone_design_1.ssmps_backend.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -18,11 +23,11 @@ public class LoginController {
     @PostMapping("/api/join")
     public ManagerResponse join(@RequestBody ManagerRequest manager){
         // 회원가입
-//        List<Store> storeList = manager.getStoreList().stream()
-//                .map(s -> new Store(null, s.getName(), s.getAddress(), null, null)).collect(Collectors.toList());
         Manager joinManager = new Manager(null, manager.getAccountId(), manager.getPassword(), null);
-        Manager joinedManager = managerService.join(joinManager);
-//        List<StoreResponse> storeListRes = joinedManager.getStores().stream().map(s -> new StoreResponse(s.getName(), s.getAddress())).collect(Collectors.toList());
+        List<Store> storeList = manager.getStoreList().stream()
+                .map(s -> new Store(null, s.getName(), s.getAddress(), joinManager, null, null)).collect(Collectors.toList());
+        Manager joinedManager = managerService.join(joinManager, storeList);
+//        List<StoreResponse> storeListRes = joinedManager.getStores().stream().map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), null)).collect(Collectors.toList());
         ManagerResponse resultManager = new ManagerResponse(joinedManager.getId(), joinedManager.getAccountId(), null, null);
         return resultManager;
     }
