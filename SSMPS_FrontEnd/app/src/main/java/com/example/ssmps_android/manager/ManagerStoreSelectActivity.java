@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -39,7 +40,7 @@ import retrofit2.Retrofit;
 public class ManagerStoreSelectActivity extends AppCompatActivity {
 
     EditText searchInput;
-    Button searchBtn;
+    ImageView searchBtn;
 
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;

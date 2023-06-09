@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class GuestItemListActivity extends AppCompatActivity {
     TextView itemName;
     List<Item> itemList = new ArrayList<>();
 
-    Button searchBtn;
+    ImageView searchBtn;
     EditText searchInput;
 
     Retrofit retrofit;
@@ -79,8 +80,8 @@ public class GuestItemListActivity extends AppCompatActivity {
 
     private void initData(){
         itemName = findViewById(R.id.guestItemList_name);
-        searchInput = findViewById(R.id.guestItemList_search_input);
-        searchBtn = findViewById(R.id.guestItemList_search_btn);
+        searchInput = findViewById(R.id.guest_item_name_input);
+        searchBtn = findViewById(R.id.guest_item_search_btn);
         
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         gson = new GsonBuilder().create();

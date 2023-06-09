@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ssmps_android.R;
@@ -36,7 +37,7 @@ import retrofit2.Retrofit;
 public class GuestStoreSelectActivity extends AppCompatActivity {
 
     EditText searchInput;
-    Button searchBtn;
+    ImageView searchBtn;
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
 

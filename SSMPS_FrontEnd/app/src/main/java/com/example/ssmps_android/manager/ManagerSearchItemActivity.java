@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -38,7 +39,7 @@ import retrofit2.Retrofit;
 
 public class ManagerSearchItemActivity extends AppCompatActivity {
     EditText itemNameInput;
-    Button searchBtn;
+    ImageView searchBtn;
 
     Retrofit retrofit;
     RetrofitAPI service;

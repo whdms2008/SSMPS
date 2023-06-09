@@ -12,23 +12,32 @@
         android:layout_marginBottom="10dp"
         android:scaleType="fitXY"
         android:src="@drawable/logo" />
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="선택 매장"
+        android:layout_gravity="center"
+        android:textColor="#000000 "
+        android:textStyle="bold"
+        android:textSize="30dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가게 이름: "/>
+        android:background="#eeeeee"
+        android:layout_width="380dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_height="50dp">
 
         <TextView
             android:id="@+id/guest_item_search_store_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:gravity="center" />
 
+    </LinearLayout>
 
     <LinearLayout
         android:background="#FAFAD2"

@@ -16,9 +16,9 @@
         android:background="#EEEEEE"
         android:layout_width="380dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center"
-        android:layout_height="70dp">
+        android:layout_height="60dp">
 
         <EditText
             android:id="@+id/managerSearchItem_item_name_input"
@@ -28,16 +28,27 @@
             android:layout_height="60dp"
             android:hint="제품 이름을 입력해 주세요" />
 
-        <Button
+        <ImageView
             android:id="@+id/managerSearchItem_search_btn"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:backgroundTint="#EEEEEE"
-            android:layout_marginLeft="10dp"
-            android:text="🔍"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/search"
+            android:scaleType="fitXY"
             android:textColor="#000000"
-            android:textSize="30dp" />
+            android:textSize="30dp"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:layout_marginLeft="115dp"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:text="제품명" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemSearchManager_recyclerView"

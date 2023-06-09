@@ -41,25 +41,55 @@
             android:id="@+id/storeSelect_search_input"
             android:layout_gravity="center"
             android:hint="매장 이름을 입력해 주세요"
-            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
             android:background="@null"
             android:layout_width="300dp"
             android:layout_height="50dp" />
 
-        <Button
+        <ImageView
             android:id="@+id/storeSelect_search_btn"
-            android:src="@drawable/search"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="5dp"
-            android:text="🔍"
-            android:backgroundTint="#EEEEEE" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/search"
+            android:scaleType="fitXY"
+            android:textColor="#000000"
+            android:textSize="30dp"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="390dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="30dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:layout_marginLeft="60dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:text="매장명" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="130dp"
+        android:text="매장 주소"/>
+
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/storeSelect_recyclerView"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
