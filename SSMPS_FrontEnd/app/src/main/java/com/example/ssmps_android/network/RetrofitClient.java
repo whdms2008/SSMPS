@@ -14,8 +14,8 @@ public class RetrofitClient {
 //    private static final String URL = "http://192.168.0.30:8080";
 //    private static final String URL = "http://10.2.5.212:8080";
 //    private static final String URL = "http://1.234.5.29:8080";
-//    private static final String URL = "http://192.168.0.36:8080";
-private static final String URL = "http://192.168.0.6:8080";
+    private static final String URL = "http://192.168.0.36:8080";
+//private static final String URL = "http://192.168.0.6:8080";
 //    private static final String URL = "http://172.30.1.35:8080";
 
     public static Retrofit getInstance(TokenInterceptor interceptor){

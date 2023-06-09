@@ -91,6 +91,7 @@ public class ItemRegisterActivity extends AppCompatActivity{
         nowItem = (CenterItem) intent.getSerializableExtra("item");
         itemName.setText(nowItem.getName());
         itemType.setText(nowItem.getType());
+        itemPrice.setText(Integer.toString(nowItem.getPrice()));
 //        itemImage.setImageBitmap();
         // 이미지 blob -> Bitmap로 바꿔서 등록
     }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import com.example.ssmps_android.network.TokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class GuestItemListActivity extends AppCompatActivity {
     List<Item> itemList = new ArrayList<>();
 
     Button searchBtn;
+    EditText searchInput;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -50,6 +54,12 @@ public class GuestItemListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guest_item_list);
         initData();
         setListData();
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchItemList();
+            }
+        });
     }
 
     private void setRecyclerview(){
@@ -64,6 +74,9 @@ public class GuestItemListActivity extends AppCompatActivity {
 
     private void initData(){
         itemName = findViewById(R.id.guestItemList_name);
+        searchInput = findViewById(R.id.guestItemList_search_input);
+        searchBtn = findViewById(R.id.guestItemList_search_btn);
+        
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         gson = new GsonBuilder().create();
         setToken();
@@ -97,6 +110,33 @@ public class GuestItemListActivity extends AppCompatActivity {
             public void onFailure(Call<List<Item>> call, Throwable t) {
                 Log.e("find all item fail", t.getMessage());
                 Toast.makeText(GuestItemListActivity.this, "매장 물건 가져오기 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    
+    private void searchItemList(){
+        String searchItemName = searchInput.getText().toString();
+        Call<List<Item>> searchItemList = service.findItemByName(searchItemName, nowStore.getId());
+        searchItemList.enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if(!response.isSuccessful()){
+                    try {
+                        Log.e("guest search item error", response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Toast.makeText(GuestItemListActivity.this, "물건 검색 에러", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                itemList = response.body();
+                setRecyclerview();
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                Log.e("guest search item fail", t.getMessage());
+                Toast.makeText(GuestItemListActivity.this, "물건 검색 실패", Toast.LENGTH_SHORT).show();
             }
         });
     }

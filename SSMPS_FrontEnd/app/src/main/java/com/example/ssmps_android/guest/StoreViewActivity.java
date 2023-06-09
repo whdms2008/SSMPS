@@ -43,7 +43,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class StoreViewActivity extends AppCompatActivity {
-    EditText searchInput;
     Button searchBtn;
     TextView searchResult, storeName;
 
@@ -102,7 +101,6 @@ public class StoreViewActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        searchInput = findViewById(R.id.guest_item_name_input);
         searchBtn = findViewById(R.id.guest_item_search_btn);
         searchResult = findViewById(R.id.guest_search_item_name);
         storeName = findViewById(R.id.guest_item_search_store_name);
