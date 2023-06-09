@@ -10,10 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a9971d4-1a08-4d36-aedc-45d6f88f1810" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/guest/StoreViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/guest/StoreViewActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/location/LocationDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/location/LocationDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/manager/ManagerSearchItemActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/manager/ManagerSearchItemActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/location/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SSMPS_FrontEnd/app/src/main/java/com/example/ssmps_android/location/MainPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
