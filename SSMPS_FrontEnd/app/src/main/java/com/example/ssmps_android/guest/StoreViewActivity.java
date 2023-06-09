@@ -177,6 +177,9 @@ public class StoreViewActivity extends AppCompatActivity {
         paint.setTextSize(40);
         paint.setTextAlign(Paint.Align.CENTER);
         String type = location.getItemList().stream().map(i -> i.getType() + "\n").collect(Collectors.joining());
+        if(type.equals("")){
+            type = "진열X";
+        }
         canvas.drawText(type, location.getCenterX(), location.getCenterY(), paint);
     }
 
