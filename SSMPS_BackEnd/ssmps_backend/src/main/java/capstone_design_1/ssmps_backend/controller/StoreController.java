@@ -76,7 +76,7 @@ public class StoreController {
 
         log.error("location size", store.getLocationList().size() + "");
         List<Location> locationList = store.getLocationList().stream()
-                .map(l -> new Location(l.getId(), l.getStartX(), l.getStartY(),
+                .map(l -> new Location(null, l.getStartX(), l.getStartY(),
                         l.getEndX(), l.getEndY(), null))
                 .collect(Collectors.toList());
 
