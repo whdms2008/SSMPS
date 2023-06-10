@@ -1,7 +1,10 @@
 package com.example.ssmps_android.manager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -82,9 +85,9 @@ public class ItemModifyDeleteActivity extends AppCompatActivity {
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
-        Intent intent = getIntent();
-
-        nowItem = (Item) intent.getSerializableExtra("item");
+//        Intent intent = getIntent();
+        nowItem = gson.fromJson(sharedPreferenceUtil.getData("item", "err"), Item.class);
+//        nowItem = (Item) intent.getSerializableExtra("item");
     }
 
     private void setToken(){
@@ -99,6 +102,7 @@ public class ItemModifyDeleteActivity extends AppCompatActivity {
         itemQuantity.setText(Integer.toString(nowItem.getQuantity()));
         itemType.setText(nowItem.getType());
         itemPrice.setText(Integer.toString(nowItem.getPrice()));
+        itemImg.setImageBitmap(byteToImage(nowItem.getImage()));
     }
 
     private void deleteItem(){
@@ -146,5 +150,16 @@ public class ItemModifyDeleteActivity extends AppCompatActivity {
         });
 
     }
-
+    private Bitmap byteToImage(String b){
+        try {
+            byte[] encodeByte = Base64.decode(b, Base64.DEFAULT);
+            // Base64 코드를 디코딩하여 바이트 형태로 저장
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            // 바이트 형태를 디코딩하여 비트맵 형태로 저장
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 }

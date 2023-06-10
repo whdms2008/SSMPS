@@ -2,7 +2,10 @@ package com.example.ssmps_android.Recyclerview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,9 +86,8 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Item item = localDataSet.get(position);
         holder.itemName.setText(item.getName());
+        holder.itemImg.setImageBitmap(byteToImage(item.getImage()));
         List<Item> itemList = nowLocation.getItemList();
-        Log.e("hhhh", nowLocation.getId() + "");
-        Log.e("itemList", itemList.size() + "");
         for(Item i : itemList){
             if(i.getName().equals(item.getName())){
                 holder.itemChcek.setChecked(true);
@@ -99,7 +101,16 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
                 if(isChecked) {
                     locationItemList.add(item);
                 }else {
-                    locationItemList.remove(locationItemList.get(position));
+                    // 체크 표시 x
+                    for(int i = 0;i < locationItemList.size();i++){
+                        Item localItem = localDataSet.get(position);
+                        Item chekcItem = locationItemList.get(i);
+                        if((chekcItem.getName().equals(localItem.getName()))){
+                            Log.e("remove", "here");
+                            locationItemList.remove(i);
+                        }
+                    }
+                    // 총 3개 체크는 2개 체크는 0 2번 position
                 }
             }
         });
@@ -112,6 +123,20 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
 
     public List<Item> getLocationItemList(){
         return locationItemList;
+    }
+
+    private Bitmap byteToImage(String b){
+        try {
+            byte[] encodeByte = Base64.decode(b, Base64.DEFAULT);
+            // Base64 코드를 디코딩하여 바이트 형태로 저장
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            // 바이트 형태를 디코딩하여 비트맵 형태로 저장
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            Log.e("error", "err");
+            return null;
+        }
     }
 
 }

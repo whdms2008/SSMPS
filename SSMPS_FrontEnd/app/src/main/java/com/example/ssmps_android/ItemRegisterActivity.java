@@ -4,7 +4,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +26,8 @@ import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.nio.charset.StandardCharsets;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,6 +83,7 @@ public class ItemRegisterActivity extends AppCompatActivity{
 
 
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+        nowItem = gson.fromJson(sharedPreferenceUtil.getData("item", "err"), CenterItem.class);
     }
 
     private void setToken(){
@@ -88,12 +94,10 @@ public class ItemRegisterActivity extends AppCompatActivity{
 
     private void setItemData(){
         Intent intent = getIntent();
-        nowItem = (CenterItem) intent.getSerializableExtra("item");
         itemName.setText(nowItem.getName());
         itemType.setText(nowItem.getType());
         itemPrice.setText(Integer.toString(nowItem.getPrice()));
-//        itemImage.setImageBitmap();
-        // 이미지 blob -> Bitmap로 바꿔서 등록
+        setItemImage();
     }
 
     private void registerItem(){
@@ -118,4 +122,23 @@ public class ItemRegisterActivity extends AppCompatActivity{
             }
         });
     }
+
+    private void setItemImage(){
+        Bitmap bitmap = byteToImage(nowItem.getImage());
+        itemImage.setImageBitmap(bitmap);
+    }
+
+    private Bitmap byteToImage(String b){
+        try {
+            byte[] encodeByte = Base64.decode(b, Base64.DEFAULT);
+            // Base64 코드를 디코딩하여 바이트 형태로 저장
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            // 바이트 형태를 디코딩하여 비트맵 형태로 저장
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
 }

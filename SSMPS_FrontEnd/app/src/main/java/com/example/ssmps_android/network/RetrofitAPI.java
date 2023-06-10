@@ -68,7 +68,14 @@ public interface RetrofitAPI {
     Call<List<Location>> findStoreLocation(@Path("id") Long storeId);
 
     @POST("api/store/location")
-    Call<List<Location>> registStoreLocation(@Body Store store);
+    Call<String> registStoreLocation(@Query("store_id") Long id, @Body Location location);
+    @DELETE("api/store/location")
+    Call<String> deleteStoreLocation(@Query("location_id") Long locationId);
+
+    @PUT("api/store/location")
+    Call<String> updateStoreLocation(@Body Location location);
+
+
     @DELETE("api/store/item/{id}")
     Call<Item> deleteItem(@Path("id") Long itemId);
     @PUT("api/store/item")

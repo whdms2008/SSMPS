@@ -27,6 +27,14 @@ public class Location implements Serializable {
         centerY = startY + ((endY - startY) / 2);
     }
 
+    public Location(Long id, float startX, float startY, float endX, float endY) {
+        this.id = id;
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+    }
+
 
     public Location(Long id, float startX, float startY, float endX, float endY, List<Item> itemList) {
         this.id = id;
@@ -123,5 +131,8 @@ public class Location implements Serializable {
     public float getCenterY() {
         centerY = startY + ((endY - startY) / 2);
         return centerY;
+    }
+
+    public void modifyLocation(Location location){
     }
 }

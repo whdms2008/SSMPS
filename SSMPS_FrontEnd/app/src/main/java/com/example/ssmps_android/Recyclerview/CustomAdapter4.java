@@ -3,6 +3,9 @@ package com.example.ssmps_android.Recyclerview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ssmps_android.R;
+import com.example.ssmps_android.data.SharedPreferenceUtil;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.guest.GuestItemInfoActivity;
 import com.example.ssmps_android.guest.GuestItemListActivity;
 import com.example.ssmps_android.guest.StoreViewActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +34,9 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
 
     private List<Item> localDataSet = new ArrayList<>();
     Context context;
+
+    SharedPreferenceUtil sharedPreferenceUtil;
+    Gson gson;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
@@ -58,6 +67,9 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
                 .inflate(R.layout.recyclerview_itemlistguest, parent, false);
         CustomAdapter4.ViewHolder viewHolder = new CustomAdapter4.ViewHolder(view);
         context = parent.getContext();
+
+        sharedPreferenceUtil = new SharedPreferenceUtil(context);
+        gson = new GsonBuilder().create();
         return viewHolder;
     }
 
@@ -66,13 +78,15 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
         Item item = localDataSet.get(position);
 
         holder.textView.setText(item.getName());
+        holder.image.setImageBitmap(byteToImage(item.getImage()));
 
         holder.locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, StoreViewActivity.class);
 //                Intent intent = ((Activity) context).getIntent();
-                intent.putExtra("item", item);
+                sharedPreferenceUtil.putData("item", gson.toJson(item));
+//                intent.putExtra("item", item);
                 Log.e("item", item.getName());
                 ((Activity) context).setResult(Activity.RESULT_OK, intent);
                 ((Activity) context).finish();
@@ -83,7 +97,7 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, GuestItemInfoActivity.class);
-                intent.putExtra("item", item);
+                sharedPreferenceUtil.putData("item", gson.toJson(item));
                 context.startActivity(intent);
             }
         });
@@ -92,5 +106,17 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
     @Override
     public int getItemCount() {
         return localDataSet.size();
+    }
+    private Bitmap byteToImage(String b){
+        try {
+            byte[] encodeByte = Base64.decode(b, Base64.DEFAULT);
+            // Base64 코드를 디코딩하여 바이트 형태로 저장
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            // 바이트 형태를 디코딩하여 비트맵 형태로 저장
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

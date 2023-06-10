@@ -71,7 +71,6 @@ public class LocationDetailActivity extends AppCompatActivity {
         findViewById(R.id.locationDetail_search_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("tttt", "here");
                 searchItem();
             }
         });
@@ -82,15 +81,15 @@ public class LocationDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 List<Item> locationItemList = customAdapter3.getLocationItemList();
                 nowLocation.setItemList(locationItemList);
+                Log.e("test", locationItemList.size() + "");
                 for(int i = 0;i < nowStore.getLocationList().size();i++){
                     if(nowLocation.getId() == nowStore.getLocationList().get(i).getId()){
-                        nowStore.getLocationList().remove(i);
+                        Location location = nowStore.getLocationList().get(i);
                         nowStore.getLocationList().add(nowLocation);
                     }
                 }
                 sharedPreferenceUtil.putData("store", gson.toJson(nowStore));
                 updateItemLocation(locationItemList);
-                Toast.makeText(LocationDetailActivity.this, locationItemList.size() + " ", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -108,7 +107,8 @@ public class LocationDetailActivity extends AppCompatActivity {
 
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
         locationList = nowStore.getLocationList();
-        nowLocation = (Location) (getIntent().getSerializableExtra("location"));
+        nowLocation = gson.fromJson(sharedPreferenceUtil.getData("location", "err"), Location.class);
+//        nowLocation = (Location) (getIntent().getSerializableExtra("location"));
     }
 
     private void setToken(){
@@ -179,6 +179,7 @@ public class LocationDetailActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(LocationDetailActivity.this, "매대 정보가 수정되었습니다", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

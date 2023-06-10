@@ -53,7 +53,7 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
 
     List<Store> storeList = new ArrayList<>();
     CustomAdapter customAdapter;
-
+    String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +80,7 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         searchInput = findViewById(R.id.storeSelect_search_input);
         searchBtn = findViewById(R.id.storeSelect_search_btn);
 
+        setToken();
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
         gson = new GsonBuilder().create();
@@ -87,6 +88,11 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         nowManager = gson.fromJson(sharedPreferenceUtil.getData("manager", "err"), Manager.class);
     }
 
+    private void setToken(){
+        token = sharedPreferenceUtil.getData("token", "err");
+        tokenInterceptor = new TokenInterceptor();
+        tokenInterceptor.setToken(token);
+    }
     private void getStorelistData(){
         Call<List<StoreResponse>> findStoreList = service.findStoreList(nowManager.getId());
         findStoreList.enqueue(new Callback<List<StoreResponse>>() {
