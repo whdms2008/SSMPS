@@ -233,11 +233,11 @@ public class MainPage extends AppCompatActivity {
                 drawLocation(Color.LTGRAY, l);
             }
         }
-//        else{
-//            Log.e("ghe", "here");
-//            locationList = nowStore.getLocationList();
-//            Log.e("now", nowStore.getLocationList().size() + "");
-//        }
+        else{
+            Log.e("ghe", "here");
+            locationList = nowStore.getLocationList();
+            Log.e("now", nowStore.getLocationList().size() + "");
+        }
 
         Toast.makeText(this, "매장 불러오기", Toast.LENGTH_SHORT).show();
         Log.e("매장 불러오기", "성공");
