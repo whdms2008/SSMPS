@@ -1,7 +1,5 @@
 package com.example.ssmps_android.location;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
@@ -63,7 +64,7 @@ public class MainPage extends AppCompatActivity {
     Store nowStore;
     String token;
 
-    boolean updatedLocation = false;
+//    boolean updatedLocation = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +86,8 @@ public class MainPage extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updatedLocation = false;
-                finish();
+//                updatedLocation = false;
+                setLocationList();
             }
         });
     }
@@ -95,7 +96,7 @@ public class MainPage extends AppCompatActivity {
     protected void onRestart() {
         Toast.makeText(this, "등록됨", Toast.LENGTH_SHORT).show();
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
-        Log.e("size: ", nowStore.getLocationList().size() + "");
+        Log.e("ㅇ테스트", nowStore.getLocationList().get(0).getItemList().size() + "");
         setLocationList();
 //        for(Location l : nowStore.getLocationList()){
 //            drawLocation(Color.LTGRAY, l);
@@ -138,13 +139,13 @@ public class MainPage extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
+                        Log.e("here", flag + " " + isRemove + " " + isRegister);
                         if(!flag && !isRemove && !isRegister){
                             // move
                             if(isClickLocation(event.getX(), event.getY())){
                                 preX = event.getX();
                                 preY = event.getY();
                             }
-                            flag = false;
                             return true;
                         }
                         if(isRemove){
@@ -159,23 +160,18 @@ public class MainPage extends AppCompatActivity {
                             return true;
                         }
                         if(isRegister){
-                            if(!updatedLocation){
-                                Toast.makeText(MainPage.this, "물건 등록", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainPage.this, "물건 등록", Toast.LENGTH_SHORT).show();
                                 // 물건 등록
-                                if(isClickLocation(event.getX(), event.getY())){
-                                    Log.e("now Location", moveLocation.getId() + "");
-//                                drawLocation(Color.DKGRAY, moveLocation);
-                                    isRegister = false;
-                                    Intent intent = new Intent(getApplicationContext(), LocationDetailActivity.class);
-                                    sharedPreferenceUtil.putData("location", gson.toJson(moveLocation));
-                                    startActivity(intent);
-                                    return true;
-                                }
-                                return true;
-                            }else{
-                                Toast.makeText(MainPage.this, "저장을 한 후 물건을 추가하세요", Toast.LENGTH_SHORT).show();
+                            if(isClickLocation(event.getX(), event.getY())){
+                                Log.e("now Location", moveLocation.getId() + "");
+                                isRegister = false;
+                                Intent intent = new Intent(getApplicationContext(), LocationDetailActivity.class);
+                                sharedPreferenceUtil.putData("location", gson.toJson(moveLocation));
+                                startActivity(intent);
                                 return true;
                             }
+                            Toast.makeText(MainPage.this, "저장을 한 후 물건을 추가하세요", Toast.LENGTH_SHORT).show();
+                            return true;
                         }
 
                         Log.e("cnt", clickCnt + " ");
@@ -192,16 +188,21 @@ public class MainPage extends AppCompatActivity {
                             endX = event.getX();
                             endY = event.getY();
                             Location location = new Location(startX, startY, endX, endY);
+
+                            nowStore.getLocationList().add(location); // 추가
+                            Log.e("nowS", nowStore.getLocationList().size() + "");
                             locationList.add(location);
+
                             drawLocation(Color.WHITE, location);
                             drawLocationType(location);
                             clickCnt = 0;
-                            updatedLocation = true;
                             registLocation(location);
+                            setLocationList();
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
                         // 무브
+                        Log.e("flag", flag + "  " + isIn);
                         if((!flag) && isIn){
                             moveLocation(moveLocation, event);
                         }
@@ -212,7 +213,6 @@ public class MainPage extends AppCompatActivity {
                             flag = false;
                         }
                         if(isMove){
-
                             drawLocation(Color.WHITE, moveLocation);
                             drawLocationType(moveLocation);
                             setLocationData(moveLocation);
@@ -220,7 +220,6 @@ public class MainPage extends AppCompatActivity {
                             isMove = false;
                         }
                         isIn = false;
-
                         break;
                 }
                 return true;
@@ -228,9 +227,18 @@ public class MainPage extends AppCompatActivity {
         });
     }
 
-
     private void setLocationList(){
+        if(locationList.size() != 0){
+            for(Location l : locationList){
+                drawLocation(Color.LTGRAY, l);
+            }
+        }else{
+            Log.e("ghe", "here");
+            locationList = nowStore.getLocationList();
+        }
+
         Toast.makeText(this, "매장 불러오기", Toast.LENGTH_SHORT).show();
+        Log.e("매장 불러오기", "성공");
         Call<List<Location>> findLocation = service.findStoreLocation(nowStore.getId());
         findLocation.enqueue(new Callback<List<Location>>() {
             @Override
@@ -276,7 +284,6 @@ public class MainPage extends AppCompatActivity {
         isMove = true;
         drawLocation(Color.LTGRAY, location);
 
-        Log.e("eventX", event.getX() + "  " + preX);
         int dx = (int) (event.getX() - preX);
         int dy = (int) (event.getY() - preY);
         preX = event.getX();
@@ -304,6 +311,7 @@ public class MainPage extends AppCompatActivity {
     }
 
     private boolean isClickLocation(float x, float y){
+        Log.e("location Size", locationList.size() + "");
         for(Location location : locationList){
             float locationSX = location.getStartX();
             float locationSY = location.getStartY();
@@ -413,6 +421,7 @@ public class MainPage extends AppCompatActivity {
             }
         });
     }
+
     private void checkModifyLocation(){
         List<Location> list = nowStore.getLocationList();
         List<Location> newList = new ArrayList<>();

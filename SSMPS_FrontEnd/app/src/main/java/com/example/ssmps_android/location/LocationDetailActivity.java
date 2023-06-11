@@ -1,38 +1,28 @@
 package com.example.ssmps_android.location;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter3;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
-import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Location;
 import com.example.ssmps_android.domain.Store;
-import com.example.ssmps_android.dto.CenterItemResponse;
-import com.example.ssmps_android.guest.GuestStoreSelectActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,13 +69,14 @@ public class LocationDetailActivity extends AppCompatActivity {
         findViewById(R.id.location_item_register_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Item> locationItemList = customAdapter3.getLocationItemList();
-                nowLocation.setItemList(locationItemList);
-                Log.e("test", locationItemList.size() + "");
+                List<Item> locationItemList = customAdapter3.getLocationItemList(); // 변경 된 List
+                nowLocation.setItemList(locationItemList); // 현재 location 아이템 리스트 변경
                 for(int i = 0;i < nowStore.getLocationList().size();i++){
-                    if(nowLocation.getId() == nowStore.getLocationList().get(i).getId()){
-                        Location location = nowStore.getLocationList().get(i);
-                        nowStore.getLocationList().add(nowLocation);
+                    Location nowStoreLocation = nowStore.getLocationList().get(i);
+                    if(nowLocation.getId() == nowStoreLocation.getId()){
+                        Location location = nowStoreLocation; // 현재 로케이션 찾음
+                        nowStoreLocation.setItemList(locationItemList);
+                        location = nowLocation;
                     }
                 }
                 sharedPreferenceUtil.putData("store", gson.toJson(nowStore));

@@ -1,5 +1,7 @@
 package com.example.ssmps_android.manager;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -107,7 +109,22 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
             }
         });
     }
+
     
+    private Bitmap byteToImage(byte[] b){
+        try {
+            // Base64 코드를 디코딩하여 바이트 형태로 저장
+            Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+            // 바이트 형태를 디코딩하여 비트맵 형태로 저장
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            Log.e("error", "err");
+            return null;
+        }
+    }
+
+
     private void searchItem(){
         String itemName = itemNameInput.getText().toString();
         Log.e("itemName", itemName);

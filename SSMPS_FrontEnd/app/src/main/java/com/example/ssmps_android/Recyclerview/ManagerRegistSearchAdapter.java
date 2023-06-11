@@ -88,7 +88,6 @@ public class ManagerRegistSearchAdapter extends RecyclerView.Adapter<ManagerRegi
 
     private void setItemImage(ImageView image, CenterItem item){
         Bitmap bitmap = byteToImage(item.getImage());
-        Log.e("size 2", item.getImage().length() + "");
         image.setImageBitmap(bitmap);
     }
 
@@ -103,5 +102,20 @@ public class ManagerRegistSearchAdapter extends RecyclerView.Adapter<ManagerRegi
             e.getMessage();
             return null;
         }
+    }
+
+    public static String decompress(String compressedStr) {
+        StringBuilder decompressed = new StringBuilder();
+
+        for (int i = 0; i < compressedStr.length(); i += 2) {
+            char c = compressedStr.charAt(i);
+            int count = Character.getNumericValue(compressedStr.charAt(i + 1));
+
+            for (int j = 0; j < count; j++) {
+                decompressed.append(c);
+            }
+        }
+
+        return decompressed.toString();
     }
 }

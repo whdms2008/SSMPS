@@ -76,9 +76,6 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
                 .inflate(R.layout.recyclerview_locationdetail, parent, false);
         CustomAdapter3.ViewHolder viewHolder = new CustomAdapter3.ViewHolder(view);
         context = parent.getContext();
-
-
-
         return viewHolder;
     }
 
@@ -86,6 +83,7 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Item item = localDataSet.get(position);
         holder.itemName.setText(item.getName());
+//        byteToImage(item.getImage(), holder.itemImg);
         holder.itemImg.setImageBitmap(byteToImage(item.getImage()));
         List<Item> itemList = nowLocation.getItemList();
         for(Item i : itemList){
@@ -114,6 +112,7 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
                 }
             }
         });
+
     }
 
     @Override
@@ -129,7 +128,11 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
         try {
             byte[] encodeByte = Base64.decode(b, Base64.DEFAULT);
             // Base64 코드를 디코딩하여 바이트 형태로 저장
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+//            options.inSampleSize = 4;
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+//            bitmap.recycle();
             // 바이트 형태를 디코딩하여 비트맵 형태로 저장
             return bitmap;
         } catch (Exception e) {
