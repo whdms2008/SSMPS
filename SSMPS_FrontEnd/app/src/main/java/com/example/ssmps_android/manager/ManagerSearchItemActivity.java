@@ -49,6 +49,8 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     String token;
     List<Item> itemList = new ArrayList<>();
     Store nowStore;
+
+    boolean isSearched = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,20 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchItem();
+                if(!isSearched){
+                    if(itemNameInput.getText().toString().equals("")){
+                        Toast.makeText(ManagerSearchItemActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchItem();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    getAllCenterItem();
+                    itemNameInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
     }

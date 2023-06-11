@@ -96,7 +96,6 @@ public class MainPage extends AppCompatActivity {
     protected void onRestart() {
         Toast.makeText(this, "등록됨", Toast.LENGTH_SHORT).show();
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
-        Log.e("ㅇ테스트", nowStore.getLocationList().get(0).getItemList().size() + "");
         setLocationList();
 //        for(Location l : nowStore.getLocationList()){
 //            drawLocation(Color.LTGRAY, l);
@@ -151,6 +150,7 @@ public class MainPage extends AppCompatActivity {
                         if(isRemove){
                             Toast.makeText(MainPage.this, "삭제", Toast.LENGTH_SHORT).show();
                             // 삭제
+                            Log.e("삭제", "삭제됨");
                             if(isClickLocation(event.getX(), event.getY())){
                                 drawLocation(Color.LTGRAY, moveLocation);
                                 locationList.remove(moveLocation);
@@ -232,10 +232,12 @@ public class MainPage extends AppCompatActivity {
             for(Location l : locationList){
                 drawLocation(Color.LTGRAY, l);
             }
-        }else{
-            Log.e("ghe", "here");
-            locationList = nowStore.getLocationList();
         }
+//        else{
+//            Log.e("ghe", "here");
+//            locationList = nowStore.getLocationList();
+//            Log.e("now", nowStore.getLocationList().size() + "");
+//        }
 
         Toast.makeText(this, "매장 불러오기", Toast.LENGTH_SHORT).show();
         Log.e("매장 불러오기", "성공");

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -30,6 +31,7 @@ import retrofit2.Retrofit;
 
 public class LocationDetailActivity extends AppCompatActivity {
     EditText searchInput;
+    ImageView searchBtn;
     RecyclerView recyclerView;
 
     Store nowStore;
@@ -47,6 +49,8 @@ public class LocationDetailActivity extends AppCompatActivity {
 
     CustomAdapter3 customAdapter3;
 
+    boolean isSearched = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +62,23 @@ public class LocationDetailActivity extends AppCompatActivity {
         initData();
         setItemList();
         // 검색 버튼 클릭
-        findViewById(R.id.locationDetail_search_btn).setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchItem();
+                if(!isSearched){
+                    if(searchInput.getText().toString().equals("")){
+                        Toast.makeText(LocationDetailActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchItem();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    setItemList();
+                    searchInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
 
@@ -88,6 +105,7 @@ public class LocationDetailActivity extends AppCompatActivity {
 
     private void initData(){
         searchInput = findViewById(R.id.locationDetail_search_input);
+        searchBtn = findViewById(R.id.locationDetail_search_btn);
         recyclerView = findViewById(R.id.locationDetail_recyclerView);
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         gson = new GsonBuilder().create();

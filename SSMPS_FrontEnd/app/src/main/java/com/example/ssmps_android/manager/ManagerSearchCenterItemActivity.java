@@ -49,6 +49,8 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
     String token;
 
     List<CenterItem> centerItemList = new ArrayList<>();
+
+    boolean isSearched = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +63,20 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // DB에서 데이터 가져오기
-                searchItem();
+                if(!isSearched){
+                    if(itemNameInput.getText().toString().equals("")){
+                        Toast.makeText(ManagerSearchCenterItemActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchItem();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    getAllCenterItem();
+                    itemNameInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
     }

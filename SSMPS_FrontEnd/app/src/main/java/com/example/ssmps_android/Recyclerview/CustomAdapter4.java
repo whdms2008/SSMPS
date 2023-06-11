@@ -78,7 +78,7 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
         Item item = localDataSet.get(position);
 
         holder.textView.setText(item.getName());
-        holder.image.setImageBitmap(byteToImage(decompress(item.getImage())));
+        holder.image.setImageBitmap(byteToImage(item.getImage()));
 
         holder.locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,18 +120,4 @@ public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.ViewHold
         }
     }
 
-    public static String decompress(String compressedStr) {
-        StringBuilder decompressed = new StringBuilder();
-
-        for (int i = 0; i < compressedStr.length(); i += 2) {
-            char c = compressedStr.charAt(i);
-            int count = Character.getNumericValue(compressedStr.charAt(i + 1));
-
-            for (int j = 0; j < count; j++) {
-                decompressed.append(c);
-            }
-        }
-
-        return decompressed.toString();
-    }
 }

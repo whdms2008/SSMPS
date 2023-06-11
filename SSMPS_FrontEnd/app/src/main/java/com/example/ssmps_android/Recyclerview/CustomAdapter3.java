@@ -46,7 +46,6 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
 //    SharedPreferenceUtil sharedPreferenceUtil;
 //    Gson gson;
 //    String token;
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView itemName;
         private ImageView itemImg;
@@ -66,8 +65,6 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.ViewHold
         localDataSet = dataSet;
         this.nowLocation = nowLocation;
     }
-
-
 
     @NonNull
     @Override
