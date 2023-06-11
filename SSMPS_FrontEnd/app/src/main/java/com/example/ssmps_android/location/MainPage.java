@@ -189,9 +189,10 @@ public class MainPage extends AppCompatActivity {
                             endY = event.getY();
                             Location location = new Location(startX, startY, endX, endY);
 
-                            nowStore.getLocationList().add(location); // 추가
-                            Log.e("nowS", nowStore.getLocationList().size() + "");
                             locationList.add(location);
+                            Log.e("nowLocation", locationList.size() + "");
+                            nowStore.setLocation(locationList);
+                            Log.e("nowS", nowStore.getLocationList().size() + "");
 
                             drawLocation(Color.WHITE, location);
                             drawLocationType(location);
