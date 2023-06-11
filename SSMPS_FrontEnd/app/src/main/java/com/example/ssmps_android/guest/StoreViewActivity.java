@@ -37,6 +37,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,19 +87,19 @@ public class StoreViewActivity extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                         Intent intent = result.getData();
                         if (result.getResultCode() == Activity.RESULT_OK){
-//                            int locationId = intent.getIntExtra("location", -1);
-                            Item searchItem = (Item) intent.getSerializableExtra("item");
-                            Toast.makeText(StoreViewActivity.this, "검색: " + searchItem.getName(), Toast.LENGTH_SHORT).show();
-                            Log.e("asdasd", searchItem.getName());
+//                            Item searchItem = (Item) intent.getSerializableExtra("item");
+                            Item searchItem = gson.fromJson(sharedPreferenceUtil.getData("item", "err"), Item.class);
                             List<Location> locaitonList = nowStore.getLocationList();
                             for(Location l : locaitonList){
                                 for (Item i : l.getItemList()) {
                                     if (i.getName().equals(searchItem.getName())) {
+                                        Toast.makeText(StoreViewActivity.this, "검색: " + searchItem.getName(), Toast.LENGTH_SHORT).show();
                                         showItemLocation(l);
                                         return;
                                     }
                                 }
                             }
+                            Toast.makeText(StoreViewActivity.this, searchItem.getName() + " 물건은\n진열 되어있지 않습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -154,7 +155,7 @@ public class StoreViewActivity extends AppCompatActivity {
     private void setLocation(){
         Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.LTGRAY);
         frame.setImageBitmap(bitmap);
         paint = new Paint();
         paint.setColor(Color.WHITE);
@@ -176,7 +177,8 @@ public class StoreViewActivity extends AppCompatActivity {
         paint.setColor(Color.BLACK);
         paint.setTextSize(40);
         paint.setTextAlign(Paint.Align.CENTER);
-        String type = location.getItemList().stream().map(i -> i.getType() + "\n").collect(Collectors.joining());
+        List<String> typeList = location.getItemList().stream().map(i -> i.getType() + " ").collect(Collectors.toList());
+        String type = typeList.stream().distinct().collect(Collectors.joining());
         if(type.equals("")){
             type = "진열X";
         }
@@ -193,12 +195,12 @@ public class StoreViewActivity extends AppCompatActivity {
             if(l.equals(location)){
                 continue;
             }
-            drawLocation(Color.BLACK, l);
+            drawLocation(Color.LTGRAY, l);
             drawLocation(Color.WHITE, l);
             drawLocationType(l);
         }
-        drawLocation(Color.BLACK, location);
-        drawLocation(Color.RED, location);
+        drawLocation(Color.LTGRAY, location);
+        drawLocation(Color.GRAY, location);
         drawLocationType(location);
     }
 

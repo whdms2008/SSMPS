@@ -101,32 +101,37 @@ public class SignActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
-        linParams2.leftMargin = 30;
+        linParams2.leftMargin = 10;
+        linParams2.rightMargin = 10;
         linParams2.topMargin = 30;
-        TextView textStoreName = new TextView(getApplicationContext());
-        textStoreName.setText("가게 이름 설정 :");
+        //TextView textStoreName = new TextView(getApplicationContext());
+        //textStoreName.setText("가게 이름 설정 :");
 
         EditText editStoreName = new EditText(getApplicationContext());
         LinearLayout.LayoutParams editParam = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
-        editParam.width = 270;
-        editParam.height = 115;
+        editParam.width = 350;
+        editParam.height = 150;
+        editStoreName.setSingleLine(true);
         editStoreName.setLayoutParams(editParam);
+        editStoreName.setHint("가게 이름을 입력해 주세요");
+        editStoreName.setBackground(null);
 
-        nameParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        nameParent.addView(textStoreName);
+        nameParent.setBackgroundColor(Color.parseColor("#eeeeee"));
+        //nameParent.addView(textStoreName);
         nameParent.addView(editStoreName);
         storeNameList.add(editStoreName);
         nameParent.setLayoutParams(linParams2);
 
 
-        linParams2.leftMargin = 30;
-        linParams2.topMargin = 30;
+        linParams2.leftMargin = 10;
+        linParams2.rightMargin = 10;
+        linParams2.bottomMargin = 30;
         LinearLayout addressParent = new LinearLayout(getApplicationContext());
-        TextView textStoreAddress = new TextView(getApplicationContext());
-        textStoreAddress.setText("           가게 주소 :");
+        //TextView textStoreAddress = new TextView(getApplicationContext());
+        //textStoreAddress.setText("           가게 주소 :");
 
         parent.setOrientation(LinearLayout.VERTICAL);
         EditText editStoreAddress = new EditText(getApplicationContext());
@@ -134,13 +139,18 @@ public class SignActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
-        editParam2.width = 270;
-        editParam2.height = 115;
-        addressParent.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        editParam2.width = 350;
+        editParam2.height = 100;
+        editParam2.topMargin = 20;
+        editStoreAddress.setHint("가게 주소를 입력해 주세요");
+        editStoreAddress.setBackground(null);
+
+        editStoreAddress.setSingleLine(true);
+        addressParent.setBackgroundColor(Color.parseColor("#eeeeee"));
 
         editStoreName.setLayoutParams(editParam);
         editStoreAddress.setLayoutParams(editParam);
-        addressParent.addView(textStoreAddress);
+        //addressParent.addView(textStoreAddress);
         addressParent.addView(editStoreAddress);
 
         storeAddressList.add(editStoreAddress);

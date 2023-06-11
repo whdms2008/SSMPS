@@ -22,6 +22,7 @@ import com.example.ssmps_android.domain.LoginType;
 import com.example.ssmps_android.domain.Manager;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.StoreResponse;
+import com.example.ssmps_android.guest.GuestItemListActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
@@ -53,7 +54,9 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
 
     List<Store> storeList = new ArrayList<>();
     CustomAdapter customAdapter;
+    String token;
 
+    boolean isSearched = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,20 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchStore();
+                if(!isSearched){
+                    if(searchInput.getText().toString().equals("")){
+                        Toast.makeText(ManagerStoreSelectActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchStore();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    getStorelistData();
+                    searchInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
 
@@ -80,6 +96,7 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         searchInput = findViewById(R.id.storeSelect_search_input);
         searchBtn = findViewById(R.id.storeSelect_search_btn);
 
+        setToken();
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
         gson = new GsonBuilder().create();
@@ -87,6 +104,11 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         nowManager = gson.fromJson(sharedPreferenceUtil.getData("manager", "err"), Manager.class);
     }
 
+    private void setToken(){
+        token = sharedPreferenceUtil.getData("token", "err");
+        tokenInterceptor = new TokenInterceptor();
+        tokenInterceptor.setToken(token);
+    }
     private void getStorelistData(){
         Call<List<StoreResponse>> findStoreList = service.findStoreList(nowManager.getId());
         findStoreList.enqueue(new Callback<List<StoreResponse>>() {

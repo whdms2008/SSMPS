@@ -1,38 +1,29 @@
 package com.example.ssmps_android.location;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.Recyclerview.CustomAdapter3;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
-import com.example.ssmps_android.domain.CenterItem;
 import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Location;
 import com.example.ssmps_android.domain.Store;
-import com.example.ssmps_android.dto.CenterItemResponse;
-import com.example.ssmps_android.guest.GuestStoreSelectActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +31,7 @@ import retrofit2.Retrofit;
 
 public class LocationDetailActivity extends AppCompatActivity {
     EditText searchInput;
+    ImageView searchBtn;
     RecyclerView recyclerView;
 
     Store nowStore;
@@ -57,6 +49,8 @@ public class LocationDetailActivity extends AppCompatActivity {
 
     CustomAdapter3 customAdapter3;
 
+    boolean isSearched = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +62,23 @@ public class LocationDetailActivity extends AppCompatActivity {
         initData();
         setItemList();
         // 검색 버튼 클릭
-        findViewById(R.id.locationDetail_search_btn).setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("tttt", "here");
-                searchItem();
+                if(!isSearched){
+                    if(searchInput.getText().toString().equals("")){
+                        Toast.makeText(LocationDetailActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchItem();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    setItemList();
+                    searchInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
 
@@ -80,17 +86,18 @@ public class LocationDetailActivity extends AppCompatActivity {
         findViewById(R.id.location_item_register_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Item> locationItemList = customAdapter3.getLocationItemList();
-                nowLocation.setItemList(locationItemList);
+                List<Item> locationItemList = customAdapter3.getLocationItemList(); // 변경 된 List
+                nowLocation.setItemList(locationItemList); // 현재 location 아이템 리스트 변경
                 for(int i = 0;i < nowStore.getLocationList().size();i++){
-                    if(nowLocation.getId() == nowStore.getLocationList().get(i).getId()){
-                        nowStore.getLocationList().remove(i);
-                        nowStore.getLocationList().add(nowLocation);
+                    Location nowStoreLocation = nowStore.getLocationList().get(i);
+                    if(nowLocation.getId() == nowStoreLocation.getId()){
+                        Location location = nowStoreLocation; // 현재 로케이션 찾음
+                        nowStoreLocation.setItemList(locationItemList);
+                        location = nowLocation;
                     }
                 }
                 sharedPreferenceUtil.putData("store", gson.toJson(nowStore));
                 updateItemLocation(locationItemList);
-                Toast.makeText(LocationDetailActivity.this, locationItemList.size() + " ", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -98,6 +105,7 @@ public class LocationDetailActivity extends AppCompatActivity {
 
     private void initData(){
         searchInput = findViewById(R.id.locationDetail_search_input);
+        searchBtn = findViewById(R.id.locationDetail_search_btn);
         recyclerView = findViewById(R.id.locationDetail_recyclerView);
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         gson = new GsonBuilder().create();
@@ -108,7 +116,8 @@ public class LocationDetailActivity extends AppCompatActivity {
 
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
         locationList = nowStore.getLocationList();
-        nowLocation = (Location) (getIntent().getSerializableExtra("location"));
+        nowLocation = gson.fromJson(sharedPreferenceUtil.getData("location", "err"), Location.class);
+//        nowLocation = (Location) (getIntent().getSerializableExtra("location"));
     }
 
     private void setToken(){
@@ -179,6 +188,7 @@ public class LocationDetailActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(LocationDetailActivity.this, "매대 정보가 수정되었습니다", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

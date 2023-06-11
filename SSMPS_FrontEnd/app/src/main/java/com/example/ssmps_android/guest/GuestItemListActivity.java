@@ -50,6 +50,8 @@ public class GuestItemListActivity extends AppCompatActivity {
     Gson gson;
     String token;
     Store nowStore;
+
+    boolean isSearched = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,20 @@ public class GuestItemListActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchItemList();
+                if(!isSearched){
+                    if(searchInput.getText().toString().equals("")){
+                        Toast.makeText(GuestItemListActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchItemList();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    setListData();
+                    searchInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
     }
