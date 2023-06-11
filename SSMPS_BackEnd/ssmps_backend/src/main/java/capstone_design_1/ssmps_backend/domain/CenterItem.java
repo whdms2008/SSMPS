@@ -17,6 +17,6 @@ public class CenterItem {
     private String type;
     private int price;
     @Column(columnDefinition = "LONGBLOB")
-    private String image;
+    private byte[] image;
     private String barcode;
 }

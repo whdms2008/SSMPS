@@ -52,6 +52,17 @@ public class ItemService {
     public List<Item> getItemByName(String name, Store store) {
         return itemRepository.findItemByName(name, store);
     }
+    public Item getItemName(String itemName, Store store){
+        List<Item> findItemList = itemRepository.findItemName(itemName, store);
+        Item findItem = findItemList.stream().findFirst().orElseThrow(() -> new IllegalArgumentException());
+        return findItem;
+    }
+
+    public CenterItem getStoreItem(String name){
+        List<CenterItem> storeItem = itemRepository.findStoreItem(name);
+        CenterItem item = storeItem.stream().findFirst().orElseThrow(() -> new IllegalArgumentException());
+        return item;
+    }
 
     @Transactional
     public Item updateQuantity(Item updateItem, int quantity) {

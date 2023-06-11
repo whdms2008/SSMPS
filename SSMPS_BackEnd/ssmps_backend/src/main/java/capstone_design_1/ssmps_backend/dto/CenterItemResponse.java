@@ -11,10 +11,10 @@ public class CenterItemResponse {
     private String name;
     private String type;
     private int price;
-    private String image;
+    private byte[] image;
     private String barcode;
 
-    public CenterItemResponse(Long id, String name, String type, int price, String image, String barcode) {
+    public CenterItemResponse(Long id, String name, String type, int price, byte[] image, String barcode) {
         this.id = id;
         this.name = name;
         this.type = type;

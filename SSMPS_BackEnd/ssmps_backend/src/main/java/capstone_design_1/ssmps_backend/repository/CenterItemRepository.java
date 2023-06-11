@@ -27,4 +27,8 @@ public class CenterItemRepository {
     public CenterItem findCenterItem(Long id) {
         return em.find(CenterItem.class, id);
     }
+
+    public void insertItem(CenterItem centerItem) {
+        em.persist(centerItem);
+    }
 }

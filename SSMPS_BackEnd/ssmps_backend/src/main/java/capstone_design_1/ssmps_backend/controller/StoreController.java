@@ -72,20 +72,29 @@ public class StoreController {
     }
 
     @PostMapping("api/store/location")
-    public ResponseEntity<Object> registStoreLocation(@RequestBody StoreRequest store){
+    public ResponseEntity<Object> registStoreLocation(@RequestParam(name = "store_id") Long storeId, @RequestBody LocationRequest locationRequest){
+        Store findStore = storeService.findStoreById(storeId);
+        Location location = new Location(locationRequest.getId(), locationRequest.getStartX(), locationRequest.getStartY(),
+                locationRequest.getEndX(), locationRequest.getEndY(), null);
+        Store store = storeService.addLocation(findStore, location);
+        return ResponseEntity.ok("good");
+    }
 
-        log.error("location size", store.getLocationList().size() + "");
-        List<Location> locationList = store.getLocationList().stream()
-                .map(l -> new Location(null, l.getStartX(), l.getStartY(),
-                        l.getEndX(), l.getEndY(), null))
-                .collect(Collectors.toList());
+    @DeleteMapping("api/store/location")
+    public String deleteStoreLocation(@RequestParam(name = "location_id") Long locationId){
+        Location findLocation = storeService.findLocationById(locationId);
+        Location deletedLocation = storeService.deleteLocation(findLocation);
+        return "good";
+    }
 
-        List<Location> savedLocations = storeService.registStoreLocation(store.getId(), locationList);
-        List<Location> resultList = savedLocations.stream()
-                .map(l -> new Location(l.getId(), l.getStartX(), l.getStartY(), l.getEndX(), l.getEndY(), null))
-                .collect(Collectors.toList());
-//        Store updatedStore = storeService.updateStore(findStore);
-        return ResponseEntity.ok(resultList);
+    @PutMapping("api/store/location")
+    public String updateStoreLocation(@RequestBody LocationRequest locationRequest){
+        Location findLocation = storeService.findLocationById(locationRequest.getId());
+        Location location = new Location(locationRequest.getId(), locationRequest.getStartX(),
+                locationRequest.getStartY(), locationRequest.getEndX(), locationRequest.getEndY(), null);
+
+        Location updatedLocation = storeService.updateLocation(findLocation, location);
+        return "good";
     }
 
     @GetMapping("api/storeList")

@@ -45,6 +45,11 @@ public class ItemRepository {
                 .setParameter("store", store)
                 .getResultList();
     }
+    public List<CenterItem> findStoreItem(String name){
+        return em.createQuery("select i from CenterItem i where i.name = :name")
+                .setParameter("name", name)
+                .getResultList();
+    }
 
     public Item deleteItem(Item deleteItem) {
         em.remove(deleteItem);
@@ -52,5 +57,12 @@ public class ItemRepository {
     }
 
     public void updateLocation(Long id, Long locationId) {
+    }
+
+    public List<Item> findItemName(String itemName, Store store) {
+        return em.createQuery("select i from Item i where i.item.name = :name and i.store = :store")
+                .setParameter("name", itemName)
+                .setParameter("store", store)
+                .getResultList();
     }
 }

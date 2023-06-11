@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -54,6 +55,13 @@ public class StoreRepository {
                 .getResultList();
     }
 
+    public Optional<Store> findStoreName(String name){
+        List<Store> findList = em.createQuery("select s from Store s where s.name = :name")
+                .setParameter("name", name)
+                .getResultList();
+        return findList.stream().findFirst();
+    }
+
     public List<Store> findManagerStoreByName(String storeName, Long managerId){
         return em.createQuery("select s from Store s where s.name = :name and s.manager.id = :managerId")
                 .setParameter("name", storeName)
@@ -63,5 +71,9 @@ public class StoreRepository {
 
     public Location findLocationById(Long locationId) {
         return em.find(Location.class, locationId);
+    }
+
+    public void deleteLocation(Location findLocation) {
+        em.remove(findLocation);
     }
 }

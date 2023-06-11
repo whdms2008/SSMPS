@@ -3,6 +3,7 @@ package capstone_design_1.ssmps_backend.controller;
 import capstone_design_1.ssmps_backend.domain.CenterItem;
 import capstone_design_1.ssmps_backend.domain.Item;
 import capstone_design_1.ssmps_backend.domain.Store;
+import capstone_design_1.ssmps_backend.dto.ItemQuantityMinusRequest;
 import capstone_design_1.ssmps_backend.dto.ItemRequest;
 import capstone_design_1.ssmps_backend.dto.CenterItemResponse;
 import capstone_design_1.ssmps_backend.dto.ItemResponse;
@@ -30,15 +31,21 @@ public class ItemController {
     private final StoreService storeService;
 
     // 바코드 촬영 후 물건 정보 요청
-    @GetMapping("api/item/{barcode}")
-    public ResponseEntity<Object> getItemByBarcode(@PathVariable String barcode){
+    @GetMapping("api/item")
+    public Integer getStoreItem(@RequestParam(name = "item_name") String itemName){
         try{
-            CenterItem findItem = itemService.getItemByBarcode(barcode);
-            return ResponseEntity.ok(findItem);
+            CenterItem findItem = itemService.getStoreItem(itemName);
+            return findItem.getPrice();
         }catch (NoSuchElementException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return -1;
         }
     }
+
+    // 가격 반환
+
+//    @PutMapping("api/item")
+//    public String update
+    // 결제되면 재고 변경
 
     // 재고 추가 (센터에서 우리 매장에 추가)
     @PostMapping("api/item")
@@ -65,16 +72,11 @@ public class ItemController {
     // 물건 조회 (검색. 추가 요청 때)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
     @GetMapping("api/mana/item") // manager/item으로했을때 401에러 뜸
     public List<ItemResponse> findItemByName(@RequestParam String name, @RequestParam("store_id") Long storeId){
-        log.error("item name: {}", name);
-        log.error("id: {}", storeId);
         Store findStore = storeService.findStoreById(storeId);
-        log.error("find store: {}", findStore.getName());
         List<Item> findItemList = itemService.getItemByName(name, findStore);
-        log.error("find list: {}", findItemList.size());
         List<ItemResponse> resultList = findItemList.stream()
                 .map(i -> new ItemResponse(i))
                 .collect(Collectors.toList());
-        log.error("list size: {}", resultList.size());
         return resultList;
 //        return ResponseEntity.ok(resultList);
     }
@@ -86,6 +88,14 @@ public class ItemController {
         Item updatedItem = itemService.updateQuantity(findItem, updateItem.getQuantity());
         ItemResponse resultItem = new ItemResponse(updatedItem);
         return ResponseEntity.ok(resultItem);
+    }
+
+    @PutMapping("api/stored/itemQuantity")
+    public String minusItemQuantity(@RequestBody ItemQuantityMinusRequest itemRequest){
+        Store findStore = storeService.findStoreName(itemRequest.getStoreName());
+        Item findItem = itemService.getItemName(itemRequest.getItemName(), findStore);
+        itemService.updateQuantity(findItem, findItem.getQuantity() - itemRequest.getQuantity());
+        return "ok";
     }
 
     @DeleteMapping("api/store/item/{id}")
