@@ -15,9 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:textSize="24dp"
+        android:maxLines="1"
+        android:autoSizeTextType="uniform"
         android:gravity="center"
         android:textColor="@color/black"
-        android:fontFamily="@font/wanju_regular"
         android:text="text"/>
 
     <View
@@ -31,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:textSize="24dp"
+        android:maxLines="1"
+        android:autoSizeTextType="uniform"
         android:gravity="center"
         android:textColor="@color/black"
-        android:fontFamily="@font/wanju_regular"
         android:text="text"/>
 
 </LinearLayout>
