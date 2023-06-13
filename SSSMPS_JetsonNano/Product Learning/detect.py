@@ -17,34 +17,15 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized,
 import serial
 import threading
 
-
-class SerialThread(threading.Thread):
-    def __init__(self, port, baudrate):
-        super().__init__()
-        self.serial_port = serial.Serial(port, baudrate)
-        self.running = True
-
-    def run(self):
-        while self.running:
-            if self.serial_port.in_waiting > 0:
-                line = self.serial_port.readline().decode('utf-8').strip()
-                print("Received: ", line)
-
-    def stop(self):
-        self.running = False
-        self.serial_port.close()
-
-
-
-
-def detect(save_img=False):
+def detect(save_img=True):
     source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
 
     # Initialize
     set_logging()
     device = select_device(opt.device)
     half = device.type != 'cpu'  # half precision only supported on CUDA
-
+    save_dir = Path(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))  # increment run
+    (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
     # Load model
     model = attempt_load(weights, map_location=device)  # load FP32 model
     stride = int(model.stride.max())  # model stride
@@ -57,7 +38,6 @@ def detect(save_img=False):
         model.half()  # to FP16
 
     # Set Dataloader
-    vid_path, vid_writer = None, None
     dataset = LoadImages(source, img_size=imgsz, stride=stride)
 
     # Get names and colorss
@@ -123,13 +103,6 @@ def detect(save_img=False):
             # Print time (inference + NMS)
             print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
 
-            # Stream results
-            if view_img:
-                cv2.imshow(str(p), im0)
-                cv2.waitKey(1)  # 1 millisecond
-
-            # Save results (image with detections)
-
     print(f'Done. ({time.time() - t0:.3f}s)')
 
 
@@ -155,18 +128,4 @@ if __name__ == '__main__':
     parser.add_argument('--no-trace', action='store_true', help='don`t trace model')
     opt = parser.parse_args()
     print(opt)
-    # check_requirements(exclude=('pycocotools', 'thop'))
-
-    # 메인 프로그램에서는 다음과 같이 스레드를 생성하고 시작합니다.
-    # serial_thread = SerialThread('/dev/ttyUSB0', 9600)
-    #serial_thread.start()
-
-    # 필요한 경우 다음과 같이 스레드를 중지할 수 있습니다.
-    # serial_thread.stop()
-    with torch.no_grad():
-        if opt.update:  # update all models (to fix SourceChangeWarning)
-            for opt.weights in ['yolov7.pt']:
-                detect()
-                strip_optimizer(opt.weights)
-        else:
-            detect()
+    detect()
