@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ import com.example.ssmps_android.network.TokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +39,7 @@ import retrofit2.Retrofit;
 
 public class ManagerSearchItemActivity extends AppCompatActivity {
     EditText itemNameInput;
-    Button searchBtn;
+    ImageView searchBtn;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -47,6 +49,8 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
     String token;
     List<Item> itemList = new ArrayList<>();
     Store nowStore;
+
+    boolean isSearched = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +60,24 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
         initData();
         getAllCenterItem();
 
+        Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // DB에서 데이터 가져오기
-                searchItem();
+                if(!isSearched){
+                    if(itemNameInput.getText().toString().equals("")){
+                        Toast.makeText(ManagerSearchItemActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchItem();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    getAllCenterItem();
+                    itemNameInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
     }
@@ -115,13 +132,19 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
         findItemByName.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                if(!response.isSuccessful()){
-                    Log.e("get search item", response.errorBody().toString());
+                if (!response.isSuccessful()) {
+                    try {
+                        Log.e("get item error", response.errorBody().toString());
+                        Log.e("get search item error", response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 에러", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Toast.makeText(ManagerSearchItemActivity.this, "아이템 검색 성공", Toast.LENGTH_SHORT).show();
                 itemList = response.body();
+                Log.e("size", "item list size" + itemList.size());
                 setItemRecyclerview();
             }
 
@@ -141,5 +164,18 @@ public class ManagerSearchItemActivity extends AppCompatActivity {
 
         ManagerModifyDeleteAdapter adapter = new ManagerModifyDeleteAdapter(itemList);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+//        Toast.makeText(this, "다시시작됨", Toast.LENGTH_SHORT).show();
+        // 처음 시작했을 때도 여기로 오는 문제 해결해야 함
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        getAllCenterItem();
+        super.onRestart();
     }
 }

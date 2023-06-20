@@ -1,10 +1,13 @@
 package com.example.ssmps_android.manager;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,7 +38,7 @@ import retrofit2.Retrofit;
 
 public class ManagerSearchCenterItemActivity extends AppCompatActivity {
     EditText itemNameInput;
-    Button searchBtn;
+    ImageView searchBtn;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -44,7 +47,10 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
     SharedPreferenceUtil sharedPreferenceUtil;
     Gson gson;
     String token;
+
     List<CenterItem> centerItemList = new ArrayList<>();
+
+    boolean isSearched = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +63,20 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // DB에서 데이터 가져오기
-                searchItem();
+                if(!isSearched){
+                    if(itemNameInput.getText().toString().equals("")){
+                        Toast.makeText(ManagerSearchCenterItemActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchItem();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    getAllCenterItem();
+                    itemNameInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
             }
         });
     }
@@ -105,7 +123,22 @@ public class ManagerSearchCenterItemActivity extends AppCompatActivity {
             }
         });
     }
+
     
+    private Bitmap byteToImage(byte[] b){
+        try {
+            // Base64 코드를 디코딩하여 바이트 형태로 저장
+            Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+            // 바이트 형태를 디코딩하여 비트맵 형태로 저장
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            Log.e("error", "err");
+            return null;
+        }
+    }
+
+
     private void searchItem(){
         String itemName = itemNameInput.getText().toString();
         Log.e("itemName", itemName);

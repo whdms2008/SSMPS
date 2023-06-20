@@ -20,10 +20,12 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssmps_android.R;
 import com.example.ssmps_android.data.SharedPreferenceUtil;
+import com.example.ssmps_android.domain.Item;
 import com.example.ssmps_android.domain.Location;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.network.RetrofitAPI;
@@ -35,6 +37,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,9 +45,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class StoreViewActivity extends AppCompatActivity {
-    EditText searchInput;
     Button searchBtn;
-    TextView searchResult;
+    TextView searchResult, storeName;
 
     Retrofit retrofit;
     RetrofitAPI service;
@@ -68,6 +70,9 @@ public class StoreViewActivity extends AppCompatActivity {
         initData();
         setStore();
         setLocationData();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,18 +87,28 @@ public class StoreViewActivity extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                         Intent intent = result.getData();
                         if (result.getResultCode() == Activity.RESULT_OK){
-                            int locationId = intent.getIntExtra("location", -1);
-                            String itemName = intent.getStringExtra("itemName");
-                            showSearchResult(locationId, itemName);
+//                            Item searchItem = (Item) intent.getSerializableExtra("item");
+                            Item searchItem = gson.fromJson(sharedPreferenceUtil.getData("item", "err"), Item.class);
+                            List<Location> locaitonList = nowStore.getLocationList();
+                            for(Location l : locaitonList){
+                                for (Item i : l.getItemList()) {
+                                    if (i.getName().equals(searchItem.getName())) {
+                                        Toast.makeText(StoreViewActivity.this, "검색: " + searchItem.getName(), Toast.LENGTH_SHORT).show();
+                                        showItemLocation(l);
+                                        return;
+                                    }
+                                }
+                            }
+                            Toast.makeText(StoreViewActivity.this, searchItem.getName() + " 물건은\n진열 되어있지 않습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
     private void initData(){
-        searchInput = findViewById(R.id.guest_item_name_input);
         searchBtn = findViewById(R.id.guest_item_search_btn);
-        searchResult = findViewById(R.id.guest_search_item_name);
+
+        storeName = findViewById(R.id.guest_item_search_store_name);
         frame = findViewById(R.id.guest_canvas);
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
@@ -102,7 +117,6 @@ public class StoreViewActivity extends AppCompatActivity {
 
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
-
     }
 
     private void setToken(){
@@ -113,6 +127,7 @@ public class StoreViewActivity extends AppCompatActivity {
 
     private void setStore(){
         nowStore = gson.fromJson(sharedPreferenceUtil.getData("store", "err"), Store.class);
+        storeName.setText(nowStore.getName());
     }
 
     private void setLocationData(){
@@ -140,7 +155,7 @@ public class StoreViewActivity extends AppCompatActivity {
     private void setLocation(){
         Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.LTGRAY);
         frame.setImageBitmap(bitmap);
         paint = new Paint();
         paint.setColor(Color.WHITE);
@@ -156,36 +171,39 @@ public class StoreViewActivity extends AppCompatActivity {
         paint.setColor(color);
         canvas.drawRect(location.getStartX(), location.getStartY(), location.getEndX(), location.getEndY(), paint);
         frame.invalidate();
-
-
     }
 
     private void drawLocationType(Location location){
         paint.setColor(Color.BLACK);
         paint.setTextSize(40);
         paint.setTextAlign(Paint.Align.CENTER);
-        String type = location.getItemList().stream().map(i -> i.getType() + "\n").collect(Collectors.joining());
+        List<String> typeList = location.getItemList().stream().map(i -> i.getType() + " ").collect(Collectors.toList());
+        String type = typeList.stream().distinct().collect(Collectors.joining());
+        if(type.equals("")){
+            type = "진열X";
+        }
         canvas.drawText(type, location.getCenterX(), location.getCenterY(), paint);
     }
 
     private void searchItem(){
-        String itemName = searchInput.getText().toString();
         Intent intent = new Intent(getApplicationContext(), GuestItemListActivity.class);
-        intent.putExtra("item", itemName);
         resultLauncher.launch(intent);
     }
 
-    private void showItemLocation(int locationId){
-        Toast.makeText(this, locationId + "", Toast.LENGTH_SHORT).show();
-        Location location = locationList.stream().filter(l -> l.getId() == locationId).findFirst().orElseThrow(() -> new IllegalArgumentException());
-        drawLocation(Color.BLACK, location);
-        drawLocation(Color.RED, location);
+    private void showItemLocation(Location location){
+        for(Location l : locationList){
+            if(l.equals(location)){
+                continue;
+            }
+            drawLocation(Color.LTGRAY, l);
+            drawLocation(Color.WHITE, l);
+            drawLocationType(l);
+        }
+        drawLocation(Color.LTGRAY, location);
+        drawLocation(Color.GRAY, location);
         drawLocationType(location);
     }
 
-    private void showSearchResult(int locationId, String itemName){
-        searchResult.setText(itemName);
-        showItemLocation(locationId);
-//        searchResult.setText();
+    private void showSearchResult(Location location, String itemName){
     }
 }

@@ -5,11 +5,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +29,7 @@ import com.example.ssmps_android.network.TokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -57,6 +62,33 @@ public class MainActivity extends AppCompatActivity {
         join();
         guest_login();
 
+//        findViewById(R.id.updateImageTest).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ImageView image = findViewById(R.id.img_test);
+//                BitmapDrawable drawable = (BitmapDrawable) image.getDrawable();
+//                String imgPath = bitmapToEncodingString(drawable.getBitmap());
+//                String imgSubstring = imgPath.substring(2, imgPath.length() - 2);
+//                Log.e("sub", imgSubstring);
+//                Call<String> insertImage = service.imageUpdate(imgPath);
+//                insertImage.enqueue(new Callback<String>() {
+//                    @Override
+//                    public void onResponse(Call<String> call, Response<String> response) {
+//                        if(!response.isSuccessful()){
+//                            Toast.makeText(MainActivity.this, "아이템 저장 에러", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                        Toast.makeText(MainActivity.this, "아이템 저장 성공", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<String> call, Throwable t) {
+//                        Toast.makeText(MainActivity.this, "아이템 저장 실패", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +108,15 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         //startActivity(intent);
     }
+    private String bitmapToEncodingString(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);    //bitmap compress
+        byte [] arr = baos.toByteArray();
+        String image = Base64.encodeToString(arr, Base64.DEFAULT);
+        return image;
+    }
+
+
     private void initComponent(){
         idInput = findViewById(R.id.login_id);
         passInput = findViewById(R.id.login_password);
@@ -146,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("ㅇㅇ","v");
                 Intent intent = new Intent(getApplicationContext(), SignActivity.class);
                 startActivity(intent);
             }

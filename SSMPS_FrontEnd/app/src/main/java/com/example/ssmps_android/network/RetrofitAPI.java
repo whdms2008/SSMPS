@@ -17,8 +17,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -53,8 +55,8 @@ public interface RetrofitAPI {
     @POST("api/item")
     Call<Item> registItem(@Query("store") Long storeId, @Query("item") Long itemId);
 
-    @GET("api/item/{name}")
-    Call<List<Item>> findItemByName(@Path("name") String name, @Query("store_id") Long storeId);
+    @GET("api/mana/item")
+    Call<List<Item>> findItemByName(@Query("name") String name, @Query("store_id") Long storeId);
 
     @GET("api/itemList")
     Call<List<Item>> findAllItem(@Query("storeId") Long storeId);
@@ -66,5 +68,19 @@ public interface RetrofitAPI {
     Call<List<Location>> findStoreLocation(@Path("id") Long storeId);
 
     @POST("api/store/location")
-    Call<List<Location>> registStoreLocation(@Body Store store);
+    Call<String> registStoreLocation(@Query("store_id") Long id, @Body Location location);
+    @DELETE("api/store/location")
+    Call<String> deleteStoreLocation(@Query("location_id") Long locationId);
+
+    @PUT("api/store/location")
+    Call<String> updateStoreLocation(@Body Location location);
+
+
+    @DELETE("api/store/item/{id}")
+    Call<Item> deleteItem(@Path("id") Long itemId);
+    @PUT("api/store/item")
+    Call<Item> modifyItemQuantity(@Body Item item);
+
+    @PUT("api/location/item/{id}")
+    Call<Location> modifyItemLocation(@Body List<Item> item, @Path("id") Long locationId);
 }

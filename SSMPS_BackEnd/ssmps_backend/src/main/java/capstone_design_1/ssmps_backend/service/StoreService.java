@@ -3,6 +3,7 @@ package capstone_design_1.ssmps_backend.service;
 import capstone_design_1.ssmps_backend.domain.Location;
 import capstone_design_1.ssmps_backend.domain.Manager;
 import capstone_design_1.ssmps_backend.domain.Store;
+import capstone_design_1.ssmps_backend.dto.LocationRequest;
 import capstone_design_1.ssmps_backend.repository.LoginRepository;
 import capstone_design_1.ssmps_backend.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -57,7 +59,39 @@ public class StoreService {
         return storeRepository.findStoreByName(storeName);
     }
 
+    public Store findStoreName(String name){
+        Optional<Store> storeName = storeRepository.findStoreName(name);
+        Store store = storeName.orElseThrow(() -> new IllegalArgumentException());
+        return store;
+    }
+
     public List<Store> findManagerStoreByName(String storeName, Long managerId){
         return storeRepository.findManagerStoreByName(storeName, managerId);
+    }
+
+    public Location findLocationById(Long locationId) {
+        return storeRepository.findLocationById(locationId);
+    }
+
+    @Transactional
+    public Location deleteLocation(Location findLocation) {
+        storeRepository.deleteLocation(findLocation);
+        return findLocation;
+    }
+
+    @Transactional
+    public Location updateLocation(Location findLocation, Location location) {
+        findLocation.setItemList(location.getItemList());
+        findLocation.setStartX(location.getStartX());
+        findLocation.setStartY(location.getStartY());
+        findLocation.setEndX(location.getEndX());
+        findLocation.setEndY(location.getEndY());
+        return findLocation;
+    }
+
+    @Transactional
+    public Store addLocation(Store store, Location location){
+        store.getLocationList().add(location);
+        return store;
     }
 }

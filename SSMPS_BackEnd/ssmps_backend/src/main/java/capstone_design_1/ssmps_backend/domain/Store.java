@@ -19,10 +19,10 @@ public class Store {
     private Long id;
     private String name;
     private String address;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id")
     private Manager manager;
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id")
     private List<Location> locationList = new ArrayList<>();
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)

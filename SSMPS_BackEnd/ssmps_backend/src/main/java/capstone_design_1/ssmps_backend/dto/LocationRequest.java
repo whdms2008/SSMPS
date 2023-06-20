@@ -1,10 +1,7 @@
 package capstone_design_1.ssmps_backend.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,15 +9,34 @@ import java.util.List;
 @Setter
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LocationRequest {
     private Long id;
-    private List<ItemRequest> itemList;
     private float startX;
     private float startY;
     private float endX;
     private float endY;
+    private List<ItemRequest> itemList;
 
     private float centerX;
     private float centerY;
 
+    public LocationRequest(Long id, float startX, float startY, float endX, float endY) {
+        this.id = id;
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+    }
+
+    public LocationRequest(Long id, float startX, float startY, float endX, float endY, List<ItemRequest> itemList) {
+        this.id = id;
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+        this.itemList = itemList;
+    }
 }
+
+

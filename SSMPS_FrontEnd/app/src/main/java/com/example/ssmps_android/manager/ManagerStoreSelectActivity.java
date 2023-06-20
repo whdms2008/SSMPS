@@ -1,9 +1,13 @@
 package com.example.ssmps_android.manager;
 
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -18,6 +22,7 @@ import com.example.ssmps_android.domain.LoginType;
 import com.example.ssmps_android.domain.Manager;
 import com.example.ssmps_android.domain.Store;
 import com.example.ssmps_android.dto.StoreResponse;
+import com.example.ssmps_android.guest.GuestItemListActivity;
 import com.example.ssmps_android.network.RetrofitAPI;
 import com.example.ssmps_android.network.RetrofitClient;
 import com.example.ssmps_android.network.TokenInterceptor;
@@ -35,8 +40,8 @@ import retrofit2.Retrofit;
 
 public class ManagerStoreSelectActivity extends AppCompatActivity {
 
-    EditText storeSelect_search;
-    Button storeSelect_search_btn;
+    EditText searchInput;
+    ImageView searchBtn;
 
     SharedPreferenceUtil sharedPreferenceUtil;
     TokenInterceptor tokenInterceptor;
@@ -49,7 +54,9 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
 
     List<Store> storeList = new ArrayList<>();
     CustomAdapter customAdapter;
+    String token;
 
+    boolean isSearched = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +65,25 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         actionBar.hide();
         initData();
         getStorelistData();
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isSearched){
+                    if(searchInput.getText().toString().equals("")){
+                        Toast.makeText(ManagerStoreSelectActivity.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    searchStore();
+                    searchBtn.setImageResource(R.drawable.close);
+                    isSearched = true;
+                }else{
+                    getStorelistData();
+                    searchInput.setText(null);
+                    searchBtn.setImageResource(R.drawable.search);
+                    isSearched = false;
+                }
+            }
+        });
 
 //        ArrayList<Store> testDataSet = new ArrayList<>();
 //        for (int i =0; i<20; i++) {
@@ -67,6 +93,10 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
 
     private void initData(){
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        searchInput = findViewById(R.id.storeSelect_search_input);
+        searchBtn = findViewById(R.id.storeSelect_search_btn);
+
+        setToken();
         retrofit = RetrofitClient.getInstance(tokenInterceptor);
         service = retrofit.create(RetrofitAPI.class);
         gson = new GsonBuilder().create();
@@ -74,6 +104,11 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
         nowManager = gson.fromJson(sharedPreferenceUtil.getData("manager", "err"), Manager.class);
     }
 
+    private void setToken(){
+        token = sharedPreferenceUtil.getData("token", "err");
+        tokenInterceptor = new TokenInterceptor();
+        tokenInterceptor.setToken(token);
+    }
     private void getStorelistData(){
         Call<List<StoreResponse>> findStoreList = service.findStoreList(nowManager.getId());
         findStoreList.enqueue(new Callback<List<StoreResponse>>() {
@@ -111,5 +146,30 @@ public class ManagerStoreSelectActivity extends AppCompatActivity {
 
         Log.e("store list", storeList.size() + "");
         recyclerView.setAdapter(customAdapter);
+    }
+
+    private void searchStore(){
+        String findStore = searchInput.getText().toString();
+        Call<List<Store>> searchStore = service.findStoreByName(findStore);
+        searchStore.enqueue(new Callback<List<Store>>() {
+            @Override
+            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                if(!response.isSuccessful()) {
+                    Log.e("search store error", response.errorBody().toString());
+                    Toast.makeText(ManagerStoreSelectActivity.this, "매장 검색 에러", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                storeList = response.body();
+                Log.e("store size", storeList.size() + "");
+                setRecyclerView();
+            }
+
+            @Override
+            public void onFailure(Call<List<Store>> call, Throwable t) {
+                Log.e("search store fail", t.getMessage());
+                Toast.makeText(ManagerStoreSelectActivity.this, "매장 검색 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

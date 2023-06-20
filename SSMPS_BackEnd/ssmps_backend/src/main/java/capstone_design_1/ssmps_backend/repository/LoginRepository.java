@@ -1,6 +1,7 @@
 package capstone_design_1.ssmps_backend.repository;
 
 import capstone_design_1.ssmps_backend.domain.Manager;
+import capstone_design_1.ssmps_backend.domain.Store;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +13,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginRepository {
     private final EntityManager em;
-    public Manager join(Manager manager){
-        em.persist(manager);
+    public Manager join(Manager manager, List<Store> list){
+        for(Store s : list){
+            em.persist(s);
+        }
         return manager;
     }
 

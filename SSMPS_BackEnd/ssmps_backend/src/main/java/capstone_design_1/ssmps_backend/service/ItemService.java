@@ -3,6 +3,7 @@ package capstone_design_1.ssmps_backend.service;
 
 import capstone_design_1.ssmps_backend.domain.CenterItem;
 import capstone_design_1.ssmps_backend.domain.Item;
+import capstone_design_1.ssmps_backend.domain.Location;
 import capstone_design_1.ssmps_backend.domain.Store;
 import capstone_design_1.ssmps_backend.dto.ItemRequest;
 import capstone_design_1.ssmps_backend.repository.ItemRepository;
@@ -51,6 +52,17 @@ public class ItemService {
     public List<Item> getItemByName(String name, Store store) {
         return itemRepository.findItemByName(name, store);
     }
+    public Item getItemName(String itemName, Store store){
+        List<Item> findItemList = itemRepository.findItemName(itemName, store);
+        Item findItem = findItemList.stream().findFirst().orElseThrow(() -> new IllegalArgumentException());
+        return findItem;
+    }
+
+    public CenterItem getStoreItem(String name){
+        List<CenterItem> storeItem = itemRepository.findStoreItem(name);
+        CenterItem item = storeItem.stream().findFirst().orElseThrow(() -> new IllegalArgumentException());
+        return item;
+    }
 
     @Transactional
     public Item updateQuantity(Item updateItem, int quantity) {
@@ -61,5 +73,12 @@ public class ItemService {
     @Transactional
     public Item deleteItem(Item deleteItem) {
         return itemRepository.deleteItem(deleteItem);
+    }
+
+
+    @Transactional
+    public Location updateLocation(List<Item> findItem, Location location) {
+        location.setItemList(findItem);
+        return location;
     }
 }
