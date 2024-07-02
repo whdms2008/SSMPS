@@ -1,7 +1,7 @@
 # 🛍️ SSMPS: Smart Store Management and Payment System
 ![mark-removebg-preview](https://user-images.githubusercontent.com/45191177/228127425-000d4608-60f5-4f62-8b0d-c498854e6241.png)
 
-공주대학교 종합설계I 팀 프로젝트
+종합설계I 팀 프로젝트
 
 🎯 SSMPS는 다이소와 편의점에서 느껴지는 불편한 점을 개선하기 위해 만들어진 스마트 매장 관리 및 결제 시스템입니다. 이 시스템은 카메라를 이용한 상품 인식, 실시간 재고 관리, 사용자 편의성 향상 등 다양한 기능을 제공합니다.
 
